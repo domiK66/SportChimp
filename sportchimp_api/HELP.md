@@ -1,32 +1,40 @@
-# Django admin credentials
-username: admin
+# Setup helpfile for DJANGO sportapp WITH sportchimp_api
+an API for the sportchimp.xyz Webpage
 
-password: admin
+username: admin /password: admin
 
-# Django setup steps
-1. Open cmd
 
-2. Install virtualenv
+## SETUP
+
+- Open cmd / bash / shell
+
+### VENV SETUP
+- Install virtualenv
 ```python 
 pip install virtualenv
 ```
 
-3. Create a new virtual enviroment, when not already created
+- Create a new virtual enviroment, when not already created
 ```python 
 python -m venv venv
 ```
-
-4. Activate venv (Windows)
+### ACTIVATE VENV
+- Activate the virtual envirmonent: venv (Windows)
+```python 
+(venv) C:\Users\AK-47u\Desktop\Code Projects\SportChimp>
+```
 ```python 
 venv\Scripts\activate.bat
 ```
+- Activate the virtual envirmonent: venv (Linux)
+Todo:
 
-5. Install Django
+### PYTHON DJNAGO DEPENDECIES
+- Install Django latest
 ```python 
 pip install django
 ```
-
-6. Install rest_framework and security
+- Install rest_framework and security
 ```python 
 pip install djangorestframework 
 ```
@@ -34,17 +42,33 @@ pip install djangorestframework
 pip install djangorestframework-jwt 
 ```
 
-7. Make migrations
+### RUN THE DJANGO PROJECT
+- Migrate migartions files
+```python 
+cd sportchimp_api
+(venv) C:\Users\AK-47u\Desktop\Code Projects\SportChimp\sportchimp_api>
+```
+- Migrate migartions files
+```python 
+python manage.py migrate
+```
+- Run the development server on localhost
+```python 
+python manage.py runserver
+```
+
+### API & ADMIN
+http://127.0.0.1:8000/
+
+http://127.0.0.1:8000/admin
+
+
+### New Models
+- Make migrations
 ```python 
 python manage.py makemigrations
 ```
 
-8. Migrate
-```python 
-python manage.py migrate
-```
 
-9. Run development server
-```python 
-python manage.py runserver
-```
+
+

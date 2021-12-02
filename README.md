@@ -10,7 +10,7 @@ This website aims to be the place for people, ...
 * KAINZ Dominik ([@domiK66](https://github.com/domik666))
 
 ## Requirements
-* tdb
+*TODO:
 
 ## Project Proposal
 [Project Proposal]
@@ -19,6 +19,6 @@ This website aims to be the place for people, ...
 
 What you need to:
 * Host this application:
-    - tbd
+    - TODO:
 * Access the website:
     - An up to date web browser, we recommend using Mozilla Firefox or Google Chrome.
