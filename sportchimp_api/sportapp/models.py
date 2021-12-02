@@ -6,12 +6,13 @@ from django.contrib.auth.models import User
 class Sport(models.Model):
     name = models.CharField(max_length = 1024)
     description = models.CharField(max_length = 1024, null = True)
+    #TODO: image
 
     def __str__(self):
         return self.name
 
 
-class Event(models.Model):
+class Activity(models.Model):
     title = models.CharField(max_length = 1024)
     description = models.CharField(max_length = 1024, null = True)
     date = models.DateField()
@@ -20,6 +21,3 @@ class Event(models.Model):
     participants = models.ManyToManyField(User, related_name="participants")
     #tbd
     location = models.CharField(max_length = 1024)
-
-    def __str__(self):
-        return self.title

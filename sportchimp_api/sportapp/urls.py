@@ -4,5 +4,5 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register('events', views.EventViewSet, basename = "events")
+router.register('activity', views.ActivityViewSet, basename = "activity")
 router.register('sports', views.SportViewSet, basename = "sports")

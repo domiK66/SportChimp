@@ -1,6 +1,24 @@
 # SportChimp
-## Software Engenieering Selective: Web Application with Django (Python) and Angular.js
 
-Please create your own venv! Not included in the repo!
+This website aims to be the place for people, ...
 
-### Commands
+## Team Members
+* BUKVAREVIC Mensur ([@mensiq](https://github.com/mensiq))
+* DWORACEK Lukas
+* FRÖHLICH Timo
+* GANSTER Peter
+* KAINZ Dominik ([@domiK66](https://github.com/domik666))
+
+## Requirements
+* tdb
+
+## Project Proposal
+[Project Proposal]
+
+## Installation
+
+What you need to:
+* Host this application:
+    - tbd
+* Access the website:
+    - An up to date web browser, we recommend using Mozilla Firefox or Google Chrome.
