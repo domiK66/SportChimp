@@ -37,7 +37,14 @@ class CommentViewSet(viewsets.ViewSet):
     def list(self, request, format = None):
         queryset = models.Comment.objects.all()
         return Response(
-            [(comment.pk, comment.created_at, comment.activity, comment.created_by_user, comment.text) for comment in queryset],
+            [(
+            comment.pk,
+            comment.activity.pk,
+            comment.created_at,
+            comment.activity.title,
+            comment.created_by_user.username,
+            comment.text
+            ) for comment in queryset],
             status = 200
         )
 
@@ -47,7 +54,10 @@ class CommentViewSet(viewsets.ViewSet):
             return Response(
                 {
                     "pk": comment.pk,
-                    "name": comment.name,
+                    "activity.pk": comment.activity.pk,
+                    "created_at":comment.created_at,
+                    "activity.title": comment.activity.title,
+                    "created_by_user.username": comment.created_by_user.username,
                     "text": comment.text
                 },
                 status = 200
