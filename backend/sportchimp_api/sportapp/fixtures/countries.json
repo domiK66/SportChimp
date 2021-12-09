@@ -1,9 +1,0 @@
-[
-  {
-    "model": "sportapp.sport",
-    "pk": 1,
-    "fields": {
-      "name": "Ski"
-    }
-  }
-]
