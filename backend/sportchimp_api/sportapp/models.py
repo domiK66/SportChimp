@@ -19,6 +19,7 @@ class Activity(models.Model):
     created_by_user = models.ForeignKey(User, on_delete = models.PROTECT, related_name="activity_created_by_user", null = True)
     participants = models.ManyToManyField(User, related_name="participants")
     #TODO: haha shesh
+    #TODO: is_public = 
     location = models.CharField(max_length = 1024)
 
     def __str__(self):
@@ -33,9 +34,14 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
-class Friendship(models.Model):
-    #TODO: haha shesh
-    pass
+class FriendshipRequest(models.Model):
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_requests_sent')
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendship_requests_received')
+
+class Friend(models.Model):
+    to_user = models.ForeignKey(User, models.CASCADE, related_name='friends')
+    from_user = models.ForeignKey(User, models.CASCADE, related_name='_unused_friend_relation')
+
 
 class Profile(models.Model):
     #TODO: haha shesh
