@@ -11,6 +11,9 @@ from . import models
 
 
 ## SPORT
+from .serializers import SportSerializer
+
+
 class SportViewSet(viewsets.ViewSet):
     ## GET: http://127.0.0.1:8000/sports/
     def list(self, request, format=None):
@@ -22,11 +25,8 @@ class SportViewSet(viewsets.ViewSet):
         if request.GET.get("order_by") is not None:
             queryset = queryset.order_by(request.GET.get("order_by"))
 
-        return Response([(sport.pk,
-                          sport.name,
-                          sport.description) for sport in queryset],
-                        status=200
-                        )
+        serializer = SportSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
 
     ## GET: http://127.0.0.1:8000/sports/pk
     def retrieve(self, request, pk=None, format=None):
