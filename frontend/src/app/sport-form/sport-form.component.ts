@@ -22,25 +22,28 @@ export class SportFormComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-    this.buttonText = 'Create';
-
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.buttonText = 'Update'
+      this.buttonText = 'Update';
       this.sportService.getSport(id).subscribe(sport => {
         this.sportFormGroup.patchValue(sport);
       })
+    } else {
+      this.buttonText = 'Create';
     }
   }
   createOrUpdateSport() {
-    const id = this.sportFormGroup.controls['id'].value;
+    const id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      this.http.put(`/api/sports/${id}/`, this.sportFormGroup.value).subscribe(() => {
+        alert('Movie updated successfully!');
+      })
+      /*
       this.sportService.updateSport(this.sportFormGroup.value).subscribe(() => {
         alert('Sport updated successfully!');
-
       })
+      */
       this.router.navigate(['/sport-list']);
-
     } else {
       this.sportService.createSport(this.sportFormGroup.value).subscribe(() => {
         alert('Sport created successfully!');

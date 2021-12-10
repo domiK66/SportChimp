@@ -11,7 +11,6 @@ from . import models
 ## SPORT
 
 
-
 class SportViewSet(viewsets.ViewSet):
     ## GET: http://127.0.0.1:8000/sports/
     def list(self, request, format=None):
@@ -25,6 +24,20 @@ class SportViewSet(viewsets.ViewSet):
 
         serializer = SportSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
+
+    def create(self, request, format=None):
+        sport = models.Sport.objects.create(
+            name=request.data["name"],
+            description=request.data["description"]
+        )
+        return Response(
+            {
+                "pk": sport.pk,
+                "name": sport.name,
+                "description": sport.description
+            },
+            status=201
+        )
 
     ## GET: http://127.0.0.1:8000/sports/pk
     def retrieve(self, request, pk=None, format=None):
@@ -46,20 +59,6 @@ class SportViewSet(viewsets.ViewSet):
                 status=404
             )
 
-    def create(self, request, format=None):
-        sport = models.Sport.objects.create(
-            name=request.data["name"],
-            description=request.data["description"]
-        )
-        return Response(
-            {
-                "pk": sport.pk,
-                "name": sport.name,
-                "description": sport.description
-            },
-            status=201
-        )
-
     def update(self, request, pk=None, format=None):
         try:
             sport = models.Sport.objects.get(
@@ -67,6 +66,7 @@ class SportViewSet(viewsets.ViewSet):
             )
 
             sport.name = request.data["name"]
+            sport.description = request.data["description"]
             sport.save()
             return Response(
                 {
@@ -83,6 +83,13 @@ class SportViewSet(viewsets.ViewSet):
         # We do not allow partial updates here
         # So we return a 405 instead.
         return Response(status=405)
+
+    def destroy(self, request, pk=None, format=None):
+        sport = models.Sport.objects.filter(
+            pk=pk
+        ).delete()
+        return Response(status=204)
+
 
 ## SPORT
 

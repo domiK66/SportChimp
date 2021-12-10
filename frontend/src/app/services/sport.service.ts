@@ -8,24 +8,24 @@ export class SportService {
   constructor(private http: HttpClient) {
   }
   getSports() {
-    return this.http.get<Sport[]>('/api/sports/')
+    return this.http.get<Sport[]>('/api/sports/');
   }
   getSport(id: string) {
-    return this.http.get<Sport>(`api/sports/${id}/`)
+    return this.http.get<Sport>(`/api/sports/${id}/`);
   }
   createSport(sport: Sport) {
-    return this.http.post(`api/sports/`, sport)
+    return this.http.post<Sport>(`/api/sports/`, sport);
   }
   updateSport(sport: Sport) {
-    return this.http.put(`/api/sports/${sport.id}/`, sport)
+    return this.http.put<Sport>(`/api/sports/${sport.id}/`, sport);
   }
   deleteSport(sport: Sport) {
-    return this.http.delete(`/api/sports/${sport.id}/`)
+    return this.http.delete<Sport>(`/api/sports/${sport.id}/`);
   }
 }
 
 export interface Sport {
   id: number;
   name: string;
-  description: string[]
+  description: string;
 }
