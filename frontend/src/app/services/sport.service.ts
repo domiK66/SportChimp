@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
-@Injectable({
-  providedIn: 'root'
-})
+export interface Sport {
+  id: number;
+  name: string;
+  description: string;
+}
+
+@Injectable({providedIn: 'root'})
 export class SportService {
   constructor(private http: HttpClient) {
   }
@@ -24,8 +28,3 @@ export class SportService {
   }
 }
 
-export interface Sport {
-  id: number;
-  name: string;
-  description: string;
-}

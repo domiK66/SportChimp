@@ -35,14 +35,9 @@ export class SportFormComponent implements OnInit {
   createOrUpdateSport() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.http.put(`/api/sports/${id}/`, this.sportFormGroup.value).subscribe(() => {
-        alert('Movie updated successfully!');
-      })
-      /*
       this.sportService.updateSport(this.sportFormGroup.value).subscribe(() => {
         alert('Sport updated successfully!');
       })
-      */
       this.router.navigate(['/sport-list']);
     } else {
       this.sportService.createSport(this.sportFormGroup.value).subscribe(() => {

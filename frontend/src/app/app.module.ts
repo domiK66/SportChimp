@@ -7,12 +7,14 @@ import { SportListComponent } from './sport-list/sport-list.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { SportFormComponent } from './sport-form/sport-form.component';
+import { ActivityListComponent } from './activity-list/activity-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SportListComponent,
-    SportFormComponent
+    SportFormComponent,
+    ActivityListComponent
   ],
   imports: [
     BrowserModule,
