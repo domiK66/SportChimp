@@ -2,16 +2,14 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import permissions
 
-from django.core import serializers
-
-
 from datetime import datetime
 
+from .serializers import SportSerializer
 from . import models
 
 
 ## SPORT
-from .serializers import SportSerializer
+
 
 
 class SportViewSet(viewsets.ViewSet):
@@ -48,6 +46,43 @@ class SportViewSet(viewsets.ViewSet):
                 status=404
             )
 
+    def create(self, request, format=None):
+        sport = models.Sport.objects.create(
+            name=request.data["name"],
+            description=request.data["description"]
+        )
+        return Response(
+            {
+                "pk": sport.pk,
+                "name": sport.name,
+                "description": sport.description
+            },
+            status=201
+        )
+
+    def update(self, request, pk=None, format=None):
+        try:
+            sport = models.Sport.objects.get(
+                pk=pk
+            )
+
+            sport.name = request.data["name"]
+            sport.save()
+            return Response(
+                {
+                    "pk": sport.pk,
+                    "name": sport.name,
+                    "description": sport.description
+                },
+                status=200
+            )
+        except models.Sport.DoesNotExist:
+            return Response(status=404)
+
+    def partial_update(self, request, pk=None, format=None):
+        # We do not allow partial updates here
+        # So we return a 405 instead.
+        return Response(status=405)
 
 ## SPORT
 

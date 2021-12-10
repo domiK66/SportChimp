@@ -14,10 +14,10 @@ export class SportService {
     return this.http.get<Sport>(`api/sports/${id}/`)
   }
   createSport(sport: Sport) {
-    return this.http.post<Sport>(`api/sports/`, sport)
+    return this.http.post(`api/sports/`, sport)
   }
   updateSport(sport: Sport) {
-    return this.http.put<Sport>(`/api/sports/${sport.id}/`, sport)
+    return this.http.put(`/api/sports/${sport.id}/`, sport)
   }
   deleteSport(sport: Sport) {
     return this.http.delete(`/api/sports/${sport.id}/`)

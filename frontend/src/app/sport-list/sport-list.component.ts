@@ -18,10 +18,11 @@ export class SportListComponent implements OnInit {
     this.sportService.getSports().subscribe((response: any[]) => {
       this.sports = response
     })
-    /* this.http.get<Movie[]>('/api/movies/').subscribe(movies => {
-      this.movies = movies
-    })*/
   }
-
-
+  deleteSport(sport: Sport): void {
+    this.sportService.deleteSport(sport)
+      .subscribe( () => {
+        this.ngOnInit();
+      });
+  }
 }

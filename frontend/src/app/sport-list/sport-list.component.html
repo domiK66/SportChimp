@@ -1,3 +1,4 @@
+<button [routerLink]="'/sport-form/'">Create Sport</button>
 <table>
   <tr>
     <th>id</th>
@@ -8,5 +9,7 @@
     <td>{{sport.id}}</td>
     <td>{{sport.name}}</td>
     <td>{{sport.description}}</td>
+    <td><button [routerLink]="'/sport-form/' + sport.id">Edit</button></td>
+    <td><button type="button" (click)="deleteSport(sport)">Delete</button></td>
   </tr>
 </table>

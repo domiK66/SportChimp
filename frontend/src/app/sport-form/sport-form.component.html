@@ -1,0 +1,12 @@
+<p>sport-form works!</p>
+<form [formGroup]="sportFormGroup" (ngSubmit)="createOrUpdateSport()">
+  <label>Title:
+    <input formControlName="name">
+  </label>
+  <br/>
+  <label>Description:
+    <input formControlName="description">
+  </label>
+  <br/>
+  <button>{{ buttonText }}</button>
+</form>
