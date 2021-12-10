@@ -81,7 +81,7 @@ class SportViewSet(viewsets.ViewSet):
         return Response(status=204)
 
 
-# TODO ACTIVITY:
+# TODO Activity:
 class ActivityViewSet(viewsets.ViewSet):
     # GET: http://127.0.0.1:8000/activities
     def list(self, request, format=None):
@@ -96,6 +96,20 @@ class ActivityViewSet(viewsets.ViewSet):
         serializer = serializers.ActivitySerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
+    # POST http://127.0.0.1:8000/activities/
+    def create(self, request, format=None):
+        activity = models.Activity.objects.create(
+            title=request.data["title"],
+            description=request.data["description"],
+            date=request.data["date"],
+            is_public=request.data["is_public"],
+            location=request.data["location"],
+            # TODO: ?? idk if best practice
+            sport_genre=models.Sport.objects.get(id=request.data["sport_genre"])
+        )
+        serializer = serializers.ActivitySerializer(activity)
+        return Response(serializer.data, status=200)
+
     # GET: http://127.0.0.1:8000/activities/id
     def retrieve(self, request, pk=None, format=None):
         try:
@@ -107,10 +121,11 @@ class ActivityViewSet(viewsets.ViewSet):
             return Response({"error": "Activity does not exist"}, status=404)
 
 
+# TODO Comment:
 class CommentViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
-    ## GET: http://127.0.0.1:8000/comments/
+    # GET: http://127.0.0.1:8000/comments/
     def list(self, request, format=None):
         queryset = models.Comment.objects.all()
 
@@ -124,7 +139,7 @@ class CommentViewSet(viewsets.ViewSet):
                         status=200
                         )
 
-    ## GET: http://127.0.0.1:8000/comments/pk
+    # GET: http://127.0.0.1:8000/comments/pk
     def retrieve(self, request, pk=None, format=None):
         try:
             comment = models.Comment.objects.get(pk=pk)
@@ -147,7 +162,7 @@ class CommentViewSet(viewsets.ViewSet):
                 status=404
             )
 
-    ## TODO: POST http://127.0.0.1:8000/comments/
+    # TODO: POST http://127.0.0.1:8000/comments/
     def create(self, request, format=None):
         # request.data contains a dictionary 
         # looking like this:
@@ -171,4 +186,3 @@ class CommentViewSet(viewsets.ViewSet):
             status=201
         )
 
-## COMMENT

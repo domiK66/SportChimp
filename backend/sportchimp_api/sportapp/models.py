@@ -16,12 +16,12 @@ class Activity(models.Model):
     title = models.CharField(max_length=1024)
     description = models.CharField(max_length=1024, null=True)
     date = models.DateField()
+    # TODO: location
     location = models.CharField(max_length=1024)
+    is_public = models.BooleanField(default=True)
     sport_genre = models.ForeignKey(Sport, on_delete=models.PROTECT)
     created_by_user = models.ForeignKey(User, on_delete=models.PROTECT, related_name="activity_created_by_user", null=True)
     participants = models.ManyToManyField(User, related_name="participants")
-    # TODO: haha shesh
-    # TODO: is_public =
 
     def __str__(self):
         return self.title

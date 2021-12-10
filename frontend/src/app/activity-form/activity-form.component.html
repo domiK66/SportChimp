@@ -1,0 +1,39 @@
+<p>activity-form Component</p>
+<form [formGroup]="activityFormGroup" (ngSubmit)="createOrUpdateActivity()">
+  <label>Title:
+    <input formControlName="title">
+  </label>
+  <br/>
+  <label>Description:
+    <input formControlName="description">
+  </label>
+  <br/>
+  <label>Date:
+    <input type="date" formControlName="date">
+  </label>
+  <br/>
+  <label>Location:
+    <input formControlName="location">
+  </label>
+  <br/>
+  <label>Is Public:
+    <input type="checkbox" formControlName="is_public">
+  </label>
+  <br/>
+  <label>Sport:
+    <input type="number" formControlName="sport_genre">
+  </label>
+  <br/>
+  <br/>
+  TODO:
+  <br/>
+  <p>created_by_user:
+
+  </p>
+  <br/>
+  <p>Participants:
+
+  </p>
+  <br/>
+  <button>{{ submitButtonText }}</button>
+</form>

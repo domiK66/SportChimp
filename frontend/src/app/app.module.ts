@@ -8,13 +8,15 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { SportFormComponent } from './sport-form/sport-form.component';
 import { ActivityListComponent } from './activity-list/activity-list.component';
+import { ActivityFormComponent } from './activity-form/activity-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SportListComponent,
     SportFormComponent,
-    ActivityListComponent
+    ActivityListComponent,
+    ActivityFormComponent
   ],
   imports: [
     BrowserModule,
