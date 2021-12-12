@@ -1,0 +1,30 @@
+<p>activity-list Component</p>
+<button [routerLink]="'/activity-form/'">Create Activity</button>
+<input type="text" [formControl]="filterFormControl" placeholder="Search activities"/>
+<table>
+  <tr>
+    <th>id</th>
+    <th>title</th>
+    <th>description</th>
+    <th>date</th>
+    <th>location</th>
+    <th>is_public</th>
+    <th>sport_genre</th>
+    <th>created_by_user</th>
+    <th>participants</th>
+  </tr>
+  <tr *ngFor="let activity of filteredActivities">
+    <td>{{activity.id}}</td>
+    <td>{{activity.title}}</td>
+    <td>{{activity.description}}</td>
+    <td>{{activity.date}}</td>
+    <td>{{activity.location}}</td>
+    <td>{{activity.is_public}}</td>
+    <td>{{activity.sport_genre.name}}</td>
+    <td></td>
+    <td></td>
+    <td><button [routerLink]="'/activity-form/' + activity.id">Edit</button></td>
+    <td><button>View</button></td>
+  </tr>
+
+</table>

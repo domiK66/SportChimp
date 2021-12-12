@@ -1,0 +1,16 @@
+<p>sport-list admin-dashboard Component</p>
+<button [routerLink]="'/sport-form/'">Create Sport</button>
+<table>
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>description</th>
+  </tr>
+  <tr *ngFor="let sport of sports">
+    <td>{{sport.id}}</td>
+    <td>{{sport.name}}</td>
+    <td>{{sport.description}}</td>
+    <td><button [routerLink]="'/sport-form/' + sport.id">Edit</button></td>
+    <td><button type="button" (click)="deleteSport(sport)">Delete</button></td>
+  </tr>
+</table>
