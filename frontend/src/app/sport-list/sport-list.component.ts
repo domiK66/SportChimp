@@ -8,8 +8,8 @@ import { Sport, SportService } from "../services/sport.service";
   styleUrls: ['./sport-list.component.scss']
 })
 export class SportListComponent implements OnInit {
-
-  sports: Sport[] = []
+  displayedColumns = ['id', 'name', 'description', 'edit', 'delete'];
+  sports: Sport[] = [];
 
   constructor(private http: HttpClient, private sportService: SportService) {
   }

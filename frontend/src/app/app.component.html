@@ -1,7 +1,34 @@
-<a [routerLink]="'/sport-list/'">sport-list</a>
-<br>
-<a [routerLink]="'/activity-list/'">activity-list</a>
-<br>
+<mat-drawer-container class="container" autosize>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="icon" aria-label="" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>SportChimp</span>
+    <span class="spacer"></span>
+    <button mat-icon-button class="icon favorite-icon" aria-label="">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="icon" aria-label="">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
 
 
-<router-outlet></router-outlet>
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="'/sport-list/'"> Sports </a>
+      <a mat-list-item [routerLink]="'/activity-list/'"> Activities </a>
+    </mat-nav-list>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+
+  </div>
+
+  <router-outlet></router-outlet>
+
+</mat-drawer-container>
+
+
+
+
