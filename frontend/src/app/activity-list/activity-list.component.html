@@ -1,30 +1,81 @@
-<p>activity-list Component</p>
-<button [routerLink]="'/activity-form/'">Create Activity</button>
-<input type="text" [formControl]="filterFormControl" placeholder="Search activities"/>
-<table>
-  <tr>
-    <th>id</th>
-    <th>title</th>
-    <th>description</th>
-    <th>date</th>
-    <th>location</th>
-    <th>is_public</th>
-    <th>sport_genre</th>
-    <th>created_by_user</th>
-    <th>participants</th>
-  </tr>
-  <tr *ngFor="let activity of filteredActivities">
-    <td>{{activity.id}}</td>
-    <td>{{activity.title}}</td>
-    <td>{{activity.description}}</td>
-    <td>{{activity.date}}</td>
-    <td>{{activity.location}}</td>
-    <td>{{activity.is_public}}</td>
-    <td>{{activity.sport_genre.name}}</td>
-    <td></td>
-    <td></td>
-    <td><button [routerLink]="'/activity-form/' + activity.id">Edit</button></td>
-    <td><button>View</button></td>
-  </tr>
+<button mat-raised-button color="accent" [routerLink]="'/activity-form/'">Create Activity</button>
+<mat-form-field>
+  <input matInput type="text" [formControl]="filterFormControl" placeholder="Search activities"/>
+</mat-form-field>
+
+<table mat-table style="width: 100%" [dataSource]="filteredActivities" matSort class="mat-elevation-z8">
+
+  <!-- Id Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <!-- Title Column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
+
+  <!-- Description Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+  <!-- Date Column -->
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+    <td mat-cell *matCellDef="let element"> {{element.date | date : 'dd.MM.yyyy'}} </td>
+  </ng-container>
+
+  <!-- Location Column -->
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+    <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+  </ng-container>
+
+  <!-- Is_Public Column -->
+  <ng-container matColumnDef="is_public">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Public</th>
+    <td mat-cell *matCellDef="let element"> {{element.is_public}} </td>
+  </ng-container>
+
+  <!-- Sport Genre Column-->
+  <ng-container matColumnDef="sport_genre">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Sport Genre</th>
+    <td mat-cell *matCellDef="let element"> {{element.sport_genre.name}} </td>
+  </ng-container>
+
+  <!-- Created_By_User Column -->
+  <ng-container matColumnDef="created_by_user">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By User</th>
+    <td mat-cell *matCellDef="let element"> {{element.created_by_user.username}} </td>
+  </ng-container>
+
+  <!-- Participants Column -->
+  <ng-container matColumnDef="participants">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Participants</th>
+    <td mat-cell *matCellDef="let element"> {{element.participants}} </td>
+  </ng-container>
+
+  <!-- Edit Column -->
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="primary" [routerLink]="'/sport-form/' + element.id">Edit</button>
+    </td>
+  </ng-container>
+
+  <!-- View Column -->
+  <ng-container matColumnDef="view">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="accent">View</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 </table>

@@ -3,13 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Sport} from "./sport.service";
 
 export interface Activity {
-  id: string;
+  id: number;
   title: string;
   description: string;
   date: Date;
   location: string;
-  is_public: Boolean;
-  sport_genre: Sport;
+  is_public: boolean;
+  sport_genre: number[];
   created_by_user: any;
   participants: [];
 }
