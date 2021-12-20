@@ -4,9 +4,9 @@ This website aims to be the place for people, ...
 
 ## Team Members
 * BUKVAREVIC Mensur ([@mensiq](https://github.com/mensiq))
-* DWORACEK Lukas
-* FRÖHLICH Timo
-* GANSTER Peter
+* DWORACEK Lukas ([@dwori](https://github.com/dwori))
+* FRÖHLICH Timo ([@Frolic97](https://github.com/Frolic97))
+* GANSTER Peter ([@Giu52](https://github.com/Giu52))
 * KAINZ Dominik ([@domiK66](https://github.com/domik666))
 
 ## Requirements
