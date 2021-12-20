@@ -9,20 +9,20 @@ import { Sport, SportService } from "../services/sport.service";
 })
 export class SportListComponent implements OnInit {
 
-  sports: Sport[] = []
+  displayedColumns = ['id', 'name', 'description', 'edit', 'delete'];
+  sports: Sport[] = [];
 
-  constructor(private http: HttpClient, private sportService: SportService) {
+  constructor(private http: HttpClient,
+              private sportService: SportService
+  ) {
+
   }
 
   ngOnInit(): void {
-    this.sportService.getSports().subscribe((response: any[]) => {
-      this.sports = response
-    })
+    this.sportService.getSports().subscribe((response: any[]) => { this.sports = response })
   }
+
   deleteSport(sport: Sport): void {
-    this.sportService.deleteSport(sport)
-      .subscribe( () => {
-        this.ngOnInit();
-      });
+    this.sportService.deleteSport(sport).subscribe( () => { this.ngOnInit() });
   }
 }

@@ -14,7 +14,12 @@ export class ActivityFormComponent implements OnInit {
   activityFormGroup: FormGroup;
   submitButtonText = 'Create';
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private activityService: ActivityService, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private activityService: ActivityService,
+    private router: Router
+  ) {
     this.activityFormGroup = new FormGroup({
       id: new FormControl(null),
       title: new FormControl(''),
@@ -23,15 +28,14 @@ export class ActivityFormComponent implements OnInit {
       location: new FormControl(''),
       is_public: new FormControl(false),
       sport_genre: new FormControl([])
-    })
+      }
+    )
   }
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.submitButtonText = 'Update';
-      this.activityService.getActivity(id).subscribe(activity => {
-        this.activityFormGroup.patchValue(activity);
-      })
+      this.activityService.getActivity(id).subscribe(activity => { this.activityFormGroup.patchValue(activity); })
     } else {
       this.submitButtonText = 'Create';
     }
@@ -39,14 +43,10 @@ export class ActivityFormComponent implements OnInit {
   createOrUpdateActivity() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.activityService.updateActivity(this.activityFormGroup.value).subscribe(() => {
-        alert('Sport updated successfully!');
-      })
+      this.activityService.updateActivity(this.activityFormGroup.value).subscribe(() => { alert('Sport updated successfully!'); })
       this.router.navigate(['/activity-list']);
     } else {
-      this.activityService.createActivity(this.activityFormGroup.value).subscribe(() => {
-        alert('Sport created successfully!');
-      })
+      this.activityService.createActivity(this.activityFormGroup.value).subscribe(() => { alert('Sport created successfully!'); })
       this.router.navigate(['/activity-list']);
     }
   }
