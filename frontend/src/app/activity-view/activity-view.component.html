@@ -1,0 +1,52 @@
+<mat-form-field>
+  <input matInput type="text" [formControl]="searchFilterFormControl" placeholder="Search activities"/>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>Sport Genre</mat-label>
+  <mat-select [formControl]="sportFilterFormControl" multiple>
+    <mat-option *ngFor="let sport of sports" [value]="sport.name">{{sport.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>Enter a date range</mat-label>
+  <mat-date-range-input [rangePicker]="picker">
+    <input matStartDate placeholder="Start date">
+    <input matEndDate placeholder="End date">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+
+
+<div class="activities">
+  <mat-grid-list [cols]="cols$ | async" rowHeight="1:2" gutterSize="10px" >
+    <div *ngFor="let activity of filteredActivities; let i=index">
+      <mat-grid-tile class="">
+        <mat-card class="activity-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{activity.created_by_user.username}}</mat-card-title>
+            <mat-card-subtitle>{{activity.title}}</mat-card-subtitle>
+            <mat-card-subtitle>{{activity.sport_genre.name}}</mat-card-subtitle>
+            <mat-card-subtitle>{{activity.date}}</mat-card-subtitle>
+            <mat-card-subtitle>{{activity.location}}</mat-card-subtitle>
+
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{activity.description}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>ATTEND</button>
+            <button mat-button>VIEW</button>
+            <button mat-button>FAV</button>
+          </mat-card-actions>
+        </mat-card>
+
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+</div>

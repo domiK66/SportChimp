@@ -1,0 +1,18 @@
+
+<div class="sports-slider">
+  <mat-grid-list [cols]="cols$ | async" rowHeight="106:151" gutterSize="10px" >
+    <div *ngFor="let sport of sports; let i=index">
+      <mat-grid-tile class="sport-grid-tile">
+        <mat-card class="sport-card">
+          <img mat-card-image class="sport-card-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.scientificamerican.com%2Fsciam%2Fcache%2Ffile%2F02D96662-3371-4647-A2A3F1E384C57E03.jpg%3Fw%3D590%26h%3D393&f=1&nofb=1" alt="Photo of a Shiba Inu">
+          <mat-card-title class="sport-card-title">{{sport.name}}</mat-card-title>
+        </mat-card>
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+</div>
+
+
+<h3>Latest Activities:</h3>
+
+

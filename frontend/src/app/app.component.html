@@ -3,27 +3,50 @@
     <button mat-icon-button class="icon" aria-label="" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>SportChimp</span>
+    <a [routerLink]="'/'" style="color: white"><span >SportChimp</span></a>
     <span class="spacer"></span>
-    <button mat-icon-button class="icon favorite-icon" aria-label="">
-      <mat-icon>favorite</mat-icon>
+
+    <!-- only shown when guest -->
+    <button mat-raised-button color="primary">Register</button>
+    <button mat-raised-button color="accent">Login</button>
+
+    <!-- only shown when loggend in -->
+    <button mat-icon-button>
+      <mat-icon>notifications_active</mat-icon>
     </button>
-    <button mat-icon-button class="icon" aria-label="">
-      <mat-icon>share</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_box</mat-icon>
     </button>
+    <mat-menu #userMenu="matMenu" xPosition="before">
+      <button mat-menu-item>Profile</button>
+      <button mat-menu-item>My friends</button>
+      <button mat-menu-item>My Account Settings</button>
+      <button mat-menu-item>Sign out</button>
+    </mat-menu>
+
   </mat-toolbar>
 
 
   <mat-drawer #drawer class="sidenav" mode="side">
     <mat-nav-list>
+      <div mat-subheader>Admin</div>
       <a mat-list-item [routerLink]="'/sport-list/'"> Sports </a>
       <a mat-list-item [routerLink]="'/activity-list/'"> Activities </a>
+      <mat-divider></mat-divider>
+      <div mat-subheader>User</div>
+      <a mat-list-item [routerLink]="'/activity-view/'"> Find Activities </a>
+      <mat-divider></mat-divider>
+      <a mat-list-item [routerLink]="'/activity-list/'"> Attending Activities </a>
+      <a mat-list-item [routerLink]="'/activity-list/'"> My Own Activities </a>
+      <a mat-list-item [routerLink]="'/activity-list/'"> My Saved Activities </a>
+      <mat-divider></mat-divider>
+      <a mat-list-item [routerLink]="'/activity-list/'"> Find Friends </a>
+      <a mat-list-item [routerLink]="'/activity-list/'"> Friends Activities</a>
+
     </mat-nav-list>
   </mat-drawer>
 
-  <div class="sidenav-content">
-
-  </div>
+  <!--- <div class="sidenav-content"></div> -->
 
   <router-outlet></router-outlet>
 

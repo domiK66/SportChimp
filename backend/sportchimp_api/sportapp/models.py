@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Sport(models.Model):
     name = models.CharField(max_length=1024)
     description = models.CharField(max_length=1024, null=True)
-    # TODO: image =
+    # TODO: image = models.ImageField()
 
     def __str__(self):
         return self.name

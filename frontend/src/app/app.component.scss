@@ -1,13 +1,18 @@
 .spacer {
   flex: 1 1 auto;
 }
+.sidenav {
+  padding: 20px;
+}
+.container {
+  height: 100%;
+}
+
+
+
 .sidenav-content {
   display: flex;
   height: 100%;
   align-items: center;
   justify-content: center;
-}
-
-.sidenav {
-  padding: 20px;
 }
