@@ -9,7 +9,7 @@ export interface Activity {
   date: Date;
   location: string;
   is_public: boolean;
-  sport_genre: number[];
+  sport_genre: Sport;
   created_by_user: any;
   participants: [];
 }
@@ -18,7 +18,9 @@ export interface Activity {
 export class ActivityService {
   base_url: string = '/api/activities/'
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient
+  ) {
 
   }
   getActivities() {

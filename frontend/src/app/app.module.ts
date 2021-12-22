@@ -23,6 +23,11 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSortModule} from "@angular/material/sort";
 import {MatTableModule} from "@angular/material/table";
+import { IndexComponent } from './index/index.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { ActivityViewComponent } from './activity-view/activity-view.component';
+import { MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -31,7 +36,9 @@ import {MatTableModule} from "@angular/material/table";
     SportListComponent,
     SportFormComponent,
     ActivityListComponent,
-    ActivityFormComponent
+    ActivityFormComponent,
+    IndexComponent,
+    ActivityViewComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +61,11 @@ import {MatTableModule} from "@angular/material/table";
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatGridListModule,
+
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
