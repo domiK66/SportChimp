@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivityService} from "../services/activity.service";
+import {Sport, SportService} from "../services/sport.service";
 
 @Component({
   selector: 'app-activity-form',
@@ -17,17 +18,20 @@ export class ActivityFormComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
+    private router: Router,
+
     private activityService: ActivityService,
-    private router: Router
+    public sportService: SportService
+
   ) {
     this.activityFormGroup = new FormGroup({
       id: new FormControl(null),
-      title: new FormControl(''),
+      title: new FormControl('',[Validators.required]),
+      sport_genre: new FormControl([]),
       description: new FormControl(''),
       date: new FormControl(new Date()),
       location: new FormControl(''),
-      is_public: new FormControl(false),
-      sport_genre: new FormControl([])
+      is_public: new FormControl(false)
       }
     )
   }
@@ -50,5 +54,4 @@ export class ActivityFormComponent implements OnInit {
       this.router.navigate(['/activity-list']);
     }
   }
-
 }

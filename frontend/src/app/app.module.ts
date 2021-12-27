@@ -28,6 +28,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { ActivityViewComponent } from './activity-view/activity-view.component';
 import { MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {DateComponent} from "./date/date.component";
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     ActivityListComponent,
     ActivityFormComponent,
     IndexComponent,
-    ActivityViewComponent
+    ActivityViewComponent,
+    DateComponent
   ],
   imports: [
     BrowserModule,
