@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SportListComponent } from './sport-list/sport-list.component';
@@ -29,7 +28,13 @@ import { ActivityViewComponent } from './activity-view/activity-view.component';
 import { MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {DateComponent} from "./date/date.component";
+import {JwtModule} from "@auth0/angular-jwt";
+import { LoginComponent } from './login/login.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token')
+}
 
 @NgModule({
   declarations: [
@@ -40,9 +45,11 @@ import {DateComponent} from "./date/date.component";
     ActivityFormComponent,
     IndexComponent,
     ActivityViewComponent,
-    DateComponent
+    DateComponent,
+    LoginComponent
   ],
   imports: [
+    JwtModule.forRoot({config: {tokenGetter: tokenGetter}}),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -67,7 +74,9 @@ import {DateComponent} from "./date/date.component";
     MatGridListModule,
 
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

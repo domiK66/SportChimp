@@ -31,10 +31,10 @@ export class ActivityService {
     return this.http.post<Activity>(`${this.sportChimpApiService.base_url}/activities/`, activity);
   }
   updateActivity(activity: Activity) {
-    return this.http.put<Activity>(`${this.sportChimpApiService.base_url}/activities/${activity.id}`, activity);
+    return this.http.put<Activity>(`${this.sportChimpApiService.base_url}/activities/${activity.id}/`, activity);
   }
   deleteActivity(activity: Activity) {
-    return this.http.delete<Activity>(`${this.sportChimpApiService.base_url}/activities/${activity.id}`);
+    return this.http.delete<Activity>(`${this.sportChimpApiService.base_url}/activities/${activity.id}/`);
   }
 }
 

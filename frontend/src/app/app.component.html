@@ -6,23 +6,30 @@
     <a [routerLink]="'/'" style="color: white"><span >SportChimp</span></a>
     <span class="spacer"></span>
 
-    <!-- only shown when guest -->
-    <button mat-raised-button color="primary">Register</button>
-    <button mat-raised-button color="accent">Login</button>
-
     <!-- only shown when loggend in -->
-    <button mat-icon-button>
-      <mat-icon>notifications_active</mat-icon>
-    </button>
-    <button mat-icon-button [matMenuTriggerFor]="userMenu">
-      <mat-icon>account_box</mat-icon>
-    </button>
-    <mat-menu #userMenu="matMenu" xPosition="before">
-      <button mat-menu-item>Profile</button>
-      <button mat-menu-item>My friends</button>
-      <button mat-menu-item>My Account Settings</button>
-      <button mat-menu-item>Sign out</button>
-    </mat-menu>
+    <div *ngIf="userService.isLoggedIn | async; else guest">
+      <button mat-icon-button [routerLink]="'/activity-form'">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>notifications_active</mat-icon>
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_box</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <button mat-menu-item>Profile</button>
+        <button mat-menu-item>My friends</button>
+        <button mat-menu-item>My Account Settings</button>
+        <button mat-menu-item (click)="userService.logout()">Log out</button>
+      </mat-menu>
+    </div>
+
+    <!-- only shown when guest -->
+    <ng-template #guest>
+      <button mat-raised-button color="primary">Register</button>
+      <button mat-raised-button color="accent" routerLink="login">Login</button>
+    </ng-template>
 
   </mat-toolbar>
 

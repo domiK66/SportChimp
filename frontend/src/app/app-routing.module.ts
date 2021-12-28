@@ -6,6 +6,8 @@ import {ActivityListComponent} from "./activity-list/activity-list.component";
 import {ActivityFormComponent} from "./activity-form/activity-form.component";
 import {IndexComponent} from "./index/index.component";
 import {ActivityViewComponent} from "./activity-view/activity-view.component";
+import {LoginComponent} from "./login/login.component";
+import {AuthGuard} from "./auth.guard";
 
 const routes: Routes = [
   // index page
@@ -20,8 +22,11 @@ const routes: Routes = [
   //forms
   {path: 'sport-form', component: SportFormComponent },
   {path: 'sport-form/:id', component: SportFormComponent},
-  {path: 'activity-form', component: ActivityFormComponent },
-  {path: 'activity-form/:id', component: ActivityFormComponent },
+  {path: 'activity-form', component: ActivityFormComponent, canActivate: [AuthGuard] },
+  {path: 'activity-form/:id', component: ActivityFormComponent, canActivate: [AuthGuard] },
+
+  //login
+  {path: 'login', component: LoginComponent},
 
   //register
 

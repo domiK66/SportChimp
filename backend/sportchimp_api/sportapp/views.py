@@ -120,6 +120,26 @@ class ActivityViewSet(viewsets.ViewSet):
         except models.Activity.DoesNotExist:
             return Response({"error": "Activity does not exist"}, status=404)
 
+    # PUT http://127.0.0.1:8000/activites/id
+    def update(self, request, pk=None, format=None):
+        try:
+            activity = models.Activity.objects.get(pk=pk)
+            activity.title = request.data["title"]
+            activity.sport_genre = models.Sport.objects.get(id=request.data["sport_genre"])
+            activity.description = request.data["description"]
+            activity.date = request.data["date"]
+            activity.location = request.data["location"]
+            activity.is_public = request.data["is_public"]
+            activity.save()
+            return Response(
+                {
+
+                },
+                status=200
+            )
+        except models.Activity.DoesNotExist:
+            return Response(status=404)
+
 
 # TODO Comment:
 class CommentViewSet(viewsets.ViewSet):
@@ -185,4 +205,3 @@ class CommentViewSet(viewsets.ViewSet):
             },
             status=201
         )
-
