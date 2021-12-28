@@ -23,7 +23,7 @@ export class UserService {
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn = new BehaviorSubject(false);
   userId: string | null = ''
-  username: string = 'y'
+  username: string = ''
 
   constructor(
     private http: HttpClient,
@@ -72,6 +72,7 @@ export class UserService {
 
   logout(): void {
     localStorage.removeItem(this.accessTokenLocalStorageKey);
+    this.username = '';
     this.isLoggedIn.next(false);
     this.router.navigate(['/login']);
   }
