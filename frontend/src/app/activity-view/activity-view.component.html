@@ -27,7 +27,7 @@
         <mat-card class="activity-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>{{activity.created_by_user.username}}</mat-card-title>
+            <mat-card-title>{{activity.created_by_user?.username}}</mat-card-title>
             <mat-card-subtitle>{{activity.title}}</mat-card-subtitle>
             <mat-card-subtitle>{{activity.sport_genre.name}}</mat-card-subtitle>
             <mat-card-subtitle>{{activity.date}}</mat-card-subtitle>

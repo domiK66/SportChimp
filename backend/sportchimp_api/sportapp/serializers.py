@@ -24,3 +24,12 @@ class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Activity
         fields = '__all__'
+
+
+class ActivitySerializer2(serializers.ModelSerializer):
+    created_by_user = UserSerializer()
+    participants = UserSerializer(many=True)
+
+    class Meta:
+        model = models.Activity
+        fields = '__all__'

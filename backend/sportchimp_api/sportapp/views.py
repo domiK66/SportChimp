@@ -114,7 +114,7 @@ class ActivityViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None, format=None):
         try:
             activity = models.Activity.objects.get(pk=pk)
-            serializer = serializers.ActivitySerializer(activity)
+            serializer = serializers.ActivitySerializer2(activity)
             return Response(serializer.data, status=200)
 
         except models.Activity.DoesNotExist:

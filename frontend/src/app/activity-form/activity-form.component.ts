@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivityService} from "../services/activity.service";
 import {Sport, SportService} from "../services/sport.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-activity-form',
@@ -19,6 +20,7 @@ export class ActivityFormComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
+    private snackbar: MatSnackBar,
 
     private activityService: ActivityService,
     public sportService: SportService
@@ -47,10 +49,10 @@ export class ActivityFormComponent implements OnInit {
   createOrUpdateActivity() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.activityService.updateActivity(this.activityFormGroup.value).subscribe(() => { alert('Sport updated successfully!'); })
+      this.activityService.updateActivity(this.activityFormGroup.value).subscribe(() => this.snackbar.open('Activity updated successfully!', 'OK',{duration:3000}))
       this.router.navigate(['/activity-list']);
     } else {
-      this.activityService.createActivity(this.activityFormGroup.value).subscribe(() => { alert('Sport created successfully!'); })
+      this.activityService.createActivity(this.activityFormGroup.value).subscribe(() => this.snackbar.open('Activity created successfully!', 'OK',{duration:3000}))
       this.router.navigate(['/activity-list']);
     }
   }

@@ -5,6 +5,7 @@ import {AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErr
 import {SportService} from "../services/sport.service";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-sport-form',
@@ -20,7 +21,8 @@ export class SportFormComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private sportService: SportService
+    private sportService: SportService,
+    private snackbar: MatSnackBar
   ) {
     this.sportFormGroup = new FormGroup({
       id: new FormControl(null),
@@ -44,12 +46,12 @@ export class SportFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.sportService.updateSport(this.sportFormGroup.value).subscribe(() => {
-        alert('Sport updated successfully!');
+        this.snackbar.open('Sport updated successfully!', 'OK',{duration:3000})
       })
       this.router.navigate(['/sport-list']);
     } else {
       this.sportService.createSport(this.sportFormGroup.value).subscribe(() => {
-        alert('Sport created successfully!');
+        this.snackbar.open('Sport created successfully!', 'OK',{duration:3000})
       })
       this.router.navigate(['/sport-list']);
     }
