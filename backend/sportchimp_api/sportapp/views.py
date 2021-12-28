@@ -205,3 +205,26 @@ class CommentViewSet(viewsets.ViewSet):
             },
             status=201
         )
+
+
+
+
+from django.contrib.auth.models import User
+
+class UsersViewSet(viewsets.ViewSet):
+    # GET: http://127.0.0.1:8000/activities
+    def list(self, request, format=None):
+        queryset = User.objects.all()
+        serializer = serializers.UserSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
+    # GET: http://127.0.0.1:8000/users/pk
+    def retrieve(self, request, pk=None, format=None):
+            user = User.objects.get(pk=pk)
+            return Response(
+                {
+                    "id": user.id,
+                    "username": user.username
+                },
+                status=200
+            )

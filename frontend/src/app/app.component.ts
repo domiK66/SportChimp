@@ -8,7 +8,10 @@ import {UserService} from "./services/user.service";
 })
 export class AppComponent {
   title = 'frontend';
+  user = new Object
   constructor(public userService: UserService){
-
+    this.userService.getUser().subscribe(user => this.user = user)
   }
+
+
 }

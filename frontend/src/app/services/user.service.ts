@@ -4,6 +4,9 @@ import {Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Sport} from "./sport.service";
+import {SportChimpApiService} from "./sportchimp-api.service";
+import {stringify} from "@angular/compiler/src/util";
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +15,16 @@ export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn = new BehaviorSubject(false);
+  userId: number = 0
+  user: Object = new Object
+
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private jwtHelperService: JwtHelperService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private sportChimpApiService: SportChimpApiService
   ) {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
     if (token) {
@@ -25,6 +32,12 @@ export class UserService {
       const tokenValid = !this.jwtHelperService.isTokenExpired(token);
       this.isLoggedIn.next(tokenValid);
     }
+
+  }
+
+  getUser() {
+    let data = this.http.get(`${this.sportChimpApiService.base_url}/sports/${this.userId}/`)
+    return data;
   }
 
   login(userData: { username: string, password: string }): void {
@@ -32,6 +45,8 @@ export class UserService {
       .subscribe((res: any) => {
         this.isLoggedIn.next(true);
         localStorage.setItem('access_token', res.token);
+        localStorage.setItem('user_id', res.user_id);
+        this.userId = res.user_id
         this.router.navigate(['index']);
         this.snackbar.open('Successfully logged in', 'OK',{duration:3000});
       }, () => {
