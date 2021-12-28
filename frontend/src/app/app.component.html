@@ -7,6 +7,7 @@
     <span class="spacer"></span>
 
     <!-- only shown when logged in -->
+    <p>{{userService.username}}</p>
     <div *ngIf="userService.isLoggedIn | async; else guest">
       <button mat-icon-button [routerLink]="'/activity-form'">
         <mat-icon>add</mat-icon>

@@ -8,6 +8,13 @@ import {Sport} from "./sport.service";
 import {SportChimpApiService} from "./sportchimp-api.service";
 import {stringify} from "@angular/compiler/src/util";
 
+
+export interface User {
+  id: number;
+  username: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,9 +22,8 @@ export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn = new BehaviorSubject(false);
-  userId: number = 0
-  user: Object = new Object
-
+  userId: string | null = ''
+  username: string = 'y'
 
   constructor(
     private http: HttpClient,
@@ -36,7 +42,7 @@ export class UserService {
   }
 
   getUser() {
-    let data = this.http.get(`${this.sportChimpApiService.base_url}/sports/${this.userId}/`)
+    let data = this.http.get<User>(`${this.sportChimpApiService.base_url}/users/${this.userId}/`)
     return data;
   }
 
@@ -46,7 +52,17 @@ export class UserService {
         this.isLoggedIn.next(true);
         localStorage.setItem('access_token', res.token);
         localStorage.setItem('user_id', res.user_id);
-        this.userId = res.user_id
+        this.userId = localStorage.getItem("user_id");
+
+        // display username test :)))
+        let test = this.http.get<User>(`${this.sportChimpApiService.base_url}/users/${this.userId}/`).subscribe(
+          data =>  {
+            this.username = data.username;
+            console.log(data)
+            console.log(data.username)
+          }
+        )
+        console.log(test)
         this.router.navigate(['index']);
         this.snackbar.open('Successfully logged in', 'OK',{duration:3000});
       }, () => {
