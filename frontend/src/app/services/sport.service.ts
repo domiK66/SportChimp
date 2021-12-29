@@ -18,7 +18,7 @@ export class SportService {
     this.getSports().subscribe(sports => this.availableSports = sports);
   }
   getSports() {
-    return this.http.get<Sport[]>(`${this.sportChimpApiService.base_url}/sports/`);
+    return this.http.get<Sport[]>(`${this.sportChimpApiService.base_url}/sports/?order_by=name`);
   }
   getSport(id: string) {
     return this.http.get<Sport>(`${this.sportChimpApiService.base_url}/sports/${id}/`);

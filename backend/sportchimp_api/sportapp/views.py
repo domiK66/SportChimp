@@ -105,7 +105,8 @@ class ActivityViewSet(viewsets.ViewSet):
             is_public=request.data["is_public"],
             location=request.data["location"],
             # TODO: ?? idk if best practice
-            sport_genre=models.Sport.objects.get(id=request.data["sport_genre"])
+            sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
+            created_by_user=User.objects.get(id=request.data["created_by_user"])
         )
         serializer = serializers.ActivitySerializer(activity)
         return Response(serializer.data, status=200)
@@ -212,7 +213,7 @@ class CommentViewSet(viewsets.ViewSet):
 from django.contrib.auth.models import User
 
 class UsersViewSet(viewsets.ViewSet):
-    # GET: http://127.0.0.1:8000/activities
+    # GET: http://127.0.0.1:8000/users
     def list(self, request, format=None):
         queryset = User.objects.all()
         serializer = serializers.UserSerializer(queryset, many=True)
