@@ -208,12 +208,11 @@ class CommentViewSet(viewsets.ViewSet):
         )
 
 
-
-
 from django.contrib.auth.models import User
 
+
 class UsersViewSet(viewsets.ViewSet):
-    # GET: http://127.0.0.1:8000/users
+    # GET: http://127.0.0.1:8000/users/
     def list(self, request, format=None):
         queryset = User.objects.all()
         serializer = serializers.UserSerializer(queryset, many=True)
@@ -229,3 +228,17 @@ class UsersViewSet(viewsets.ViewSet):
                 },
                 status=200
             )
+    # POST: http://127.0.0.1:8000/users/
+    def create(self, request):
+        user = User.objects.create(
+            username=request.data["username"],
+        )
+        user.set_password(request.data["password"])
+        user.save()
+        return Response(
+            {
+                "id": user.id,
+                "username": user.username
+            },
+            status=201
+        )

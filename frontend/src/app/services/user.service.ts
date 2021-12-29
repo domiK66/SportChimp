@@ -5,6 +5,7 @@ import {BehaviorSubject} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SportChimpApiService} from "./sportchimp-api.service";
+import {Sport} from "./sport.service";
 
 
 export interface User {
@@ -43,15 +44,23 @@ export class UserService {
     this.getUserData();
   }
 
+  getUser(id: string) {
+    return this.http.get<User>(`${this.sportChimpApiService.base_url}/users/${id}/`);
+  }
+  createUser(user: User) {
+    return this.http.post<User>(`${this.sportChimpApiService.base_url}/users/`, user);
+  }
+
+
+  // XX
   getUserData(){
+
     const userIdString = localStorage.getItem(this.userIdLocalStorageKey)
     this.userId = parseFloat(<string>userIdString);
-    if (userIdString == null) {
-      this.user = {}
+    if (userIdString != null) {
+      this.getUser(userIdString).subscribe(data => this.user = data)
     } else {
-      this.http.get<User>(`${this.sportChimpApiService.base_url}/users/${this.userId}/`).subscribe(
-        data => this.user = data
-      )
+      this.user = {}
     }
   }
 
