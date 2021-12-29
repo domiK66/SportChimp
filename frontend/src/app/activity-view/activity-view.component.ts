@@ -3,9 +3,9 @@ import {Sport, SportService} from "../services/sport.service";
 import {Activity, ActivityService} from "../services/activity.service";
 import {Observable} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-import {filter, map, shareReplay} from "rxjs/operators";
-import {FormControl} from "@angular/forms";
-import {ActivatedRoute, Route} from "@angular/router";
+import {map, shareReplay} from "rxjs/operators";
+import { FormControl} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-activity-view',
@@ -18,32 +18,35 @@ export class ActivityViewComponent implements OnInit {
   sports: Sport[] = [];
 
   filteredActivities: Activity[] = [];
+
   searchFilterFormControl = new FormControl('');
   sportFilterFormControl = new FormControl('');
 
-  cols$: Observable<number> = this.breakpointObserver
-    .observe([Breakpoints.Small, Breakpoints.XSmall])
-    .pipe(
-      map((result) => {
-        if (result.breakpoints[Breakpoints.XSmall]) {
-          return 1;
-        } else if (result.breakpoints[Breakpoints.Small]) {
-          return 2;
-        } else {
-          return 3;
-        }
-      }),
-      shareReplay()
-    );
+  curPage = 1;
+  pageSize = 6;
+  pageSizeOptions = [3, 6, 12, 24, 32];
+
+  pageSizeFormControl = new FormControl(this.pageSize);
+
+  cols$: Observable<number> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]).pipe(map((result) => {
+    if (result.breakpoints[Breakpoints.XSmall]) {
+      return 1;
+    } else if (result.breakpoints[Breakpoints.Small]) {
+      return 2;
+    } else {
+      return 3;
+    }
+  }), shareReplay());
 
   constructor(
     private sportService: SportService,
     private activityService: ActivityService,
     private breakpointObserver: BreakpointObserver,
-    private route: ActivatedRoute,
-  )
-  {
+    private route: ActivatedRoute
+  ) { }
 
+  numberOfPages(){
+    return Math.ceil(this.filteredActivities.length / this.pageSize);
   }
 
   ngOnInit(): void {
@@ -61,20 +64,24 @@ export class ActivityViewComponent implements OnInit {
 
     this.searchFilterFormControl.valueChanges.subscribe(value => this.searchFilter(value));
     this.route.paramMap.subscribe(params => this.searchFilterFormControl.setValue(params.get('filter')) );
+
+    this.pageSizeFormControl.valueChanges.subscribe(value => this.pageSize = value);
+
   }
 
   searchFilter(filterValue: string) {
     this.filteredActivities = this.activities.filter(a => {
-        return !filterValue || a.title.toLowerCase().includes(filterValue.toLowerCase())
-      }
-    );
+      return !filterValue || a.title.toLowerCase().includes(filterValue.toLowerCase())
+    });
+    this.numberOfPages();
   }
+
   sportFilter(filterValue: []) {
     this.filteredActivities = this.activities.filter((el) => {
       return filterValue.some((f) => {
         return !filterValue || f === el.sport_genre.name;
-      });
+      })
     });
+    this.numberOfPages();
   }
-
 }

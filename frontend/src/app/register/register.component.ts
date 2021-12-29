@@ -42,16 +42,17 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   createUser() {
     this.userService.createUser(this.registerFormGroup.value).subscribe(() => {
-      let userData = {
-        username: this.registerFormGroup.value.username,
-        password: this.registerFormGroup.value.password,
-      }
-      this.userService.login(userData)
-      this.snackbar.open('yx!', 'OK',{duration:3000})
+        this.snackbar.open('registered!', 'OK', {duration: 3000})
+        let userData = {
+          username: this.registerFormGroup.value.username,
+          password: this.registerFormGroup.value.password,
+        }
+        this.userService.login(userData)
       }
     )
     this.router.navigate(['/index']);

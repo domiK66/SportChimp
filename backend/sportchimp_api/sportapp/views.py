@@ -7,7 +7,10 @@ from datetime import datetime
 from . import serializers
 from . import models
 
+from django.contrib.auth.models import User
 
+
+# Sport:
 class SportViewSet(viewsets.ViewSet):
     # GET: http://127.0.0.1:8000/sports/
     def list(self, request, format=None):
@@ -81,8 +84,9 @@ class SportViewSet(viewsets.ViewSet):
         return Response(status=204)
 
 
-# TODO Activity:
+# Activity:
 class ActivityViewSet(viewsets.ViewSet):
+
     # GET: http://127.0.0.1:8000/activities
     def list(self, request, format=None):
         queryset = models.Activity.objects.all()
@@ -97,6 +101,7 @@ class ActivityViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=200)
 
     # POST http://127.0.0.1:8000/activities/
+    # ALLOW ONLY WHEN LOGGEND IN:
     def create(self, request, format=None):
         activity = models.Activity.objects.create(
             title=request.data["title"],
@@ -104,6 +109,7 @@ class ActivityViewSet(viewsets.ViewSet):
             date=request.data["date"],
             is_public=request.data["is_public"],
             location=request.data["location"],
+
             # TODO: ?? idk if best practice
             sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
             created_by_user=User.objects.get(id=request.data["created_by_user"])
@@ -122,6 +128,7 @@ class ActivityViewSet(viewsets.ViewSet):
             return Response({"error": "Activity does not exist"}, status=404)
 
     # PUT http://127.0.0.1:8000/activites/id
+    # ALLOW ONLY WHEN LOGGEND IN AND THE USER WHO CREATED IT
     def update(self, request, pk=None, format=None):
         try:
             activity = models.Activity.objects.get(pk=pk)
@@ -142,7 +149,7 @@ class ActivityViewSet(viewsets.ViewSet):
             return Response(status=404)
 
 
-# TODO Comment:
+# TODO: Comment:
 class CommentViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -208,10 +215,9 @@ class CommentViewSet(viewsets.ViewSet):
         )
 
 
-from django.contrib.auth.models import User
-
-
+# TODO: User
 class UsersViewSet(viewsets.ViewSet):
+
     # GET: http://127.0.0.1:8000/users/
     def list(self, request, format=None):
         queryset = User.objects.all()
@@ -220,14 +226,15 @@ class UsersViewSet(viewsets.ViewSet):
 
     # GET: http://127.0.0.1:8000/users/pk
     def retrieve(self, request, pk=None, format=None):
-            user = User.objects.get(pk=pk)
-            return Response(
-                {
-                    "id": user.id,
-                    "username": user.username
-                },
-                status=200
-            )
+        user = User.objects.get(pk=pk)
+        return Response(
+            {
+                "id": user.id,
+                "username": user.username
+            },
+            status=200
+        )
+
     # POST: http://127.0.0.1:8000/users/
     def create(self, request):
         user = User.objects.create(

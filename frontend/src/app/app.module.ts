@@ -32,6 +32,9 @@ import {JwtModule} from "@auth0/angular-jwt";
 import { LoginComponent } from './login/login.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token')
@@ -48,7 +51,9 @@ export function tokenGetter() {
     ActivityViewComponent,
     DateComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+
   ],
   imports: [
     JwtModule.forRoot({config: {tokenGetter: tokenGetter}}),
@@ -78,7 +83,9 @@ export function tokenGetter() {
     MatDatepickerModule,
     MatNativeDateModule,
 
-    MatSnackBarModule
+    MatSnackBarModule,
+
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

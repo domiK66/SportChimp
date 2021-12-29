@@ -12,7 +12,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ActivityListComponent implements OnInit {
 
-  displayedColumns = ['id', 'title', 'description', 'date', 'location', 'is_public', 'sport_genre', 'created_by_user', 'participants', 'edit', 'view'];
+  displayedColumns = ['id', 'title', 'sport_genre', 'date', 'location', 'is_public', 'created_by_user', 'participants', 'edit', 'view'];
   activities: Activity[] = [];
   filteredActivities: Activity[] = [];
   filterFormControl = new FormControl('');

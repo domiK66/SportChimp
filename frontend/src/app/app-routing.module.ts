@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import {AuthGuard} from "./auth.guard";
+
 import {SportListComponent} from "./sport-list/sport-list.component";
 import {SportFormComponent} from "./sport-form/sport-form.component";
 import {ActivityListComponent} from "./activity-list/activity-list.component";
@@ -7,8 +10,8 @@ import {ActivityFormComponent} from "./activity-form/activity-form.component";
 import {IndexComponent} from "./index/index.component";
 import {ActivityViewComponent} from "./activity-view/activity-view.component";
 import {LoginComponent} from "./login/login.component";
-import {AuthGuard} from "./auth.guard";
 import {RegisterComponent} from "./register/register.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   // index page
@@ -31,6 +34,9 @@ const routes: Routes = [
 
   //register
   {path: 'register', component: RegisterComponent},
+
+  //profile
+  {path: 'profile', component: ProfileComponent},
 
   //activity views
   {path: 'activity-view', component: ActivityViewComponent },

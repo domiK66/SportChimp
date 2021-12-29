@@ -20,7 +20,7 @@
         <mat-icon>account_box</mat-icon>
       </button>
       <mat-menu #userMenu="matMenu" xPosition="before">
-        <button mat-menu-item>Profile</button>
+        <button mat-menu-item routerLink="profile">Profile</button>
         <button mat-menu-item>My friends</button>
         <button mat-menu-item>My Account Settings</button>
         <button mat-menu-item (click)="userService.logout()">Log out</button>

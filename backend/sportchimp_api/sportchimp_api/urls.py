@@ -26,12 +26,14 @@ from rest_framework_jwt.views import obtain_jwt_token, ObtainJSONWebToken
 from django.contrib.auth.models import User
 
 
+# POST: http://127.0.0.1:8000/api-token-auth/
 class CustomObtainJSONWebToken(ObtainJSONWebToken):
     def post(self, request, *args, **kwargs):
         try:
             if "username" not in request.data or "password" not in request.data:
                 raise AuthenticationFailed("invalid Data")
 
+            # magic happens here
             user = User.objects.get(username=request.data["username"])
             response = super().post(request, *args, kwargs)
             response.data.update({'user_id': user.id})

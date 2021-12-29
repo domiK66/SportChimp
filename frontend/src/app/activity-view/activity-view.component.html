@@ -21,8 +21,8 @@
 
 
 <div class="activities">
-  <mat-grid-list [cols]="cols$ | async" rowHeight="1:2" gutterSize="10px" >
-    <div *ngFor="let activity of filteredActivities; let i=index">
+  <mat-grid-list [cols]="cols$ | async" rowHeight="627:305" gutterSize="10px" >
+    <div *ngFor="let activity of filteredActivities | slice: (curPage * pageSize) - pageSize :curPage * pageSize; let i=index">
       <mat-grid-tile class="">
         <mat-card class="activity-card">
           <mat-card-header>
@@ -50,4 +50,15 @@
       </mat-grid-tile>
     </div>
   </mat-grid-list>
+</div>
+
+<div class="pagination">
+  <mat-form-field>
+    <mat-select [formControl]="pageSizeFormControl" placeholder="Items per Page">
+      <mat-option *ngFor="let item of pageSizeOptions" [value]="item">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-flat-button [disabled] ="curPage == 1" (click)="curPage = curPage - 1">PREV</button>
+  <span> Page {{curPage}} of {{ numberOfPages() }} </span>
+  <button mat-flat-button [disabled] = "curPage >= filteredActivities.length/pageSize" (click) ="curPage = curPage + 1">NEXT</button>
 </div>
