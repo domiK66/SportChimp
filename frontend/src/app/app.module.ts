@@ -31,6 +31,7 @@ import {DateComponent} from "./date/date.component";
 import {JwtModule} from "@auth0/angular-jwt";
 import { LoginComponent } from './login/login.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { RegisterComponent } from './register/register.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token')
@@ -46,7 +47,8 @@ export function tokenGetter() {
     IndexComponent,
     ActivityViewComponent,
     DateComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     JwtModule.forRoot({config: {tokenGetter: tokenGetter}}),

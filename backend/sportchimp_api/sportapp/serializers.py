@@ -27,7 +27,6 @@ class ActivitySerializer(serializers.ModelSerializer):
 
 
 class ActivitySerializer2(serializers.ModelSerializer):
-    created_by_user = UserSerializer()
     participants = UserSerializer(many=True)
 
     class Meta:

@@ -15,12 +15,42 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_jwt.views import obtain_jwt_token
+
+from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework import status
 
 from sportapp.urls import router
 
+from rest_framework_jwt.views import obtain_jwt_token, ObtainJSONWebToken
+from django.contrib.auth.models import User
+
+
+class CustomObtainJSONWebToken(ObtainJSONWebToken):
+    def post(self, request, *args, **kwargs):
+        try:
+            if "username" not in request.data or "password" not in request.data:
+                raise AuthenticationFailed("invalid Data")
+
+            user = User.objects.get(username=request.data["username"])
+            response = super().post(request, *args, kwargs)
+            response.data.update({'user_id': user.id})
+            return response
+
+        except User.DoesNotExist:
+            return Response(
+                'Wrong credentials',
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        except AuthenticationFailed as error:
+            return Response(
+                error.detail,
+                status=error.status_code
+            )
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-token-auth/', obtain_jwt_token),
+    path('api-token-auth/', CustomObtainJSONWebToken.as_view()),
     path('', include(router.urls))
 ]

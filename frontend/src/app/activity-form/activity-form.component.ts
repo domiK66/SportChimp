@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ActivityService} from "../services/activity.service";
 import {Sport, SportService} from "../services/sport.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-activity-form',
@@ -23,7 +24,8 @@ export class ActivityFormComponent implements OnInit {
     private snackbar: MatSnackBar,
 
     private activityService: ActivityService,
-    public sportService: SportService
+    public sportService: SportService,
+    public userService: UserService
 
   ) {
     this.activityFormGroup = new FormGroup({
@@ -33,7 +35,8 @@ export class ActivityFormComponent implements OnInit {
       description: new FormControl(''),
       date: new FormControl(new Date()),
       location: new FormControl(''),
-      is_public: new FormControl(false)
+      is_public: new FormControl(false),
+      created_by_user: new FormControl(userService.userId)
       }
     )
   }

@@ -8,6 +8,7 @@ import {IndexComponent} from "./index/index.component";
 import {ActivityViewComponent} from "./activity-view/activity-view.component";
 import {LoginComponent} from "./login/login.component";
 import {AuthGuard} from "./auth.guard";
+import {RegisterComponent} from "./register/register.component";
 
 const routes: Routes = [
   // index page
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
 
   //register
+  {path: 'register', component: RegisterComponent},
 
   //activity views
   {path: 'activity-view', component: ActivityViewComponent },

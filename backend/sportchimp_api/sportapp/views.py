@@ -105,7 +105,8 @@ class ActivityViewSet(viewsets.ViewSet):
             is_public=request.data["is_public"],
             location=request.data["location"],
             # TODO: ?? idk if best practice
-            sport_genre=models.Sport.objects.get(id=request.data["sport_genre"])
+            sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
+            created_by_user=User.objects.get(id=request.data["created_by_user"])
         )
         serializer = serializers.ActivitySerializer(activity)
         return Response(serializer.data, status=200)
@@ -202,6 +203,42 @@ class CommentViewSet(viewsets.ViewSet):
             {
                 "pk": comment.pk,
                 "text": comment.text
+            },
+            status=201
+        )
+
+
+from django.contrib.auth.models import User
+
+
+class UsersViewSet(viewsets.ViewSet):
+    # GET: http://127.0.0.1:8000/users/
+    def list(self, request, format=None):
+        queryset = User.objects.all()
+        serializer = serializers.UserSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
+    # GET: http://127.0.0.1:8000/users/pk
+    def retrieve(self, request, pk=None, format=None):
+            user = User.objects.get(pk=pk)
+            return Response(
+                {
+                    "id": user.id,
+                    "username": user.username
+                },
+                status=200
+            )
+    # POST: http://127.0.0.1:8000/users/
+    def create(self, request):
+        user = User.objects.create(
+            username=request.data["username"],
+        )
+        user.set_password(request.data["password"])
+        user.save()
+        return Response(
+            {
+                "id": user.id,
+                "username": user.username
             },
             status=201
         )
