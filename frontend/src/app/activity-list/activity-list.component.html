@@ -1,7 +1,9 @@
-<button mat-raised-button color="accent" [routerLink]="'/activity-form/'">Create Activity</button>
-<mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-icon matPrefix>search</mat-icon>
   <input matInput type="text" [formControl]="filterFormControl" placeholder="Search activities"/>
 </mat-form-field>
+
+<button mat-stroked-button color="accent" [routerLink]="'/activity-form/'">Create Activity</button>
 
 <table mat-table style="width: 100%" [dataSource]="filteredActivities" matSort class="mat-elevation-z8">
 

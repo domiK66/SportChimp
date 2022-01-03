@@ -1,12 +1,24 @@
 <form [formGroup]="registerFormGroup" (ngSubmit)="createUser()" class="register-form__form">
   <mat-card class="login-card">
-    <mat-form-field>
-      <input matInput type="text" placeholder="Username" formControlName="username">
+
+    <mat-card-header>
+
+    <mat-card-title>
+      <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
+      <a [routerLink]="'/'" style="color: white"><span> SportChimp</span></a>
+      /Register</mat-card-title>
+      <mat-card-subtitle>{{this.users}} Users already have already registered at sportchimp.xyz.</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content style="display: flex; flex-direction: column">
+
+      <mat-form-field appearance="outline">
+      <input matInput type="text" placeholder="Username" formControlName="username" required>
       <mat-hint align="end">Your username</mat-hint>
     </mat-form-field>
 
-    <mat-form-field>
-      <input matInput type="password" placeholder="Password" formControlName="password">
+      <mat-form-field appearance="outline">
+      <input matInput type="password" placeholder="Password" formControlName="password" required>
       <mat-hint align="end">Your password</mat-hint>
       <mat-error *ngIf="registerFormGroup.controls.password.hasError('required')">
       Title is required
@@ -17,17 +29,19 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-      <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+      <mat-form-field appearance="outline">
+      <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
       <mat-hint align="end">Confirm password</mat-hint>
     </mat-form-field>
 
     <p
     *ngIf="registerFormGroup.hasError('notSame')">Passwords do not match.
     </p>
+    </mat-card-content>
 
     <mat-card-actions align="start">
       <button mat-raised-button color="primary" [disabled]="!registerFormGroup.valid">{{submitButtonText}}</button>
     </mat-card-actions>
+
   </mat-card>
 </form>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {UserService} from "../services/user.service";
+import {User, UserService} from "../services/user.service";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
 
   registerFormGroup: FormGroup;
   submitButtonText = 'Register';
+  users: number = 0;
 
   constructor(
     public userService: UserService,
@@ -42,7 +43,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.userService.getUsers().subscribe(users => this.users = users.length)
   }
 
   createUser() {

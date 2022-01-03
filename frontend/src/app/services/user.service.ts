@@ -48,6 +48,9 @@ export class UserService {
   getUser(id: string) {
     return this.http.get<User>(`${this.sportChimpApiService.base_url}/users/${id}/`);
   }
+  getUsers() {
+    return this.http.get<User[]>(`${this.sportChimpApiService.base_url}/users/`);
+  }
   createUser(user: User) {
     return this.http.post<User>(`${this.sportChimpApiService.base_url}/users/`, user);
   }

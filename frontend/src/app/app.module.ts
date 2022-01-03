@@ -34,6 +34,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 export function tokenGetter() {
@@ -85,7 +86,8 @@ export function tokenGetter() {
 
     MatSnackBarModule,
 
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatBadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
