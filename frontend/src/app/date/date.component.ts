@@ -53,7 +53,7 @@ export class DateComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any): void {
-    this.date.patchValue(obj, {emitEvent: false});
+    //this.date.patchValue(obj, {emitEvent: false});
   }
 
   hasError(errorName: string) {
