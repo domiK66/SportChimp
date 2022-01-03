@@ -5,9 +5,6 @@ import {BehaviorSubject} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SportChimpApiService} from "./sportchimp-api.service";
-import {Sport} from "./sport.service";
-import {AppComponent} from "../app.component";
-
 
 export interface User {
   id: number;
@@ -40,8 +37,19 @@ export class UserService {
       this.isLoggedIn.next(tokenValid);
     }
 
+    this.start();
     this.getUserData();
 
+  }
+
+  private start(): void {
+    window.addEventListener("storage", this.storageEventListener.bind(this));
+  }
+  // EventListener to prevent user from changing anything in the local storage. (security reasons -> user would be able to change user_id)
+  private storageEventListener(event: StorageEvent) {
+    if (event.storageArea == localStorage && event.newValue != event.oldValue) {
+        this.logout();
+    }
   }
 
   // API
@@ -55,8 +63,6 @@ export class UserService {
     return this.http.post<User>(`${this.sportChimpApiService.base_url}/users/`, user);
   }
 
-
-  // XX
   getUserData(){
     const userIdString = localStorage.getItem(this.userIdLocalStorageKey)
     this.userId = parseFloat(<string>userIdString);
