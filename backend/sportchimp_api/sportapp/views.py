@@ -230,7 +230,10 @@ class UsersViewSet(viewsets.ViewSet):
         return Response(
             {
                 "id": user.id,
-                "username": user.username
+                "username": user.username,
+                "email": user.email,
+                "first_name": user.first_name,
+                "last_name": user.last_name
             },
             status=200
         )
@@ -239,13 +242,19 @@ class UsersViewSet(viewsets.ViewSet):
     def create(self, request):
         user = User.objects.create(
             username=request.data["username"],
+            email=request.data["email"],
+            first_name=request.data["first_name"],
+            last_name=request.data["last_name"]
         )
         user.set_password(request.data["password"])
         user.save()
         return Response(
             {
                 "id": user.id,
-                "username": user.username
+                "username": user.username,
+                "email": user.email,
+                "first_name": user.first_name,
+                "last_name": user.last_name
             },
             status=201
         )
