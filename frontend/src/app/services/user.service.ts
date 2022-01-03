@@ -6,6 +6,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SportChimpApiService} from "./sportchimp-api.service";
 import {Sport} from "./sport.service";
+import {AppComponent} from "../app.component";
 
 
 export interface User {
@@ -13,10 +14,7 @@ export interface User {
   username: string;
 }
 
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
@@ -41,11 +39,17 @@ export class UserService {
       const tokenValid = !this.jwtHelperService.isTokenExpired(token);
       this.isLoggedIn.next(tokenValid);
     }
+
     this.getUserData();
+
   }
 
+  // API
   getUser(id: string) {
     return this.http.get<User>(`${this.sportChimpApiService.base_url}/users/${id}/`);
+  }
+  getUsers() {
+    return this.http.get<User[]>(`${this.sportChimpApiService.base_url}/users/`);
   }
   createUser(user: User) {
     return this.http.post<User>(`${this.sportChimpApiService.base_url}/users/`, user);
@@ -54,7 +58,6 @@ export class UserService {
 
   // XX
   getUserData(){
-
     const userIdString = localStorage.getItem(this.userIdLocalStorageKey)
     this.userId = parseFloat(<string>userIdString);
     if (userIdString != null) {
@@ -65,7 +68,7 @@ export class UserService {
   }
 
   login(userData: { username: string, password: string }): void {
-    this.http.post('/api/api-token-auth/', userData)
+    this.http.post(`${this.sportChimpApiService.base_url}/api-token-auth/`, userData)
       .subscribe((res: any) => {
         this.isLoggedIn.next(true);
         localStorage.setItem('access_token', res.token);
@@ -88,6 +91,7 @@ export class UserService {
     localStorage.removeItem(this.userIdLocalStorageKey);
 
     this.getUserData();
+
 
     this.snackbar.open('Successfully logged out', 'OK',{duration:3000});
     this.router.navigate(['/index']);

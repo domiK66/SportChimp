@@ -52,7 +52,7 @@ class Profile(models.Model):
     pass
 
 
+# TODO OWN USER MODEL
 class UserX(models.Model):
-    # TODO: haha shesh
     pass
 
