@@ -53,6 +53,6 @@ class CustomObtainJSONWebToken(ObtainJSONWebToken):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-token-auth/', CustomObtainJSONWebToken.as_view()),
+    path('api-token-auth/', obtain_jwt_token),
     path('', include(router.urls))
 ]

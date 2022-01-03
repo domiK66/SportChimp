@@ -12,6 +12,7 @@ import {ActivityViewComponent} from "./activity-view/activity-view.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {AdminGuard} from "./admin.guard";
 
 const routes: Routes = [
   // index page
@@ -19,7 +20,7 @@ const routes: Routes = [
   {path: 'index', component: IndexComponent },
 
   //admin
-  {path: 'sport-list', component: SportListComponent },
+  {path: 'sport-list', component: SportListComponent, canActivate: [AdminGuard]},
   {path: 'activity-list', component: ActivityListComponent },
   {path: 'activity-list:filter', component: ActivityListComponent},
 
