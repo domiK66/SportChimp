@@ -1,46 +1,76 @@
-<form [formGroup]="registerFormGroup" (ngSubmit)="createUser()" class="register-form__form">
+<form (ngSubmit)="createUser()" [formGroup]="registerFormGroup" class="register-form__form">
   <mat-card class="login-card">
 
     <mat-card-header>
 
-    <mat-card-title>
-      <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
-      <a [routerLink]="'/'" style="color: white"><span> SportChimp</span></a>
-      /Register</mat-card-title>
+      <mat-card-title>
+        <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
+        <a [routerLink]="'/'" style="color: white"><span> SportChimp</span></a>
+        /Register
+      </mat-card-title>
       <mat-card-subtitle>{{this.users}} Users already have already registered at sportchimp.xyz.</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content style="display: flex; flex-direction: column">
 
+      <!-- Username -->
       <mat-form-field appearance="outline">
-      <input matInput type="text" placeholder="Username" formControlName="username" required>
-      <mat-hint align="end">Your username</mat-hint>
-    </mat-form-field>
+        <mat-label>Username</mat-label>
+        <input formControlName="username" matInput placeholder="Username" required type="text">
+        <mat-hint align="end">Your username</mat-hint>
+      </mat-form-field>
 
+      <!-- Email -->
       <mat-form-field appearance="outline">
-      <input matInput type="password" placeholder="Password" formControlName="password" required>
-      <mat-hint align="end">Your password</mat-hint>
-      <mat-error *ngIf="registerFormGroup.controls.password.hasError('required')">
-      Title is required
-      </mat-error>
-      <mat-error
-        *ngIf="registerFormGroup.controls.password.hasError('notSame')">
-        not same
-      </mat-error>
-    </mat-form-field>
+        <mat-label>Email</mat-label>
+        <input formControlName="email" required matInput placeholder="Email" type="email">
+        <mat-hint align="end">Your e-mail</mat-hint>
+      </mat-form-field>
 
+      <!-- Firstname -->
       <mat-form-field appearance="outline">
-      <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
-      <mat-hint align="end">Confirm password</mat-hint>
-    </mat-form-field>
+        <mat-label>Firstname</mat-label>
+        <input formControlName="first_name" matInput placeholder="Firstname" type="text">
+        <mat-hint align="end">Your firstname</mat-hint>
+      </mat-form-field>
 
-    <p
-    *ngIf="registerFormGroup.hasError('notSame')">Passwords do not match.
-    </p>
+      <!-- Lastname -->
+      <mat-form-field appearance="outline">
+        <mat-label>Lastname</mat-label>
+        <input formControlName="last_name" matInput placeholder="Lastname" type="text">
+        <mat-hint align="end">Your lastname</mat-hint>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" matInput required placeholder="Password" [type]="showPassword ? 'text' : 'password'">
+        <mat-icon matSuffix (click)="togglePasswordVisibility()">{{showPassword?'visibility':'visibility_off'}}</mat-icon>
+        <mat-hint align="end">Your password</mat-hint>
+        <mat-error *ngIf="registerFormGroup.controls.password.hasError('required')">
+          Title is required
+        </mat-error>
+        <mat-error
+          *ngIf="registerFormGroup.controls.password.hasError('notSame')">
+          not same
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Confirm Password -->
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input formControlName="confirmPassword" matInput placeholder="Confirm Password" required [type]="showPassword ? 'text' : 'password'">
+        <mat-hint align="end">Confirm password</mat-hint>
+      </mat-form-field>
+
+      <p
+        *ngIf="registerFormGroup.hasError('notSame')">Passwords do not match.
+      </p>
     </mat-card-content>
 
+    <!-- Submit Button -->
     <mat-card-actions align="start">
-      <button mat-raised-button color="primary" [disabled]="!registerFormGroup.valid">{{submitButtonText}}</button>
+      <button [disabled]="!registerFormGroup.valid" color="primary" mat-raised-button>{{submitButtonText}}</button>
     </mat-card-actions>
 
   </mat-card>
