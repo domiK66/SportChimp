@@ -246,9 +246,11 @@ class UsersViewSet(viewsets.ViewSet):
         user = User.objects.create(
             username=request.data["username"],
             email=request.data["email"],
-            first_name=request.data["first_name"],
-            last_name=request.data["last_name"]
         )
+        if request.data["first_name"] is not None:
+            user.first_name = request.data["first_name"]
+        elif request.data["last_name"] is not None:
+            user.last_name = request.data["last_name"]
         user.set_password(request.data["password"])
         user.save()
         return Response(
