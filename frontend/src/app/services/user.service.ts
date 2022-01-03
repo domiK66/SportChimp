@@ -18,6 +18,7 @@ export class UserService {
   readonly userIdLocalStorageKey = 'user_id';
 
   isLoggedIn = new BehaviorSubject(false);
+  isAdmin = new BehaviorSubject(false);
 
   userId: number | null = 1
   user: User | any = {}
@@ -65,6 +66,7 @@ export class UserService {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
     const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
     this.userId = decodedToken?.user_id;
+    this.hasAdminPermission()
     console.log(this.userId)
     if (this.userId != null) {
       this.getUser(this.userId).subscribe(data => this.user = data)
@@ -105,6 +107,11 @@ export class UserService {
       return permission in permissions;
     }
     return false
+  }
+  hasAdminPermission() {
+    if (this.hasPermission('sportapp.add_sport')) {
+      this.isAdmin.next(true);
+    }
   }
 
 }
