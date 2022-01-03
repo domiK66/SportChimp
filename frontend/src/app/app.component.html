@@ -45,23 +45,24 @@
 
   <mat-drawer #drawer class="sidenav" mode="side">
     <mat-nav-list>
-      <div mat-subheader style="color: #000">Admin Dashboard *secret*</div>
-      <a mat-list-item style="color: #000" [routerLink]="'/sport-list/'"> Sports </a>
-      <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"> Activities </a>
-      <mat-divider style="border-top-color: #000;border-width: 4px"></mat-divider>
-      <div mat-subheader style="color: #000">User Dashboard</div>
-      <a mat-list-item style="background-color: #7b1fa2" [routerLink]="'/activity-view/'"><mat-icon aria-hidden="false">emoji_events</mat-icon><mat-icon aria-hidden="false">search</mat-icon> Find Activities </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">event_available</mat-icon> Attending Activities </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"> My Own Activities </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">favorite</mat-icon> My Saved Activities </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">group_add</mat-icon> Find Friends </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">event</mat-icon> Friends Activities</a>
-
+      <div *ngIf="userService.hasPermission('sportapp.add_sport')">
+        <div mat-subheader style="color: #000">Admin Dashboard *secret*</div>
+        <a mat-list-item style="color: #000" [routerLink]="'/sport-list/'"> Sports </a>
+        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"> Activities </a>
+        <mat-divider style="border-top-color: #000;border-width: 4px"></mat-divider>
+        <div mat-subheader style="color: #000">User Dashboard</div>
+      </div>
+        <a mat-list-item style="background-color: #7b1fa2" [routerLink]="'/activity-view/'"><mat-icon aria-hidden="false">emoji_events</mat-icon><mat-icon aria-hidden="false">search</mat-icon> Find Activities </a>
+        <mat-divider style="border-top-color: #000"></mat-divider>
+        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">event_available</mat-icon> Attending Activities </a>
+        <mat-divider style="border-top-color: #000"></mat-divider>
+        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"> My Own Activities </a>
+        <mat-divider style="border-top-color: #000"></mat-divider>
+        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">favorite</mat-icon> My Saved Activities </a>
+        <mat-divider style="border-top-color: #000"></mat-divider>
+        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">group_add</mat-icon> Find Friends </a>
+        <mat-divider style="border-top-color: #000"></mat-divider>
+        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">event</mat-icon> Friends Activities</a>
     </mat-nav-list>
   </mat-drawer>
 

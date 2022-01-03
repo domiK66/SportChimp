@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import user_passes_test
 from rest_framework import viewsets
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework import permissions
 
@@ -27,18 +29,19 @@ class SportViewSet(viewsets.ViewSet):
 
     # POST http://127.0.0.1:8000/sports/
     def create(self, request, format=None):
-        sport = models.Sport.objects.create(
-            name=request.data["name"],
-            description=request.data["description"]
-        )
-        return Response(
-            {
-                "id": sport.pk,
-                "name": sport.name,
-                "description": sport.description
-            },
-            status=201
-        )
+        if request.user.is_superuser:
+            sport = models.Sport.objects.create(
+                name=request.data["name"],
+                description=request.data["description"]
+            )
+            return Response(
+                {
+                    "id": sport.pk,
+                    "name": sport.name,
+                    "description": sport.description
+                },
+                status=201
+            )
 
     # GET: http://127.0.0.1:8000/sports/id
     def retrieve(self, request, pk=None, format=None):

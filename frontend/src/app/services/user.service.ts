@@ -19,7 +19,7 @@ export class UserService {
 
   isLoggedIn = new BehaviorSubject(false);
 
-  userId: number = 0
+  userId: number | null = 1
   user: User | any = {}
 
   constructor(
@@ -36,10 +36,8 @@ export class UserService {
       const tokenValid = !this.jwtHelperService.isTokenExpired(token);
       this.isLoggedIn.next(tokenValid);
     }
-
     this.start();
     this.getUserData();
-
   }
 
   private start(): void {
@@ -53,7 +51,7 @@ export class UserService {
   }
 
   // API
-  getUser(id: string) {
+  getUser(id: number) {
     return this.http.get<User>(`${this.sportChimpApiService.base_url}/users/${id}/`);
   }
   getUsers() {
@@ -64,10 +62,12 @@ export class UserService {
   }
 
   getUserData(){
-    const userIdString = localStorage.getItem(this.userIdLocalStorageKey)
-    this.userId = parseFloat(<string>userIdString);
-    if (userIdString != null) {
-      this.getUser(userIdString).subscribe(data => this.user = data)
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+    this.userId = decodedToken?.user_id;
+    console.log(this.userId)
+    if (this.userId != null) {
+      this.getUser(this.userId).subscribe(data => this.user = data)
     } else {
       this.user = {}
     }
@@ -78,10 +78,7 @@ export class UserService {
       .subscribe((res: any) => {
         this.isLoggedIn.next(true);
         localStorage.setItem('access_token', res.token);
-        localStorage.setItem('user_id', res.user_id);
-
-        this.getUserData();
-
+        this.getUserData()
 
         this.snackbar.open('Successfully logged in', 'OK',{duration:3000});
         this.router.navigate(['/index']);
@@ -94,13 +91,20 @@ export class UserService {
   logout(): void {
     this.isLoggedIn.next(false);
     localStorage.removeItem(this.accessTokenLocalStorageKey);
-    localStorage.removeItem(this.userIdLocalStorageKey);
-
-    this.getUserData();
-
+    this.userId = null
+    this.getUserData()
 
     this.snackbar.open('Successfully logged out', 'OK',{duration:3000});
     this.router.navigate(['/index']);
+  }
+  hasPermission(permission:string): boolean {
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    const decodedToken = this.jwtHelperService.decodeToken(token ? token : '');
+    const permissions = decodedToken?.permissions;
+    if (permissions != undefined) {
+      return permission in permissions;
+    }
+    return false
   }
 
 }
