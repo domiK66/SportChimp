@@ -26,13 +26,14 @@ python -m venv venv
 ```python 
 venv\Scripts\activate.bat
 ```
-- Activate the virtual envirmonent: venv (Linux)
-Todo:
-
+- Activate the virtual envirmonent: venv (Linux/Mac)
+```python
+(venv) lukas@MacBook-Pro-Lukas backend % source venv/bin/activate  
+```
 ### PYTHON DJNAGO DEPENDECIES
-- Install Django latest
+- Install Django version 3.2.10
 ```python 
-pip install django
+pip install django==3.2.10
 ```
 - Install rest_framework and security
 ```python 
