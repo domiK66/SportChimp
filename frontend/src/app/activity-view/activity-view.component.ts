@@ -73,15 +73,23 @@ export class ActivityViewComponent implements OnInit {
     this.filteredActivities = this.activities.filter(a => {
       return !filterValue || a.title.toLowerCase().includes(filterValue.toLowerCase())
     });
+    this.curPage = 1;
     this.numberOfPages();
   }
 
   sportFilter(filterValue: []) {
-    this.filteredActivities = this.activities.filter((el) => {
-      return filterValue.some((f) => {
-        return !filterValue || f === el.sport_genre.name;
-      })
-    });
+    if (filterValue == null || filterValue.length == 0) {
+      this.filteredActivities = this.activities
+    } else {
+      this.filteredActivities = this.activities.filter((el) => {
+        return filterValue.some((f) => {
+          return !filterValue || f === el.sport_genre.name;
+        })
+      });
+    }
+
+
+    this.curPage = 1;
     this.numberOfPages();
   }
 }
