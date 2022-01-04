@@ -13,6 +13,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {AdminGuard} from "./admin.guard";
+import {ActivityDetailsComponent} from "./activity-details/activity-details.component";
 
 const routes: Routes = [
   // index page
@@ -41,7 +42,8 @@ const routes: Routes = [
 
   //activity views
   {path: 'activity-view', component: ActivityViewComponent },
-  {path: 'activity-view:filter', component: ActivityListComponent}
+  {path: 'activity-view:filter', component: ActivityListComponent},
+  {path: 'activity-details/:id', component: ActivityDetailsComponent}
 
 ];
 
