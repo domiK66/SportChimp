@@ -1,92 +1,109 @@
-<mat-drawer-container class="container" autosize xmlns="http://www.w3.org/1999/html">
-  <mat-toolbar color="primary">
-
-    <button class="menu" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened'))" aria-label="Main Menu" (click)="drawer.toggle()">
-        <svg width="40" height="40" viewBox="0 0 100 100" style="color: #FFF;">
-          <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
-          <path class="line line2" d="M 20,50 H 80" />
-          <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
-        </svg>
-    </button>
-    <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
-    <a [routerLink]="'/'" style="color: white"><span> SportChimp</span></a>
-    <span class="spacer"></span>
-
-    <!-- only shown when logged in -->
-
-
-    <div *ngIf="userService.isLoggedIn | async; else guest">
-      <button mat-icon-button [routerLink]="'/activity-form'">
-        <mat-icon>add</mat-icon>
-      </button>
-      <button mat-icon-button matBadge="4" matBadgeColor="accent"  matBadgeSize="medium">
-        <mat-icon >notifications_active</mat-icon>
-      </button>
-      <button mat-icon-button [matMenuTriggerFor]="userMenu">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      <mat-menu #userMenu="matMenu" xPosition="before">
-        <button mat-menu-item >Welcome {{userService.user.username}}!</button>
-        <button mat-menu-item routerLink="profile">Profile</button>
-        <button mat-menu-item>My friends</button>
-        <button mat-menu-item>My Account Settings</button>
-        <button mat-menu-item (click)="userService.logout()">Log out</button>
-      </mat-menu>
-    </div>
-
-    <!-- only shown when guest -->
-    <ng-template #guest>
-      <button mat-stroked-button routerLink="register">Register</button>
-      <button mat-raised-button color="accent" routerLink="login">Login</button>
-    </ng-template>
-
-  </mat-toolbar>
-
-
+<!-- Header & sidenav-->
+<mat-drawer-container class="all-wrap" fullscreen>
   <mat-drawer #drawer class="sidenav" mode="side">
     <mat-nav-list>
       <div *ngIf="userService.hasPermission('sportapp.add_sport')">
         <div mat-subheader style="color: #000">Admin Dashboard *secret*</div>
-        <a mat-list-item style="color: #000" [routerLink]="'/sport-list/'"> Sports </a>
-        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"> Activities </a>
+        <a [routerLink]="'/sport-list/'" mat-list-item style="color: #000"> Sports </a>
+        <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000"> Activities </a>
         <mat-divider style="border-top-color: #000;border-width: 4px"></mat-divider>
         <div mat-subheader style="color: #000">User Dashboard</div>
       </div>
-        <a mat-list-item style="background-color: #7b1fa2" [routerLink]="'/activity-view/'"><mat-icon aria-hidden="false">emoji_events</mat-icon><mat-icon aria-hidden="false">search</mat-icon> Find Activities </a>
-        <mat-divider style="border-top-color: #000"></mat-divider>
-        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">event_available</mat-icon> Attending Activities </a>
-        <mat-divider style="border-top-color: #000"></mat-divider>
-        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"> My Own Activities </a>
-        <mat-divider style="border-top-color: #000"></mat-divider>
-        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">favorite</mat-icon> My Saved Activities </a>
-        <mat-divider style="border-top-color: #000"></mat-divider>
-        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">group_add</mat-icon> Find Friends </a>
-        <mat-divider style="border-top-color: #000"></mat-divider>
-        <a mat-list-item style="color: #000" [routerLink]="'/activity-list/'"><mat-icon aria-hidden="false">event</mat-icon> Friends Activities</a>
+      <a [routerLink]="'/activity-view/'" mat-list-item style="background-color: #7b1fa2">
+        <mat-icon aria-hidden="false">emoji_events</mat-icon>
+        <mat-icon aria-hidden="false">search</mat-icon>
+        Find Activities </a>
+      <mat-divider style="border-top-color: #000"></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000">
+        <mat-icon aria-hidden="false">event_available</mat-icon>
+        Attending Activities </a>
+      <mat-divider style="border-top-color: #000"></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000"> My Own Activities </a>
+      <mat-divider style="border-top-color: #000"></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000">
+        <mat-icon aria-hidden="false">favorite</mat-icon>
+        My Saved Activities </a>
+      <mat-divider style="border-top-color: #000"></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000">
+        <mat-icon aria-hidden="false">group_add</mat-icon>
+        Find Friends </a>
+      <mat-divider style="border-top-color: #000"></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000">
+        <mat-icon aria-hidden="false">event</mat-icon>
+        Friends Activities</a>
     </mat-nav-list>
   </mat-drawer>
 
-  <!--- <div class="sidenav-content"></div> -->
+  <div class="page-wrap">
+    <header role="banner">
+      <mat-toolbar color="primary">
+        <button (click)="drawer.toggle()"
+                aria-label="Main Menu"
+                class="menu" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened'))">
+          <svg height="40" style="color: #FFF;" viewBox="0 0 100 100" width="40">
+            <path class="line line1"
+                  d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"/>
+            <path class="line line2" d="M 20,50 H 80"/>
+            <path class="line line3"
+                  d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"/>
+          </svg>
+        </button>
+        <span class="spacer"></span>
+        <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
+        <span class="white-space"></span>
+        <a [routerLink]="'/'" style="color: white"><span>  SportChimp</span></a>
+        <span class="spacer"></span>
 
-  <router-outlet></router-outlet>
+        <!-- only shown when logged in -->
+        <div *ngIf="userService.isLoggedIn | async; else guest">
+          <button [routerLink]="'/activity-form'" mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button matBadge="4" matBadgeColor="accent" matBadgeSize="medium">
+            <mat-icon>notifications_active</mat-icon>
+          </button>
+          <button [matMenuTriggerFor]="userMenu" mat-icon-button>
+            <mat-icon>account_circle</mat-icon>
+          </button>
+          <mat-menu #userMenu="matMenu" xPosition="before">
+            <button mat-menu-item>Welcome {{userService.user.username}}!</button>
+            <button mat-menu-item routerLink="profile">Profile</button>
+            <button mat-menu-item>My friends</button>
+            <button mat-menu-item>My Account Settings</button>
+            <button (click)="userService.logout()" mat-menu-item>Log out</button>
+          </mat-menu>
+        </div>
 
-  <div class="footer-container">
-    <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
-    <p></p>
-    <a [routerLink]="'/'" style="color: white"><h1> SportChimp</h1></a>
-    <p>Exercising is often just more fun if done with other people.</p>
-    <p>We want to address this with our app.</p>
-    <p>We want to provide people an easy solution to plan sport activities together and even meet new people to exercise with in new places.
-    </p>
-    <p>They can look for places and activities near them and take part. </p>
-    <p>This way the get to know new people with similar sporting interests and might find their new sporting buddy. </p>
-    <p>The app can be used by everyone who is interested in sports.</p>
-    <span style="background-color: #69f0ae; color: black">2021 - 2022 © Copyright by sportchimp.xyz </span>
+        <!-- only shown when guest -->
+        <ng-template #guest>
+          <button mat-stroked-button routerLink="register">Register</button>
+          <button color="accent" mat-raised-button routerLink="login">Login</button>
+        </ng-template>
+      </mat-toolbar>
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
+        <p></p>
+        <a [routerLink]="'/'" style="color: white"><h1> SportChimp</h1></a>
+        <p>Exercising is often just more fun if done with other people.</p>
+        <p>We want to address this with our app.</p>
+        <p>We want to provide people an easy solution to plan sport activities together and even meet new people to
+          exercise with in new places.
+        </p>
+        <p>They can look for places and activities near them and take part. </p>
+        <p>This way the get to know new people with similar sporting interests and might find their new sporting
+          buddy. </p>
+        <p>The app can be used by everyone who is interested in sports.</p>
+        <span style="background-color: #69f0ae; color: black">2021 - 2022 © Copyright by sportchimp.xyz </span>
+      </div>
+    </footer>
   </div>
-
-
-
 </mat-drawer-container>
-
-
-
