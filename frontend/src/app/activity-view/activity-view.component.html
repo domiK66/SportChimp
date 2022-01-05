@@ -67,9 +67,9 @@
           </mat-card-content>
           <mat-card-actions>
 
-            <button mat-stroked-button >View</button>
-            <button mat-stroked-button >Add to favourites</button>
-            <button mat-stroked-button >Attend</button>
+            <button mat-stroked-button [routerLink]="'/activity-details/' + activity.id">View</button>
+            <button mat-stroked-button >Add to favourites</button> <!-- TODO -->
+            <button mat-stroked-button >Attend</button> <!-- TODO -->
             <button mat-stroked-button  [routerLink]="'/activity-form/' + activity.id">Edit</button>
           </mat-card-actions>
         </mat-card>
