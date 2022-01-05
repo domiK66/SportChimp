@@ -70,6 +70,12 @@ http://127.0.0.1:8000/admin
 python manage.py makemigrations
 ```
 
+### Add Sports Data
+
+```python
+python manage.py loaddata sports
+```
+
 
 
 
