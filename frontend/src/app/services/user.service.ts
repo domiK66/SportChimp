@@ -9,6 +9,9 @@ import {SportChimpApiService} from "./sportchimp-api.service";
 export interface User {
   id: number;
   username: string;
+  first_name: string;
+  last_name: string;
+  date_joined: string;
 }
 
 @Injectable({providedIn: 'root'})

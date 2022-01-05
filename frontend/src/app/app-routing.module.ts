@@ -39,6 +39,7 @@ const routes: Routes = [
 
   //profile
   {path: 'profile', component: ProfileComponent},
+  {path: 'profile/:username', component: ProfileComponent},
 
   //activity views
   {path: 'activity-view', component: ActivityViewComponent },

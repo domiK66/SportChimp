@@ -79,4 +79,23 @@
   </mat-grid-list>
 </div>
 
-
+<div class="pagination">
+  <p>{{filteredActivities.length}} Results found</p>
+  <span> Page {{curPage}} of {{ numberOfPages() }} </span>
+  <button mat-mini-fab [disabled]="curPage == 1" (click)="curPage = curPage - 1">
+    <mat-icon>
+      arrow_back_ios
+    </mat-icon>
+  </button>
+  <button mat-mini-fab [disabled]="curPage >= filteredActivities.length/pageSize" (click)="curPage = curPage + 1">
+    <mat-icon>
+      arrow_forward_ios
+    </mat-icon>
+  </button>
+  <mat-form-field appearance="outline">
+    <mat-label>Items per page</mat-label>
+    <mat-select [formControl]="pageSizeFormControl" placeholder="Items per Page">
+      <mat-option *ngFor="let item of pageSizeOptions" [value]="item">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

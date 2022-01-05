@@ -2,13 +2,15 @@
   <mat-card class="card">
     <mat-card-header>
       <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
-      <mat-card-title>{{userService.user.username}}</mat-card-title>
-      <mat-card-subtitle></mat-card-subtitle>
+      <mat-card-title>{{this.user.username}}</mat-card-title>
+      <mat-card-subtitle>{{this.user.first_name + " " + this.user.last_name}}</mat-card-subtitle>
+
     </mat-card-header>
     <mat-card-content>
-      <p>Username: {{userService.user.username}}</p>
+      <p>Date joined: {{this.user.date_joined.slice(0, 10)}}</p>
       <p>Age: 21</p>
-      <h2>Activities from {{userService.user.username}}</h2>
+      <p>bio:</p>
+      <h2>Activities from {{this.user.username}}</h2>
     </mat-card-content>
     <table mat-table style="width: 100%" [dataSource]="myActivities" matSort class="mat-elevation-z8">
 

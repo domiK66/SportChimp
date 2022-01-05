@@ -18,7 +18,7 @@
         <mat-icon aria-hidden="false">event_available</mat-icon>
         Attending Activities </a>
       <mat-divider style="border-top-color: #000"></mat-divider>
-      <a [routerLink]="'/profile/'" mat-list-item style="color: #000">
+      <a routerLink="profile/{{userService.user.username}}" mat-list-item style="color: #000">
         <mat-icon aria-hidden="false">person</mat-icon>
         My Own Activities </a>
       <mat-divider style="border-top-color: #000"></mat-divider>
@@ -68,8 +68,8 @@
             <mat-icon>account_circle</mat-icon>
           </button>
           <mat-menu #userMenu="matMenu" xPosition="before">
-            <button mat-menu-item>Welcome {{userService.user.username}}!</button>
-            <button mat-menu-item routerLink="profile">Profile</button>
+            <button mat-menu-item routerLink="profile/{{userService.user.username}}">Welcome {{userService.user.username}}!</button>
+            <button mat-menu-item routerLink="profile/{{userService.user.username}}">Profile</button>
             <button mat-menu-item>My friends</button>
             <button mat-menu-item>My Account Settings</button>
             <button (click)="userService.logout()" mat-menu-item>Log out</button>

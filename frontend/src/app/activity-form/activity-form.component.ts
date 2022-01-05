@@ -35,8 +35,7 @@ export class ActivityFormComponent implements OnInit {
       description: new FormControl(''),
       date: new FormControl(new Date()),
       location: new FormControl(''),
-      is_public: new FormControl(false),
-      created_by_user: new FormControl(userService.userId)
+      is_public: new FormControl(false)
       }
     )
   }

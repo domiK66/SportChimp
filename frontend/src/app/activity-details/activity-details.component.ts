@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivityService} from "../services/activity.service";
+import {Activity, ActivityService} from "../services/activity.service";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {SportService} from "../services/sport.service";
-import {UserService} from "../services/user.service";
+import {Sport, SportService} from "../services/sport.service";
+import {User, UserService} from "../services/user.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -14,9 +14,10 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class ActivityDetailsComponent implements OnInit {
 
-  activityDetailFormGroup: FormGroup;
   editable = false; // Todo: datum verstecken
-
+  user: User | any = {}
+  activity: Activity | any = {}
+  sport : Sport | any = {}
 
   constructor(
     private http: HttpClient,
@@ -29,24 +30,23 @@ export class ActivityDetailsComponent implements OnInit {
     public userService: UserService
 
   ) {
-    this.activityDetailFormGroup = new FormGroup({
-        id: new FormControl(null),
-        title: new FormControl('',[Validators.required]),
-        sport_genre: new FormControl([]),
-        description: new FormControl(''),
-        date: new FormControl(new Date()),
-        location: new FormControl(''),
-        is_public: new FormControl(false),
-        created_by_user: new FormControl(userService.userId)
-      }
-    )
   }
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.activityService.getActivity(id).subscribe(activity => { this.activityDetailFormGroup.patchValue(activity); })
+      this.activityService.getActivity(id).subscribe(activity => {
+
+        this.activity = activity;
+        this.sportService.getSport(`${this.activity.sport_genre}`).subscribe(sport => this.sport = sport)
+      })
     }else{
       this.router.navigate(['/activity-list/']);
     }
+    this.getUser()
+
+  }
+  getUser() {
+    const id = this.activity.created_by_user
+    this.userService.getUser(id).subscribe(user => this.user = user)
   }
 }
