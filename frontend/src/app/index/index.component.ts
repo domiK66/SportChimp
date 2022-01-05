@@ -40,7 +40,12 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.sportService.getSports().subscribe( sports => this.sports = sports)
-    this.activityService.getActivities().subscribe( activities => this.activities = activities)
+    const sortByDate = function (a: { date: any; }, b: { date: any; }) {
+      // @ts-ignore
+      return new Date((b.date)) - new Date(a.date);
+
+    };
+    this.activityService.getActivities().subscribe( activities => this.activities = activities.sort(sortByDate))
   }
 
 }

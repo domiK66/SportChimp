@@ -1,56 +1,35 @@
-<form [formGroup]="activityDetailFormGroup" class="activity-details__form"
-      xmlns="http://www.w3.org/1999/html">
-  <mat-form-field appearance="outline">
-    <input readonly="true" matInput type="text" placeholder="Title" formControlName="title">
-    <mat-hint align="end">The title of the sport activity</mat-hint>
-    <mat-error *ngIf="activityDetailFormGroup.controls.title.hasError('required')">
-      Title is required
-    </mat-error>
-  </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-select [disabled]="!editable" placeholder="Sport Genre" formControlName="sport_genre">
-      <mat-option *ngFor="let sport_genre of sportService.availableSports" [value]="sport_genre.id">{{sport_genre.name}}</mat-option>
-    </mat-select>
-    <mat-hint align="end">The sport genre of the activity</mat-hint>
-  </mat-form-field>
+<div class="main-div">
+  <mat-card class="card">
+    <mat-card-header>
 
-  <mat-form-field appearance="outline">
-    <textarea matInput type="text" placeholder="Description" formControlName="description" readonly="true"></textarea>
-    <mat-hint align="end">The description of the sport activity</mat-hint>
-  </mat-form-field>
+      <mat-card-title>{{this.activity.title}}</mat-card-title>
+      <mat-card-subtitle><a routerLink="/profile/{{this.user.username}}">by {{this.user.username}}</a></mat-card-subtitle>
+      <mat-card-subtitle>{{this.activity.description}}</mat-card-subtitle>
 
-  <app-date placeholder="Date"
-            formControlName="date"
-            hint="The date of the activity"
-            [required]="true" appearance="outline"> <!-- aria-readonly="true" TODO: Datum sperren und beim öffnen einfügen! -->
-  </app-date>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- TODO: load sport image-->
+      <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+      <button mat-raised-button color="primary" [routerLink]="'/activity-form/' + this.activity.id">Edit</button>
+      <h2>Info</h2>
+      <p>Date: {{this.activity.date}}</p>
+      <p>Time: </p>
+      <p>Sport: {{this.sport.name}}</p>
+      <p>min people</p>
+      <p>max people</p>
+      <p>equipment provided</p>
+      <p> is public {{this.activity.is_public}}</p>
+      <p>Location: {{this.activity.location}}</p>
 
-  <mat-form-field appearance="outline">
-    <input matInput type="text" placeholder="Location" formControlName="location" readonly="true">
-    <mat-hint align="end">The location of the sport activity</mat-hint>
-  </mat-form-field>
+      <h2>Attendance List</h2>
+      <div *ngFor="let user of activity.participants">
+        <a routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
 
-  <mat-checkbox [disabled]="!editable" formControlName="is_public">is public</mat-checkbox>
-  <br>
-
-  <mat-card-actions align="start">
-    <button mat-raised-button color="primary" [routerLink]="'/activity-view/'">Back</button>
-  </mat-card-actions>
-</form>
-
-<br/>
-<br/>
-TODO:
-<br/>
-<p>created_by_user:
-
-</p>
-<br/>
-<p>Participants:
-
-</p>
-<br/>
 
 
 
