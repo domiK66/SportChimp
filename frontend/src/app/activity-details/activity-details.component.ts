@@ -38,11 +38,11 @@ export class ActivityDetailsComponent implements OnInit {
 
         this.activity = activity;
         this.sportService.getSport(`${this.activity.sport_genre}`).subscribe(sport => this.sport = sport)
+        this.getUser()
       })
     }else{
       this.router.navigate(['/activity-list/']);
     }
-    this.getUser()
 
   }
   getUser() {

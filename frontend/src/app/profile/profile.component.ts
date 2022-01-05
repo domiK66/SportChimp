@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.activityService.getActivities().subscribe(activities => {
         this.activities = activities;
-        this.filter(this.userService.user.username);
+        this.filter(this.user.username);
       }
     );
     this.getUser()
