@@ -45,7 +45,7 @@
 
 
 <div class="activities">
-  <mat-grid-list [cols]="cols$ | async" rowHeight="4:4" gutterSize="10px" >
+  <mat-grid-list [cols]="cols$ | async" rowHeight="405:295" gutterSize="10px" >
     <div *ngFor="let activity of filteredActivities | slice: (curPage * pageSize) - pageSize :curPage * pageSize; let i=index">
       <mat-grid-tile class="title">
         <mat-card class="activity-card">

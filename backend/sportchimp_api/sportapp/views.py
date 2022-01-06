@@ -34,6 +34,7 @@ class SportViewSet(viewsets.ViewSet):
                 name=request.data["name"],
                 description=request.data["description"],
                 image=request.data["image"]
+
             )
             return Response(
                 {
