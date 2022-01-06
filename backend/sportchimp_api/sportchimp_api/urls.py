@@ -54,5 +54,10 @@ class CustomObtainJSONWebToken(ObtainJSONWebToken):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-token-auth/', obtain_jwt_token),
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

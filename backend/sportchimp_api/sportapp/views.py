@@ -32,7 +32,8 @@ class SportViewSet(viewsets.ViewSet):
         if request.user.is_superuser:
             sport = models.Sport.objects.create(
                 name=request.data["name"],
-                description=request.data["description"]
+                description=request.data["description"],
+                image=request.data["image"]
             )
             return Response(
                 {
