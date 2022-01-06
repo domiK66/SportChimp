@@ -36,6 +36,7 @@ import { ProfileComponent } from './profile/profile.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatBadgeModule} from '@angular/material/badge';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 export function tokenGetter() {
@@ -82,6 +83,7 @@ export function tokenGetter() {
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
+    MatProgressBarModule,
 
     MatDatepickerModule,
     MatNativeDateModule,
