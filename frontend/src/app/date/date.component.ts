@@ -17,6 +17,8 @@ export class DateComponent implements OnInit, ControlValueAccessor {
 
   date: FormControl = new FormControl();
   private propagateChange: any;
+  minDate: Date;
+  maxDate: Date;
 
   @Input()
   placeholder = '';
@@ -26,6 +28,8 @@ export class DateComponent implements OnInit, ControlValueAccessor {
   required = false;
 
   constructor(private fb: FormBuilder) {
+    this.minDate = new Date();
+    this.maxDate = new Date(new Date().getFullYear(), new Date().getMonth()+1, 31);
   }
 
   ngOnInit() {
@@ -53,7 +57,7 @@ export class DateComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any): void {
-    //this.date.patchValue(obj, {emitEvent: false});
+    this.date.patchValue(obj, {emitEvent: false});
   }
 
   hasError(errorName: string) {

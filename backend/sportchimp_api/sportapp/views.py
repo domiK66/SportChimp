@@ -117,6 +117,8 @@ class ActivityViewSet(viewsets.ViewSet):
             sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
             created_by_user=request.user
         )
+        activity.participants.add(request.user)
+        activity.save()
         serializer = serializers.ActivitySerializer(activity)
         return Response(serializer.data, status=200)
 
@@ -144,14 +146,26 @@ class ActivityViewSet(viewsets.ViewSet):
                 activity.location = request.data["location"]
                 activity.is_public = request.data["is_public"]
                 activity.save()
-            else:
-                return Response(status=404)
-            return Response(
-                {
 
-                },
-                status=200
-            )
+                return Response(
+                    {
+                    },
+                    status=200
+                )
+            else:
+                if request.user in activity.participants.all():
+                    activity.participants.remove(request.user)
+                    activity.save()
+                else:
+                    activity.participants.add(request.user)
+                    activity.save()
+
+                return Response(
+                    {
+                    },
+                    status=200
+                )
+
         except models.Activity.DoesNotExist:
             return Response(status=404)
 

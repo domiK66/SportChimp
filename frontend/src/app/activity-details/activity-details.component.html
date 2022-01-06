@@ -1,17 +1,17 @@
-
 <div class="main-div">
   <mat-card class="card">
     <mat-card-header>
-
       <mat-card-title>{{this.activity.title}}</mat-card-title>
-      <mat-card-subtitle><a routerLink="/profile/{{this.user.username}}">by {{this.user.username}}</a></mat-card-subtitle>
+      <mat-card-subtitle><a style="color: #FFFFFF" routerLink="/profile/{{this.user.username}}">by {{this.user.username}}</a></mat-card-subtitle>
       <mat-card-subtitle>{{this.activity.description}}</mat-card-subtitle>
-
+      <mat-card-subtitle><button mat-raised-button color="primary" [routerLink]="'/activity-form/' + this.activity.id">Edit</button></mat-card-subtitle>
     </mat-card-header>
+  </mat-card>
+  <!-- TODO: load sport image-->
+  <img class="card" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+
+  <mat-card class="card">
     <mat-card-content>
-      <!-- TODO: load sport image-->
-      <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
-      <button mat-raised-button color="primary" [routerLink]="'/activity-form/' + this.activity.id">Edit</button>
       <h2>Info</h2>
       <p>Date: {{this.activity.date}}</p>
       <p>Time: </p>
@@ -21,10 +21,15 @@
       <p>equipment provided</p>
       <p> is public {{this.activity.is_public}}</p>
       <p>Location: {{this.activity.location}}</p>
+    </mat-card-content>
+  </mat-card>
 
+  <mat-card class="card">
+    <mat-card-content>
+      <button mat-raised-button color="accent" *ngIf="this.isNotTheOwner" (click)="attendActivity()">{{attendButton}}</button>
       <h2>Attendance List</h2>
       <div *ngFor="let user of activity.participants">
-        <a routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+        <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
       </div>
     </mat-card-content>
   </mat-card>

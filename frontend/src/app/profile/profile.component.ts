@@ -9,7 +9,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  displayedColumns = ['id', 'title', 'sport_genre', 'date', 'location', 'is_public', 'created_by_user', 'participants', 'view'];
+  displayedColumns = ['id', 'title', 'sport_genre', 'date', 'location', 'is_public', 'created_by_user', 'view'];
   activities: Activity[] = [];
   myActivities: Activity[] = [];
 
@@ -23,12 +23,12 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUser()
     this.activityService.getActivities().subscribe(activities => {
         this.activities = activities;
         this.filter(this.user.username);
       }
     );
-    this.getUser()
   }
 
   filter(username: string) {

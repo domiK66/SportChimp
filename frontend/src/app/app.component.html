@@ -9,7 +9,11 @@
         <mat-divider style="border-top-color: #000;border-width: 4px"></mat-divider>
         <div mat-subheader style="color: #000">User Dashboard</div>
       </div>
-      <a [routerLink]="'/activity-view/'" mat-list-item style="background-color: #7b1fa2">
+      <a [routerLink]="'/index/'" mat-list-item style="color: #000">
+        <mat-icon aria-hidden="false">home</mat-icon>
+        Home </a>
+      <mat-divider style="border-top-color: #000"></mat-divider>
+      <a [routerLink]="'/activity-view/'" mat-list-item style="color: #000">
         <mat-icon aria-hidden="false">emoji_events</mat-icon>
         <mat-icon aria-hidden="false">search</mat-icon>
         Find Activities </a>

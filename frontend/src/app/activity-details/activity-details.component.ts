@@ -18,6 +18,8 @@ export class ActivityDetailsComponent implements OnInit {
   user: User | any = {}
   activity: Activity | any = {}
   sport : Sport | any = {}
+  attendButton: string = ''
+  isNotTheOwner: boolean = true
 
   constructor(
     private http: HttpClient,
@@ -32,21 +34,37 @@ export class ActivityDetailsComponent implements OnInit {
   ) {
   }
   ngOnInit(): void {
+    this.getActivity()
+  }
+  getActivity() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.activityService.getActivity(id).subscribe(activity => {
-
         this.activity = activity;
         this.sportService.getSport(`${this.activity.sport_genre}`).subscribe(sport => this.sport = sport)
         this.getUser()
+        if (this.activity.participants.filter( (user: { [x: string]: number; }) => user['id'] === this.userService.user.id ).length > 0)
+          this.attendButton = 'Un-attend'
+        else
+          this.attendButton = 'Attend'
+
+        if (this.activity.created_by_user === this.userService.user.id)
+          this.isNotTheOwner = false
       })
-    }else{
-      this.router.navigate(['/activity-list/']);
     }
 
   }
   getUser() {
     const id = this.activity.created_by_user
-    this.userService.getUser(id).subscribe(user => this.user = user)
+    this.userService.getUser(id).subscribe(user => {
+      this.user = user;
+    })
+  }
+  attendActivity() {
+    this.activityService.attendActivity(this.activity).subscribe(() => {
+        this.snackbar.open('Attended successfully!', 'OK',{duration:3000})
+        this.getActivity()
+      }
+    )
   }
 }
