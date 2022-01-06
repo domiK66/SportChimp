@@ -6,6 +6,7 @@ import {ActivityService} from "../services/activity.service";
 import {Sport, SportService} from "../services/sport.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserService} from "../services/user.service";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-activity-form',
@@ -33,7 +34,7 @@ export class ActivityFormComponent implements OnInit {
       title: new FormControl('',[Validators.required]),
       sport_genre: new FormControl([]),
       description: new FormControl(''),
-      date: new FormControl(new Date()),
+      date: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
       location: new FormControl(''),
       is_public: new FormControl(false)
       }

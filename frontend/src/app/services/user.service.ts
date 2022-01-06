@@ -50,7 +50,7 @@ export class UserService {
   // EventListener to prevent user from changing anything in the local storage. (security reasons -> user would be able to change user_id)
   private storageEventListener(event: StorageEvent) {
     if (event.storageArea == localStorage && event.newValue != event.oldValue) {
-        this.logout();
+        //this.logout();
     }
   }
 

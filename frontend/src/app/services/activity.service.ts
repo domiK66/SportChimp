@@ -33,6 +33,9 @@ export class ActivityService {
   updateActivity(activity: Activity) {
     return this.http.put<Activity>(`${this.sportChimpApiService.base_url}/activities/${activity.id}/`, activity);
   }
+  attendActivity(activity: Activity) {
+    return this.http.put<Activity>(`${this.sportChimpApiService.base_url}/activities/${activity.id}/`, null);
+  }
   deleteActivity(activity: Activity) {
     return this.http.delete<Activity>(`${this.sportChimpApiService.base_url}/activities/${activity.id}/`);
   }
