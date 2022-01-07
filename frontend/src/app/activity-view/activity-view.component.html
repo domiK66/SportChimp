@@ -50,7 +50,8 @@
       <mat-grid-tile class="title">
         <mat-card class="activity-card">
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image"><img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/></div>
+
+            <div mat-card-avatar class="example-header-image"><img src="http://127.0.0.1:4200/api/{{activity.sport_genre.image}}" style="height:50px"/></div>
             <mat-card-title>{{activity.title}}</mat-card-title>
             <mat-card-subtitle>{{activity.sport_genre.name}}</mat-card-subtitle>
             <mat-card-subtitle>created by: {{activity.created_by_user?.username}}</mat-card-subtitle>
