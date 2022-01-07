@@ -5,6 +5,7 @@ import {BehaviorSubject} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SportChimpApiService} from "./sportchimp-api.service";
+import {Sport} from "./sport.service";
 
 export interface User {
   id: number;
@@ -63,6 +64,9 @@ export class UserService {
   }
   createUser(user: User) {
     return this.http.post<User>(`${this.sportChimpApiService.base_url}/users/`, user);
+  }
+  updateUser(user: User) {
+    return this.http.put<User>(`${this.sportChimpApiService.base_url}/users/${user.id}/`, user);
   }
 
   getUserData(){

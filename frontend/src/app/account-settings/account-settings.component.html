@@ -1,0 +1,39 @@
+<form (ngSubmit)="updateUser()" [formGroup]="userFormGroup" class="register-form__form">
+  <mat-card class="card">
+
+    <mat-card-header>
+
+      <mat-card-title>
+
+      </mat-card-title>
+      <mat-card-subtitle>
+
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content style="display: flex; flex-direction: column">
+
+      <!-- Firstname -->
+      <mat-form-field appearance="outline">
+        <mat-label>Firstname</mat-label>
+        <input formControlName="first_name" matInput placeholder="Firstname" type="text">
+        <mat-hint align="end">Your firstname</mat-hint>
+      </mat-form-field>
+
+      <!-- Lastname -->
+      <mat-form-field appearance="outline">
+        <mat-label>Lastname</mat-label>
+        <input formControlName="last_name" matInput placeholder="Lastname" type="text">
+        <mat-hint align="end">Your lastname</mat-hint>
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <!-- Submit Button -->
+    <mat-card-actions align="start">
+      <button [disabled]="!userFormGroup.valid" color="primary" mat-raised-button>Update</button>
+    </mat-card-actions>
+
+  </mat-card>
+</form>
+

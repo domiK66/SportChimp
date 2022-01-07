@@ -284,3 +284,18 @@ class UsersViewSet(viewsets.ViewSet):
             },
             status=201
         )
+
+    def update(self, request, pk=None):
+        user = User.objects.get(pk=pk)
+        user.first_name = request.data["first_name"]
+        user.last_name = request.data["last_name"]
+        user.save()
+        return Response(
+            {
+                "id": user.id,
+                "username": user.username,
+                "first_name": user.first_name,
+                "last_name": user.last_name
+            },
+            status=201
+        )
