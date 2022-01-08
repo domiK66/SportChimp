@@ -32,7 +32,9 @@ class SportViewSet(viewsets.ViewSet):
         if request.user.is_superuser:
             sport = models.Sport.objects.create(
                 name=request.data["name"],
-                description=request.data["description"]
+                description=request.data["description"],
+                image=request.data["image"]
+
             )
             return Response(
                 {
@@ -47,14 +49,9 @@ class SportViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None, format=None):
         try:
             sport = models.Sport.objects.get(pk=pk)
-            return Response(
-                {
-                    "id": sport.pk,
-                    "name": sport.name,
-                    "description": sport.description
-                },
-                status=200
-            )
+            serializer = serializers.SportSerializer(sport)
+            return Response(serializer.data, status=200)
+
         except models.Sport.DoesNotExist:
             return Response({"error": "Sport does not exist"}, status=404)
 
@@ -173,21 +170,13 @@ class ActivityViewSet(viewsets.ViewSet):
 
 # TODO: Comment:
 class CommentViewSet(viewsets.ViewSet):
-    permission_classes = [permissions.IsAuthenticated]
 
     # GET: http://127.0.0.1:8000/comments/
     def list(self, request, format=None):
         queryset = models.Comment.objects.all()
+        serializer = serializers.CommentSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
 
-        return Response([(comment.pk,
-                          comment.activity.pk,
-                          comment.created_at,
-                          comment.activity.title,
-                          comment.created_by_user.username,
-                          comment.text)
-                         for comment in queryset],
-                        status=200
-                        )
 
     # GET: http://127.0.0.1:8000/comments/pk
     def retrieve(self, request, pk=None, format=None):
@@ -214,17 +203,10 @@ class CommentViewSet(viewsets.ViewSet):
 
     # TODO: POST http://127.0.0.1:8000/comments/
     def create(self, request, format=None):
-        # request.data contains a dictionary 
-        # looking like this:
-        # { 
-        #   "activity_id": 1,
-        #   "text": "shesh"
-        #  }
-
         comment = models.Comment.objects.create(
             created_at=datetime.now(),
-            activity=models.Activity.objects.get(pk=request.data["activity_id"]),
-            # TODO: created_by_user 
+            activity=models.Activity.objects.get(pk=request.data["activity"]),
+            created_by_user=User.objects.get(pk=request.data["created_by_user"]),
             text=request.data["text"]
         )
 
@@ -277,6 +259,21 @@ class UsersViewSet(viewsets.ViewSet):
                 "id": user.id,
                 "username": user.username,
                 "email": user.email,
+                "first_name": user.first_name,
+                "last_name": user.last_name
+            },
+            status=201
+        )
+
+    def update(self, request, pk=None):
+        user = User.objects.get(pk=pk)
+        user.first_name = request.data["first_name"]
+        user.last_name = request.data["last_name"]
+        user.save()
+        return Response(
+            {
+                "id": user.id,
+                "username": user.username,
                 "first_name": user.first_name,
                 "last_name": user.last_name
             },

@@ -14,6 +14,7 @@ import {RegisterComponent} from "./register/register.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {AdminGuard} from "./admin.guard";
 import {ActivityDetailsComponent} from "./activity-details/activity-details.component";
+import {AccountSettingsComponent} from "./account-settings/account-settings.component";
 
 const routes: Routes = [
   // index page
@@ -41,9 +42,14 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'profile/:username', component: ProfileComponent},
 
+  //account-settings
+  {path: 'account-settings', component: AccountSettingsComponent},
+
   //activity views
   {path: 'activity-view', component: ActivityViewComponent },
   {path: 'activity-view:filter', component: ActivityListComponent},
+
+  // activity-details
   {path: 'activity-details/:id', component: ActivityDetailsComponent}
 
 ];

@@ -8,3 +8,4 @@ asgiref~=3.4.1
 djangorestframework~=3.12.4
 PyJWT~=1.7.1
 djangorestframework-jwt~=1.11.0
+Pillow~=9.0.0

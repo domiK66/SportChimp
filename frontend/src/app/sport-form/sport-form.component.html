@@ -23,9 +23,17 @@
     </mat-error>
   </mat-form-field>
 
+  <!-- Image Input Field -->
+  <p></p>
+  <mat-hint>Image Upload:</mat-hint>
+  <input #imageInput type="file" accept="image/*">
+  <p></p>
+
+
   <!-- Submit Button -->
   <mat-card-actions align="start">
-    <button mat-raised-button color="accent" [disabled]="!sportFormGroup.valid">{{ submitButtonText }}</button>
+    <button mat-raised-button color="accent"  [disabled]="!sportFormGroup.valid">{{ submitButtonText }}</button>
+    <button mat-raised-button color="accent" (click)="processFile(imageInput)"[disabled]="!sportFormGroup.valid" >Upload</button>
     <button mat-raised-button color="warn" [routerLink]="'/sport-list/'">Back</button>
   </mat-card-actions>
 

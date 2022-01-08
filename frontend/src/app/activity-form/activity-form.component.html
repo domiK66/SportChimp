@@ -1,5 +1,5 @@
 <form [formGroup]="activityFormGroup" (ngSubmit)="createOrUpdateActivity()" class="activity-form__form">
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <input matInput type="text" placeholder="Title" formControlName="title">
     <mat-hint align="end">The title of the sport activity</mat-hint>
     <mat-error *ngIf="activityFormGroup.controls.title.hasError('required')">
@@ -7,14 +7,14 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field  appearance="outline">
     <mat-select placeholder="Sport Genre" formControlName="sport_genre">
       <mat-option *ngFor="let sport_genre of sportService.availableSports" [value]="sport_genre.id">{{sport_genre.name}}</mat-option>
     </mat-select>
     <mat-hint align="end">The sport genre of the activity</mat-hint>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <textarea matInput type="text" placeholder="Description" formControlName="description"></textarea>
     <mat-hint align="end">The description of the sport activity</mat-hint>
   </mat-form-field>
@@ -25,7 +25,7 @@
             [required]="true">
   </app-date>
 
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <input matInput type="text" placeholder="Location" formControlName="location">
     <mat-hint align="end">The location of the sport activity</mat-hint>
   </mat-form-field>

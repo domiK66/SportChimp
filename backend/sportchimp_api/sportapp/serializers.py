@@ -32,3 +32,9 @@ class ActivitySerializer2(serializers.ModelSerializer):
     class Meta:
         model = models.Activity
         fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+    created_by_user = UserSerializer()
+    class Meta:
+        model = models.Comment
+        fields = '__all__'

@@ -75,7 +75,7 @@
             <button mat-menu-item routerLink="profile/{{userService.user.username}}">Welcome {{userService.user.username}}!</button>
             <button mat-menu-item routerLink="profile/{{userService.user.username}}">Profile</button>
             <button mat-menu-item>My friends</button>
-            <button mat-menu-item>My Account Settings</button>
+            <button mat-menu-item routerLink="account-settings">My Account Settings</button>
             <button (click)="userService.logout()" mat-menu-item>Log out</button>
           </mat-menu>
         </div>

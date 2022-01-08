@@ -6,6 +6,7 @@ export interface Sport {
   id: number;
   name: string;
   description: string;
+  image: string;
 }
 
 @Injectable({providedIn: 'root'})

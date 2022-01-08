@@ -34,7 +34,7 @@ export class ActivityViewComponent implements OnInit {
     } else if (result.breakpoints[Breakpoints.Small]) {
       return 2;
     } else {
-      return 3;
+      return 4;
     }
   }), shareReplay());
 
