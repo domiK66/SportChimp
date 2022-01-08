@@ -44,14 +44,14 @@
 
 
   <mat-card class="card">
-    <mat-card>
+
     <form [formGroup]="commentFormGroup" (ngSubmit)="createComment()" class="sport-form__form">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <input matInput type="text" placeholder="Comment" formControlName="text">
       </mat-form-field>
-        <button mat-raised-button color="accent"  [disabled]="!commentFormGroup.valid">Create</button>
+        <button mat-raised-button color="accent"  [disabled]="!commentFormGroup.valid">Comment</button>
     </form>
-    </mat-card>
+
     <p></p>
     <mat-card-title>Activity comments:</mat-card-title>
   <div *ngFor="let comment of this.comments">

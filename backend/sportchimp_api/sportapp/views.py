@@ -9,7 +9,7 @@ from datetime import datetime
 from . import serializers
 from . import models
 
-from django.contrib.auth.models import User
+from .models import CustomUser
 
 
 # Sport:
@@ -206,7 +206,7 @@ class CommentViewSet(viewsets.ViewSet):
         comment = models.Comment.objects.create(
             created_at=datetime.now(),
             activity=models.Activity.objects.get(pk=request.data["activity"]),
-            created_by_user=User.objects.get(pk=request.data["created_by_user"]),
+            created_by_user=CustomUser.objects.get(pk=request.data["created_by_user"]),
             text=request.data["text"]
         )
 
@@ -219,38 +219,30 @@ class CommentViewSet(viewsets.ViewSet):
         )
 
 
-# TODO: User
+# TODO: CustomUser
 class UsersViewSet(viewsets.ViewSet):
 
     # GET: http://127.0.0.1:8000/users/
     def list(self, request, format=None):
-        queryset = User.objects.all()
+        queryset = CustomUser.objects.all()
         serializer = serializers.UserSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
     # GET: http://127.0.0.1:8000/users/pk
     def retrieve(self, request, pk=None, format=None):
-        user = User.objects.get(pk=pk)
-        return Response(
-            {
-                "id": user.id,
-                "username": user.username,
-                "email": user.email,
-                "first_name": user.first_name,
-                "last_name": user.last_name
-            },
-            status=200
-        )
+        user = CustomUser.objects.get(pk=pk)
+        serializer = serializers.UserSerializer(user)
+        return Response(serializer.data, status=200)
 
     # POST: http://127.0.0.1:8000/users/
     def create(self, request):
-        user = User.objects.create(
+        user = CustomUser.objects.create(
             username=request.data["username"],
             email=request.data["email"],
         )
         if request.data["first_name"] is not None:
             user.first_name = request.data["first_name"]
-        elif request.data["last_name"] is not None:
+        if request.data["last_name"] is not None:
             user.last_name = request.data["last_name"]
         user.set_password(request.data["password"])
         user.save()
@@ -266,9 +258,12 @@ class UsersViewSet(viewsets.ViewSet):
         )
 
     def update(self, request, pk=None):
-        user = User.objects.get(pk=pk)
+        user = CustomUser.objects.get(pk=pk)
         user.first_name = request.data["first_name"]
         user.last_name = request.data["last_name"]
+        user.bio = request.data["bio"]
+        user.birthday = request.data["birthday"]
+        user.profile_image = request.data["profile_image"]
         user.save()
         return Response(
             {

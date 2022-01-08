@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework'
 ]
 
+AUTH_USER_MODEL = 'sportapp.CustomUser'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',

@@ -6,9 +6,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Sport, SportService} from "../services/sport.service";
 import {User, UserService} from "../services/user.service";
 import {FormControl, FormGroup, FormsModule, Validators} from "@angular/forms";
+import {formatDate} from "@angular/common";
 interface Comment {
   text: string;
-  created_at: Date;
+  created_at: string;
   activity: Activity;
   created_by_user : User;
 }
@@ -72,11 +73,10 @@ export class ActivityDetailsComponent implements OnInit {
       this.user = user;
       this.commentFormGroup = new FormGroup({
           text: new FormControl(''),
-          created_by_user: new FormControl(this.user.id),
+          created_by_user: new FormControl(this.userService.user.id),
           activity: new FormControl(this.activity.id)
         }
       )
-
     })
   }
   attendActivity() {
@@ -89,12 +89,13 @@ export class ActivityDetailsComponent implements OnInit {
   getComments() {
     this.http.get<[]>(`http://localhost:4200/api/comments/`).subscribe(comments => {
       this.comments = comments
+      this.comments.forEach(com => com.created_at = formatDate(com.created_at, "yyyy-mm-dd hh:mm", "en"))
       this.comments = this.comments.filter(com => com.activity == this.activity.id)
     });
   }
   createComment(){
     this.http.post(`http://localhost:4200/api/comments/`, this.commentFormGroup.value).subscribe(() => {
-      this.snackbar.open('Comment successfully!', 'OK',{duration:3000})
+      this.getComments();
     })
   }
 }
