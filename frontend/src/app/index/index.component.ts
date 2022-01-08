@@ -24,7 +24,7 @@ export class IndexComponent implements OnInit {
         } else if (result.breakpoints[Breakpoints.Small]) {
           return 4;
         } else {
-          return 8;
+          return 10;
         }
       }),
       shareReplay()

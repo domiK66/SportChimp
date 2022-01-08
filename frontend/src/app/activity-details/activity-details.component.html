@@ -7,12 +7,19 @@
       <mat-card-subtitle><button mat-raised-button color="primary" [routerLink]="'/activity-form/' + this.activity.id">Edit</button></mat-card-subtitle>
     </mat-card-header>
   </mat-card>
-  <!-- TODO: load sport image-->
-  <img class="card" src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
 
   <mat-card class="card">
     <mat-card-content>
-      <h2>Info</h2>
+      <mat-card-title>This activity's sport is:</mat-card-title>
+        <mat-card-title> -> {{this.sport.name}}</mat-card-title>
+      <img class="card"  src="http://127.0.0.1:4200/api/{{this.sport.image}}" style="height:100px; width: 100px">
+      <p>{{this.sport.description}}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-title>Activity information:</mat-card-title>
+    <mat-card-content>
       <p>Date: {{this.activity.date}}</p>
       <p>Time: </p>
       <p>Sport: {{this.sport.name}}</p>
@@ -25,13 +32,39 @@
   </mat-card>
 
   <mat-card class="card">
+    <mat-card-title>Activity attendance list:</mat-card-title>
     <mat-card-content>
       <button mat-raised-button color="accent" *ngIf="this.isNotTheOwner" (click)="attendActivity()">{{attendButton}}</button>
-      <h2>Attendance List</h2>
+      <p></p>
       <div *ngFor="let user of activity.participants">
         <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
       </div>
     </mat-card-content>
+  </mat-card>
+
+
+  <mat-card class="card">
+    <mat-card>
+    <form [formGroup]="commentFormGroup" (ngSubmit)="createComment()" class="sport-form__form">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Comment" formControlName="text">
+      </mat-form-field>
+        <button mat-raised-button color="accent"  [disabled]="!commentFormGroup.valid">Create</button>
+    </form>
+    </mat-card>
+    <p></p>
+    <mat-card-title>Activity comments:</mat-card-title>
+  <div *ngFor="let comment of this.comments">
+
+    <mat-card-content>
+
+     {{comment.created_at}}
+      {{comment.created_by_user.username}}
+      {{comment.text}}
+
+    </mat-card-content>
+
+  </div>
   </mat-card>
 </div>
 
