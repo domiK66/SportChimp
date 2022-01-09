@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
     birthday = models.DateField(null=True)
     bio = models.CharField(max_length=1024, null=True)
-    profile_image = models.ImageField(upload_to='profile_images/', null=True)
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, default='profile_images/user.png')
 
 
 class Sport(models.Model):

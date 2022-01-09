@@ -259,11 +259,11 @@ class UsersViewSet(viewsets.ViewSet):
 
     def update(self, request, pk=None):
         user = CustomUser.objects.get(pk=pk)
-        user.first_name = request.data["first_name"]
-        user.last_name = request.data["last_name"]
-        user.bio = request.data["bio"]
-        user.birthday = request.data["birthday"]
-        user.profile_image = request.data["profile_image"]
+        if request.data["first_name"]: user.first_name = request.data["first_name"]
+        if request.data["last_name"]: user.last_name = request.data["last_name"]
+        if request.data["bio"]: user.bio = request.data["bio"]
+        if request.data["birthday"]: user.birthday = request.data["birthday"]
+        if request.data["profile_image"]: user.profile_image = request.data["profile_image"]
         user.save()
         return Response(
             {

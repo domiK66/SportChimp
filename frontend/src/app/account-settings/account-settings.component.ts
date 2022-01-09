@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../services/user.service";
+import {User, UserService} from "../services/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {formatDate} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
@@ -26,7 +26,7 @@ export class AccountSettingsComponent implements OnInit {
     private http: HttpClient
   ) {
     this.userFormGroup = new FormGroup({
-        id: new FormControl(null),
+        id: new FormControl(this.userService.userId),
         first_name: new FormControl(null),
         last_name: new FormControl(null),
         bio: new FormControl(null),
@@ -44,47 +44,37 @@ export class AccountSettingsComponent implements OnInit {
     this.userService.getUser(this.userService.userId).subscribe(user => {
       this.userFormGroup.patchValue(user);
     })
+
   }
 
-  updateUser(imageInput: any){
+  ImageInputOnClick(imageInput: any){
     const file: File = imageInput.files[0];
     const reader = new FileReader();
     reader.addEventListener('load', (event: any) => {
       this.selectedFile = new ImageSnippet(event.target.result, file);
-      this.userFormGroup.value.profile_image = new FormControl(this.selectedFile.file);
-      this.userFormGroup.value.birthday = formatDate(new Date(this.userFormGroup.value.birthday), 'yyyy-MM-dd', 'en')
-      console.log(this.userFormGroup.value.birthday)
-
-
-      this.selectedFile = new ImageSnippet(event.target.result, file);
-
-      this.uploadImage(this.selectedFile.file).subscribe(
-        (res:any) => {
-
-        },
-        (err:any) => {
-
-        })
-
-      // this.userService.updateUser(this.userFormGroup.value).subscribe( () =>
-      //   this.snackbar.open('updated!', 'OK', {duration: 3000})
-      // )
     });
-
     reader.readAsDataURL(file);
   }
 
-  uploadImage(image: File) {
+
+  updateUser() {
+    console.log(this.selectedFile)
     const formData = new FormData();
-    formData.append('profile_image', image);
+    if (this.selectedFile) {
+      formData.append('profile_image', this.selectedFile.file);
+    } else {
+      formData.append('profile_image', "");
+    }
     formData.append('first_name', this.userFormGroup.value.first_name);
     formData.append('last_name', this.userFormGroup.value.last_name);
     formData.append('bio', this.userFormGroup.value.bio);
+    this.userFormGroup.value.birthday = formatDate(new Date(this.userFormGroup.value.birthday), 'yyyy-MM-dd', 'en')
     formData.append('birthday', this.userFormGroup.value.birthday);
-    console.log(image)
 
-    return this.http.put(`/api/users/${this.userService.user.id}/`, formData);
+    this.http.put(`/api/users/${this.userService.user.id}/`, formData).subscribe( () => {
+        this.snackbar.open('updated!', 'OK', {duration: 3000})
+      }
+    )
   }
-
 }
 

@@ -1,4 +1,4 @@
-<form (ngSubmit)="updateUser(imageInput)" [formGroup]="userFormGroup" class="register-form__form">
+<form (ngSubmit)="updateUser()" [formGroup]="userFormGroup" class="register-form__form">
   <mat-card class="card">
 
     <mat-card-header>
@@ -42,7 +42,7 @@
       <!-- Image Input Field -->
       <p></p>
       <mat-hint>Image Upload:</mat-hint>
-      <input #imageInput type="file" accept="image/*" formControlName="profile_image">
+      <input #imageInput type="file" accept="image/*" (change)="ImageInputOnClick(imageInput)">
       <p></p>
 
     </mat-card-content>
