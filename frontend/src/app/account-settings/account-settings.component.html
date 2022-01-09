@@ -27,6 +27,24 @@
         <mat-hint align="end">Your lastname</mat-hint>
       </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <textarea matInput type="text" placeholder="Bio" formControlName="bio"></textarea>
+        <mat-hint align="end">Your bio</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthday">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Image Input Field -->
+      <p></p>
+      <mat-hint>Image Upload:</mat-hint>
+      <input #imageInput type="file" accept="image/*" (change)="ImageInputOnClick(imageInput)">
+      <p></p>
+
     </mat-card-content>
 
     <!-- Submit Button -->

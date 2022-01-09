@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
   myActivities: Activity[] = [];
 
   user: any | User = {};
+  age: number | null = null;
 
   constructor(
     public userService: UserService,
@@ -42,7 +43,12 @@ export class ProfileComponent implements OnInit {
 
   getUser(){
     const username = this.route.snapshot.paramMap.get('username');
-    this.userService.getUsers().subscribe(users => this.user = users.find(u => u.username == username));
+    this.userService.getUsers().subscribe(users => {
+      this.user = users.find(u => u.username == username)
+      if (this.user.birthday != null) {
+        let timeDiff = Math.abs(Date.now() - new Date(this.user.birthday).getTime());
+        this.age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+      }
+    });
   }
-
 }

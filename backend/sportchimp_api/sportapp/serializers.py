@@ -12,8 +12,8 @@ class SportSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'date_joined')
+        model = models.CustomUser
+        fields = ('id', 'username', 'first_name', 'last_name', 'date_joined', 'birthday', 'bio', 'profile_image')
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -33,8 +33,10 @@ class ActivitySerializer2(serializers.ModelSerializer):
         model = models.Activity
         fields = '__all__'
 
+
 class CommentSerializer(serializers.ModelSerializer):
     created_by_user = UserSerializer()
+
     class Meta:
         model = models.Comment
         fields = '__all__'

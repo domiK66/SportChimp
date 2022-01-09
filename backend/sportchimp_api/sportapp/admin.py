@@ -40,3 +40,11 @@ class FriendshipRequestAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.FriendshipRequest, FriendshipRequestAdmin)
+
+
+#
+class UserAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(models.CustomUser, UserAdmin)
