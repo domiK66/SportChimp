@@ -4,22 +4,8 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-/*
- * Actual Sticky Footer Styles
- */
-.all-wrap {
-  min-height: 100vh;
-}
 
-.page-wrap {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
 
-.content {
-  flex: 1;
-}
 
 
 /*

@@ -1,51 +1,52 @@
 <!-- Header & sidenav-->
 <mat-drawer-container class="all-wrap" fullscreen>
-  <mat-drawer #drawer class="sidenav" mode="side">
+  <mat-drawer #drawer class="sidenav" mode="side" (click)="drawer.toggle(); this.menuOnClick()">
     <mat-nav-list>
       <div *ngIf="userService.hasPermission('sportapp.add_sport')">
         <div mat-subheader style="color: #000">Admin Dashboard *secret*</div>
-        <a [routerLink]="'/sport-list/'" mat-list-item style="color: #000"> Sports </a>
-        <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000"> Activities </a>
-        <mat-divider style="border-top-color: #000;border-width: 4px"></mat-divider>
+        <a [routerLink]="'/sport-list/'" mat-list-item> Sports </a>
+        <a [routerLink]="'/activity-list/'" mat-list-item> Activities </a>
+        <mat-divider style="border-width: 4px"></mat-divider>
         <div mat-subheader style="color: #000">User Dashboard</div>
       </div>
-      <a [routerLink]="'/index/'" mat-list-item style="color: #000">
+      <a [routerLink]="'/index/'" mat-list-item>
         <mat-icon aria-hidden="false">home</mat-icon>
         Home </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a [routerLink]="'/activity-view/'" mat-list-item style="color: #000">
+      <mat-divider></mat-divider>
+      <a [routerLink]="'/activity-view/'" mat-list-item>
         <mat-icon aria-hidden="false">emoji_events</mat-icon>
         <mat-icon aria-hidden="false">search</mat-icon>
         Find Activities </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000">
+      <mat-divider></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item>
         <mat-icon aria-hidden="false">event_available</mat-icon>
         Attending Activities </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a routerLink="profile/{{userService.user.username}}" mat-list-item style="color: #000">
+      <mat-divider></mat-divider>
+      <a routerLink="profile/{{userService.user.username}}" mat-list-item>
         <mat-icon aria-hidden="false">person</mat-icon>
         My Own Activities </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000">
+      <mat-divider ></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item>
         <mat-icon aria-hidden="false">favorite</mat-icon>
         My Saved Activities </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000">
+      <mat-divider></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item>
         <mat-icon aria-hidden="false">group_add</mat-icon>
         Find Friends </a>
-      <mat-divider style="border-top-color: #000"></mat-divider>
-      <a [routerLink]="'/activity-list/'" mat-list-item style="color: #000">
+      <mat-divider></mat-divider>
+      <a [routerLink]="'/activity-list/'" mat-list-item>
         <mat-icon aria-hidden="false">event</mat-icon>
         Friends Activities</a>
     </mat-nav-list>
   </mat-drawer>
 
   <div class="page-wrap">
-    <header role="banner">
+    <header class="header" role="banner">
       <mat-toolbar color="primary">
         <button (click)="drawer.toggle()"
+                id="menu"
                 aria-label="Main Menu"
-                class="menu" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened'))">
+                class="menu" onclick="this.classList.toggle('opened'); this.setAttribute('aria-expanded', this.classList.contains('opened'))">
           <svg height="40" style="color: #FFF;" viewBox="0 0 100 100" width="40">
             <path class="line line1"
                   d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"/>
@@ -96,19 +97,20 @@
     <!-- Footer -->
     <footer>
       <div class="footer-container">
+        <div class="row py-4">
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0"><img src="img/logo.png" alt="" width="180" class="mb-3">
+            <p class="font-italic text-muted">Exercising is often just more fun if done with other people. SportChimp offers an easy way to plan sport activities together and even meet new people to exercise with. Look for places and activities near you and take part. Find people with similar sporting interests!</p>
+          </div>
         <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
-        <p></p>
-        <a [routerLink]="'/'" style="color: white"><h1> SportChimp</h1></a>
-        <p>Exercising is often just more fun if done with other people.</p>
-        <p>We want to address this with our app.</p>
-        <p>We want to provide people an easy solution to plan sport activities together and even meet new people to
-          exercise with in new places.
-        </p>
-        <p>They can look for places and activities near them and take part. </p>
-        <p>This way the get to know new people with similar sporting interests and might find their new sporting
-          buddy. </p>
-        <p>The app can be used by everyone who is interested in sports.</p>
-        <span style="background-color: #69f0ae; color: black">2021 - 2022 © Copyright by sportchimp.xyz </span>
+        <div class="title">
+        <a [routerLink]="'/'" style="color: white"><h1>SportChimp</h1></a>
+        </div>
+        <div class="bg-light py-4">
+          <div class="container text-center">
+            <p class="text-muted mb-0 py-2">© 2021 SportChimp All rights reserved.</p>
+          </div>
+        </div>
+      </div>
       </div>
     </footer>
   </div>
