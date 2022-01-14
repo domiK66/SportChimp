@@ -1,48 +1,17 @@
+//HEADER
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+//NAVBAR
 .spacer {
   flex: 1 1 auto;
 }
-.sidenav {
-  padding: 20px;
-  background-color: #69f0ae;
-}
-.mat-divider {
-  border-top-color: #000
 
-}
-
-.mat-list-item{
-  color: #000
-
-}
-
-.container {
-  height: 100%;
-}
-
-.sidenav-content {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.footer-container {
-
-  text-align: center;
-  background-color: #7b1fa2;
-  padding: 10px;
-
-}
-
-
- // menu animation
-body {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-}
+// TOGGLE SIDENAV MENU
 .menu {
   background-color: transparent;
   border: none;
@@ -83,4 +52,45 @@ body {
   stroke-dasharray: 90 207;
   stroke-dashoffset: -134;
   stroke-width: 6;
+}
+
+// SIDENAV
+.sidenav {
+  padding: 20px;
+  background-color: #69f0ae;
+}
+.mat-divider {
+  border-top-color: #000
+}
+.mat-list-item{
+  color: #000
+}
+
+//PAGE CONTENT
+.content {
+  padding-top: 50px;
+}
+.container {
+  height: 100%;
+}
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+//FOOTER
+.footer-container {
+  text-align: center;
+  background-color: #7b1fa2;
+  padding: 10px;
+}
+.all-wrap {
+  min-height: 100vh;
+}
+.page-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
