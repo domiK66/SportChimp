@@ -1,4 +1,4 @@
-<form (ngSubmit)="updateUser()" [formGroup]="userFormGroup" class="register-form__form">
+<form (ngSubmit)="updateUser()" [formGroup]="userFormGroup" class="user-form__form">
   <mat-card class="card">
 
     <mat-card-header>
@@ -27,22 +27,48 @@
         <mat-hint align="end">Your lastname</mat-hint>
       </mat-form-field>
 
+      <!-- New Password -->
       <mat-form-field appearance="outline">
-        <textarea matInput type="text" placeholder="Bio" formControlName="bio"></textarea>
+        <mat-label>New Password</mat-label>
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput
+               placeholder="New Password">
+        <mat-icon (click)="togglePasswordVisibility()"
+                  matSuffix>{{showPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-hint align="end">Your new password</mat-hint>
+        <mat-error
+          *ngIf="userFormGroup.controls.password.hasError('notSame')">
+          not same
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Confirm New Password -->
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" matInput
+               placeholder="Confirm New Password">
+        <mat-hint align="end">Confirm new password</mat-hint>
+      </mat-form-field>
+      <p
+        *ngIf="userFormGroup.hasError('notSame')">Passwords do not match.
+      </p>
+      <!-- Bio -->
+      <mat-form-field appearance="outline">
+        <mat-label>Biography</mat-label>
+        <textarea formControlName="bio" matInput placeholder="Bio" type="text"></textarea>
         <mat-hint align="end">Your bio</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="birthday">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <input [matDatepicker]="picker" formControlName="birthday" matInput>
+        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
       <!-- Image Input Field -->
       <p></p>
       <mat-hint>Image Upload:</mat-hint>
-      <input #imageInput type="file" accept="image/*" (change)="ImageInputOnClick(imageInput)">
+      <input #imageInput (change)="ImageInputOnClick(imageInput)" accept="image/*" type="file">
       <p></p>
 
     </mat-card-content>

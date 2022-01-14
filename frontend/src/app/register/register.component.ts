@@ -4,6 +4,7 @@ import {User, UserService} from "../services/user.service";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {PasswordService} from "../services/password.service";
 
 @Component({
   selector: 'app-register',
@@ -21,25 +22,26 @@ export class RegisterComponent implements OnInit {
     public userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private passwordService: PasswordService
   ) {
     this.registerFormGroup = new FormGroup({
         id: new FormControl(null),
         username: new FormControl('', [Validators.required]),
         password: new FormControl(null,
           [
-            Validators.required, this.confirmPassword()
+            Validators.required, passwordService.confirmPassword()
           ]),
         confirmPassword: new FormControl(null,
           [
-            Validators.required, this.confirmPassword()
+            Validators.required, passwordService.confirmPassword()
           ]
         ),
         email: new FormControl('',[Validators.required]),
         first_name: new FormControl(null),
         last_name: new FormControl(null)
       },
-      {validators: this.confirmPassword()}
+      {validators: passwordService.confirmPassword()}
     )
   }
 
@@ -61,13 +63,6 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/index']);
   }
 
-  confirmPassword(): ValidatorFn {
-    return (group: AbstractControl) => {
-      let pass = group.get('password')?.value;
-      let confPass = group.get('confirmPassword')?.value;
-      return pass !== confPass ? {'notSame': true} : null
-    }
-  }
   public togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
