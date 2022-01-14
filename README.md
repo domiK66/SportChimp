@@ -5,7 +5,7 @@
 
 1. [General Info](#general-info)
 2. [Team Members](#team-members)
-3. [Requirements](requirements)
+3. [Requirements](#requirements)
 4. [Project Proposal](#project-proposal)
 5. [Installation](#installation)
 
