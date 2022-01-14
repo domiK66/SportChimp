@@ -27,8 +27,8 @@ const routes: Routes = [
   {path: 'activity-list:filter', component: ActivityListComponent},
 
   //forms
-  {path: 'sport-form', component: SportFormComponent },
-  {path: 'sport-form/:id', component: SportFormComponent},
+  {path: 'sport-form', component: SportFormComponent, canActivate: [AdminGuard] },
+  {path: 'sport-form/:id', component: SportFormComponent, canActivate: [AdminGuard]},
   {path: 'activity-form', component: ActivityFormComponent, canActivate: [AuthGuard] },
   {path: 'activity-form/:id', component: ActivityFormComponent, canActivate: [AuthGuard] },
 
