@@ -264,6 +264,7 @@ class UsersViewSet(viewsets.ViewSet):
         if request.data["bio"]: user.bio = request.data["bio"]
         if request.data["birthday"]: user.birthday = request.data["birthday"]
         if request.data["profile_image"]: user.profile_image = request.data["profile_image"]
+        if request.data["password"]: user.set_password(request.data["password"])
         user.save()
         return Response(
             {
