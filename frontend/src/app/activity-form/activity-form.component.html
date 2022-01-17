@@ -1,53 +1,44 @@
-<form [formGroup]="activityFormGroup" (ngSubmit)="createOrUpdateActivity()" class="activity-form__form">
+<form (ngSubmit)="createOrUpdateActivity()" [formGroup]="activityFormGroup" class="activity-form__form">
   <mat-form-field appearance="outline">
-    <input matInput type="text" placeholder="Title" formControlName="title">
+    <input formControlName="title" matInput placeholder="Title" type="text">
     <mat-hint align="end">The title of the sport activity</mat-hint>
     <mat-error *ngIf="activityFormGroup.controls.title.hasError('required')">
       Title is required
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field  appearance="outline">
-    <mat-select placeholder="Sport Genre" formControlName="sport_genre">
-      <mat-option *ngFor="let sport_genre of sportService.availableSports" [value]="sport_genre.id">{{sport_genre.name}}</mat-option>
+  <mat-form-field appearance="outline">
+    <mat-select [formControl]="sportControl" formControlName="sport_genre" placeholder="Sport Genre" required>
+      <mat-option *ngFor="let sport_genre of sportService.availableSports"
+                  [value]="sport_genre.id">{{sport_genre.name}}</mat-option>
     </mat-select>
+    <mat-error *ngIf="sportControl.hasError('required')">Please choose a sport</mat-error>
     <mat-hint align="end">The sport genre of the activity</mat-hint>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <textarea matInput type="text" placeholder="Description" formControlName="description"></textarea>
+    <textarea formControlName="description" matInput placeholder="Description" type="text"></textarea>
     <mat-hint align="end">The description of the sport activity</mat-hint>
   </mat-form-field>
 
-  <app-date placeholder="Date"
+  <app-date [required]="true"
             formControlName="date"
             hint="The date of the activity"
-            [required]="true">
+            placeholder="Date">
   </app-date>
 
   <mat-form-field appearance="outline">
-    <input matInput type="text" placeholder="Location" formControlName="location">
+    <input formControlName="location" required matInput placeholder="Location" type="text">
+    <mat-error *ngIf="activityFormGroup.controls.location.hasError('required')">Please enter a location</mat-error>
     <mat-hint align="end">The location of the sport activity</mat-hint>
   </mat-form-field>
 
   <mat-checkbox formControlName="is_public">is public</mat-checkbox>
 
   <mat-card-actions align="start">
-    <button mat-raised-button color="primary" [disabled]="!activityFormGroup.valid">{{submitButtonText}}</button>
+    <button [disabled]="!activityFormGroup.valid" color="primary" mat-raised-button>{{submitButtonText}}</button>
   </mat-card-actions>
 </form>
 
-  <br/>
-  <br/>
-  TODO:
-  <br/>
-  <p>created_by_user:
-
-  </p>
-  <br/>
-  <p>Participants:
-
-  </p>
-  <br/>
 
 

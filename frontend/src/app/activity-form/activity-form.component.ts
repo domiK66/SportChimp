@@ -16,6 +16,7 @@ import {formatDate} from "@angular/common";
 export class ActivityFormComponent implements OnInit {
 
   activityFormGroup: FormGroup;
+  sportControl: FormControl;
   submitButtonText = 'Create';
 
   constructor(
@@ -29,6 +30,7 @@ export class ActivityFormComponent implements OnInit {
     public userService: UserService
 
   ) {
+    this.sportControl = new FormControl('', Validators.required)
     this.activityFormGroup = new FormGroup({
       id: new FormControl(null),
       title: new FormControl('',[Validators.required]),
