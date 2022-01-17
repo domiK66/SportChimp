@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   users: number = 0;
   public showPassword = true;
 
+
   constructor(
     public userService: UserService,
     private route: ActivatedRoute,
@@ -37,13 +38,14 @@ export class RegisterComponent implements OnInit {
             Validators.required, passwordService.confirmPassword()
           ]
         ),
-        email: new FormControl('',[Validators.required]),
+        email: new FormControl('',[Validators.required, Validators.pattern(this.emailPattern)]),
         first_name: new FormControl(null),
         last_name: new FormControl(null)
       },
       {validators: passwordService.confirmPassword()}
     )
   }
+
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe(users => this.users = users.length)
@@ -66,4 +68,11 @@ export class RegisterComponent implements OnInit {
   public togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
+
+  // Validators
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  get emailValidation() {
+    return this.registerFormGroup.get('email');
+  }
+
 }

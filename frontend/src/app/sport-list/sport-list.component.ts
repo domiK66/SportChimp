@@ -25,4 +25,10 @@ export class SportListComponent implements OnInit {
   deleteSport(sport: Sport): void {
     this.sportService.deleteSport(sport).subscribe( () => { this.ngOnInit() });
   }
+  // confirmation dialog for deleting sport entries
+  confirmDelete(sport: Sport){
+    if (confirm("Are you sure to delete '" + sport.name +"'?")){
+      console.log(this.deleteSport(sport))
+    }
+  }
 }

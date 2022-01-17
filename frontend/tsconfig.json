@@ -25,6 +25,8 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    // for email validator in register form > TODO: maybe find better solution
+    "strictNullChecks": false
   }
 }

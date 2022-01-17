@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
@@ -9,7 +9,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 class ImageSnippet {
-  constructor(public src: string, public file: File) {}
+  constructor(public src: string, public file: File) {
+  }
 }
 
 @Component({
@@ -22,6 +23,9 @@ export class SportFormComponent implements OnInit {
   sportFormGroup: FormGroup;
   submitButtonText = '';
   selectedFile: ImageSnippet | undefined;
+
+  //fileSelected: boolean;
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -30,9 +34,9 @@ export class SportFormComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {
     this.sportFormGroup = new FormGroup({
-      id: new FormControl(null),
-      name: new FormControl('', [Validators.required], [this.nameValidator()]),
-      description: new FormControl('', [Validators.required])
+        id: new FormControl(null),
+        name: new FormControl('', [Validators.required], [this.nameValidator()]),
+        description: new FormControl('', [Validators.required])
       }
     )
   }
@@ -41,7 +45,9 @@ export class SportFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.submitButtonText = 'Update';
-      this.sportService.getSport(id).subscribe(sport => { this.sportFormGroup.patchValue(sport) });
+      this.sportService.getSport(id).subscribe(sport => {
+        this.sportFormGroup.patchValue(sport)
+      });
     } else {
       this.submitButtonText = 'Create';
     }
@@ -51,16 +57,17 @@ export class SportFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.sportService.updateSport(this.sportFormGroup.value).subscribe(() => {
-       this.snackbar.open('Sport updated successfully!', 'OK',{duration:3000})
+        this.snackbar.open('Sport updated successfully!', 'OK', {duration: 3000})
       })
       this.router.navigate(['/sport-list']);
     } else {
       this.sportService.createSport(this.sportFormGroup.value).subscribe(() => {
-        this.snackbar.open('Sport created successfully!', 'OK',{duration:3000})
+        this.snackbar.open('Sport created successfully!', 'OK', {duration: 3000})
       })
       this.router.navigate(['/sport-list']);
     }
   }
+
   uploadImage(image: File) {
     const formData = new FormData();
     formData.append('image', image);
@@ -86,16 +93,15 @@ export class SportFormComponent implements OnInit {
   processFile(imageInput: any) {
     const file: File = imageInput.files[0];
     const reader = new FileReader();
-
     reader.addEventListener('load', (event: any) => {
 
       this.selectedFile = new ImageSnippet(event.target.result, file);
 
       this.uploadImage(this.selectedFile.file).subscribe(
-        (res:any) => {
+        (res: any) => {
 
         },
-        (err:any) => {
+        (err: any) => {
 
         })
     });
