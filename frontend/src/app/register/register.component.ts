@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
             Validators.required, passwordService.confirmPassword()
           ]
         ),
-        email: new FormControl('',[Validators.required, Validators.pattern(this.emailPattern)]),
+        email: new FormControl('',[Validators.required, Validators.email]),
         first_name: new FormControl(null),
         last_name: new FormControl(null)
       },
@@ -69,10 +69,5 @@ export class RegisterComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  // Validators
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
-  get emailValidation() {
-    return this.registerFormGroup.get('email');
-  }
 
 }

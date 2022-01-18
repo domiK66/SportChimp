@@ -30,7 +30,7 @@
           Please enter a valid email address
         </mat-error>
         <mat-error
-          *ngIf="emailValidation.errors.pattern">
+          *ngIf="registerFormGroup.controls.email.hasError('email')">
           Please enter a valid email address -> john@doe.com
         </mat-error>
         <mat-hint align="end">Your email address</mat-hint>
