@@ -27,18 +27,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  /*
- login(): void {
-   this.http.post('/api/api-token-auth/', this.loginFormGroup.value)
-     .subscribe((res: any) => {
-       localStorage.setItem('access_token', res.token);
-       this.router.navigate(['movie-list']);
-       this.snackbar.open('Successfully logged in', 'OK',{duration:3000})
-     }, () => {
-       this.snackbar.open('Invalid credentials', 'OK',{duration:3000})
-     });
- }
- */
   login(): void {
     this.userService.login(this.loginFormGroup.value)
   }

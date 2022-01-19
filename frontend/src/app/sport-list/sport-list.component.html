@@ -31,7 +31,7 @@
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button color="warn" (click)="deleteSport(element)">Delete</button>
+      <button mat-raised-button color="warn" (click)="confirmDelete(element)">Delete</button>
     </td>
   </ng-container>
 

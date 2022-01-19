@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -23,39 +23,41 @@ export class ActivityFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snackbar: MatSnackBar,
-
     private activityService: ActivityService,
     public sportService: SportService,
     public userService: UserService
-
   ) {
     this.activityFormGroup = new FormGroup({
-      id: new FormControl(null),
-      title: new FormControl('',[Validators.required]),
-      sport_genre: new FormControl([]),
-      description: new FormControl(''),
-      date: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
-      location: new FormControl(''),
-      is_public: new FormControl(false)
+        id: new FormControl(null),
+        title: new FormControl('', [Validators.required]),
+        sport_genre: new FormControl([]),
+        description: new FormControl(''),
+        date: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
+        location: new FormControl(''),
+        is_public: new FormControl(false)
       }
     )
   }
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.submitButtonText = 'Update';
-      this.activityService.getActivity(id).subscribe(activity => { this.activityFormGroup.patchValue(activity); })
+      this.activityService.getActivity(id).subscribe(activity => {
+        this.activityFormGroup.patchValue(activity);
+      })
     } else {
       this.submitButtonText = 'Create';
     }
   }
+
   createOrUpdateActivity() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.activityService.updateActivity(this.activityFormGroup.value).subscribe(() => this.snackbar.open('Activity updated successfully!', 'OK',{duration:3000}))
+      this.activityService.updateActivity(this.activityFormGroup.value).subscribe(() => this.snackbar.open('Activity updated successfully!', 'OK', {duration: 3000}))
       this.router.navigate(['/activity-list']);
     } else {
-      this.activityService.createActivity(this.activityFormGroup.value).subscribe(() => this.snackbar.open('Activity created successfully!', 'OK',{duration:3000}))
+      this.activityService.createActivity(this.activityFormGroup.value).subscribe(() => this.snackbar.open('Activity created successfully!', 'OK', {duration: 3000}))
       this.router.navigate(['/activity-list']);
     }
   }

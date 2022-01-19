@@ -1,29 +1,33 @@
+<form (ngSubmit)="login()" [formGroup]="loginFormGroup" class="login-form__form">
+  <mat-card class="login-card">
+    <mat-card-header>
 
-<form [formGroup]="loginFormGroup" (ngSubmit)="login()" class="login-form__form">
-    <mat-card class="login-card">
-        <mat-card-header>
+      <mat-card-title>
+        <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
+        <a [routerLink]="'/'" style="color: white"><span> SportChimp</span></a>
+        /Login
+      </mat-card-title>
+      <mat-card-subtitle><p>Login to unleash the full power of SportChimp.xyz 🔥</p></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content style="display: flex; flex-direction: column">
 
-            <mat-card-title>
-              <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
-              <a [routerLink]="'/'" style="color: white"><span> SportChimp</span></a>
-              /Login</mat-card-title>
-          <mat-card-subtitle><p>Login to unleash the full power of SportChimp.xyz 🔥</p></mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content style="display: flex; flex-direction: column">
+      <!-- Username -->
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input formControlName="username" matInput name="username" placeholder="sportchimpuser007" required>
+        <mat-error *ngIf="loginFormGroup.controls.username.hasError('required')">Please enter your username</mat-error>
+      </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Username</mat-label>
-                <input matInput placeholder="sportchimpuser007" formControlName="username" name="username" required>
-            </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-                <input matInput formControlName="password" type="password" name="password"
-                       required>
-            </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button type="submit" color="primary">Login</button>
-        </mat-card-actions>
-    </mat-card>
+      <!-- Password -->
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" matInput name="password" required type="password">
+        <mat-error *ngIf="loginFormGroup.controls.password.hasError('required')">Please enter your password</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button color="primary" mat-raised-button type="submit">Login</button>
+    </mat-card-actions>
+  </mat-card>
 </form>
 
