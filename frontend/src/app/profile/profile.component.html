@@ -21,8 +21,85 @@
 
   </mat-card>
 
-
+  <h2 style="margin: 3rem auto;width: 80%;">Activities that {{this.user.username}} created</h2>
   <table mat-table [dataSource]="myActivities" matSort class="mat-elevation-z8">
+    <h2>Activities from {{this.user.username}}</h2>
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Image -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+      <td mat-cell *matCellDef="let element"> <img alt='image' src="api/{{element.sport_genre.image}}/" height="50px"> </td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+      <td mat-cell *matCellDef="let element"> {{element.date | date : 'dd.MM.yyyy'}} </td>
+    </ng-container>
+
+    <!-- Location Column -->
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+      <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+    </ng-container>
+
+    <!-- Is_Public Column -->
+    <ng-container matColumnDef="is_public">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Public</th>
+      <td mat-cell *matCellDef="let element"> {{element.is_public}} </td>
+    </ng-container>
+
+    <!-- Sport Genre Column-->
+    <ng-container matColumnDef="sport_genre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sport Genre</th>
+      <td mat-cell *matCellDef="let element"> {{element.sport_genre.name}} </td>
+    </ng-container>
+
+    <!-- Created_By_User Column -->
+    <ng-container matColumnDef="created_by_user">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By User</th>
+      <td mat-cell *matCellDef="let element"> {{element.created_by_user?.username}} </td>
+    </ng-container>
+
+    <!-- Participants Column -->
+    <ng-container matColumnDef="participants">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Participants</th>
+      <td mat-cell *matCellDef="let element"> {{element.participants.length}} </td>
+    </ng-container>
+
+    <!-- View Column -->
+    <ng-container matColumnDef="view">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="accent" [routerLink]="'/activity-details/' + element.id">View</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+
+  <h2 style="margin: 3rem auto;width: 80%;">Activities where {{this.user.username}} is going to</h2>
+  <table mat-table [dataSource]="attendActivities" matSort class="mat-elevation-z8">
     <h2>Activities from {{this.user.username}}</h2>
     <!-- Id Column -->
     <ng-container matColumnDef="id">

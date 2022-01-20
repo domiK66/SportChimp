@@ -9,9 +9,10 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  displayedColumns = ['id','image', 'title', 'sport_genre', 'date', 'location', 'is_public','participants', 'view'];
+  displayedColumns = ['id','image', 'title', 'sport_genre', 'date', 'location', 'is_public','participants','created_by_user', 'view'];
   activities: Activity[] = [];
   myActivities: Activity[] = [];
+  attendActivities: Activity[] = [];
 
   user: any | User = {};
   age: number | null = null;
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
     this.activityService.getActivities().subscribe(activities => {
         this.activities = activities;
         this.filter(this.user.username);
+        this.filter2(this.user.username);
       }
     );
   }
@@ -37,6 +39,13 @@ export class ProfileComponent implements OnInit {
       if (a.created_by_user != null) {
           return !username || a.created_by_user.username.toLowerCase().includes(username.toLowerCase())
         }
+      }
+    );
+  }
+  filter2(username: string) {
+    this.attendActivities = this.activities.filter(a => {
+      return a.participants.some(function(user) { return !username || user.username.toLowerCase() == username.toLowerCase()})
+          && a.created_by_user.username.toLowerCase() != username.toLowerCase()
       }
     );
   }
