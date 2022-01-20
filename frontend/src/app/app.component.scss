@@ -1,6 +1,6 @@
 //HEADER
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
   z-index: 1;
@@ -68,7 +68,7 @@
 
 //PAGE CONTENT
 .content {
-  padding-top: 50px;
+
 }
 .container {
   height: 100%;
