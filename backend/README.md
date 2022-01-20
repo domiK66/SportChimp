@@ -1,7 +1,7 @@
 # Setup helpfile for DJANGO sportapp WITH sportchimp_api
 an API for the sportchimp.xyz Webpage
 
-username: admin /password: admin
+username: admin/password: admin
 
 
 ## SETUP
@@ -14,23 +14,23 @@ username: admin /password: admin
 pip install virtualenv
 ```
 
-- Create a new virtual enviroment, when not already created
+- Create a new virtual environment, when not already created
 ```python 
 python -m venv venv
 ```
 ### ACTIVATE VENV
-- Activate the virtual envirmonent: venv (Windows)
+- Activate the virtual environment: venv (Windows)
 ```python 
 (venv) C:\Users\AK-47u\Desktop\Code Projects\SportChimp>
 ```
 ```python 
 venv\Scripts\activate.bat
 ```
-- Activate the virtual envirmonent: venv (Linux/Mac)
+- Activate the virtual environment: venv (Linux/Mac)
 ```python
 (venv) lukas@MacBook-Pro-Lukas backend % source venv/bin/activate  
 ```
-### PYTHON DJNAGO DEPENDECIES
+### PYTHON DJNAGO DEPENDENCIES
 - Install Django version 3.2.10
 ```python 
 pip install django==3.2.10
@@ -44,12 +44,12 @@ pip install djangorestframework-jwt
 ```
 
 ### RUN THE DJANGO PROJECT
-- Migrate migartions files
+- Migrate migrations files
 ```python 
 cd sportchimp_api
 (venv) C:\Users\AK-47u\Desktop\Code Projects\SportChimp\sportchimp_api>
 ```
-- Migrate migartions files
+- Migrate migrations files
 ```python 
 python manage.py migrate
 ```
