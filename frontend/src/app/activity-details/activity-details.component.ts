@@ -87,14 +87,14 @@ export class ActivityDetailsComponent implements OnInit {
     )
   }
   getComments() {
-    this.http.get<[]>(`http://localhost:4200/api/comments/`).subscribe(comments => {
+    this.http.get<[]>(`/api/comments/`).subscribe(comments => {
       this.comments = comments
       this.comments.forEach(com => com.created_at = formatDate(com.created_at, "yyyy-mm-dd hh:mm", "en"))
       this.comments = this.comments.filter(com => com.activity == this.activity.id)
     });
   }
   createComment(){
-    this.http.post(`http://localhost:4200/api/comments/`, this.commentFormGroup.value).subscribe(() => {
+    this.http.post(`/api/comments/`, this.commentFormGroup.value).subscribe(() => {
       this.getComments();
     })
   }

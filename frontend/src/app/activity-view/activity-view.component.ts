@@ -23,8 +23,8 @@ export class ActivityViewComponent implements OnInit {
   sportFilterFormControl = new FormControl('');
 
   curPage = 1;
-  pageSize = 6;
-  pageSizeOptions = [3, 6, 12, 24, 32];
+  pageSize = 4;
+  pageSizeOptions = [4, 8, 12, 24, 32];
 
   pageSizeFormControl = new FormControl(this.pageSize);
 

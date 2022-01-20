@@ -16,16 +16,24 @@
       <p>Age: {{this.age}}</p>
       <p>Birthday: {{this.user.birthday}}</p>
       <p>About me: {{this.user.bio}}</p>
-      <h2>Activities from {{this.user.username}}</h2>
+
     </mat-card-content>
 
   </mat-card>
-  <table mat-table style="width: 100%" [dataSource]="myActivities" matSort class="mat-elevation-z8">
 
+
+  <table mat-table [dataSource]="myActivities" matSort class="mat-elevation-z8">
+    <h2>Activities from {{this.user.username}}</h2>
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Image -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+      <td mat-cell *matCellDef="let element"> <img alt='image' src="api/{{element.sport_genre.image}}/" height="50px"> </td>
     </ng-container>
 
     <!-- Title Column -->
@@ -73,7 +81,7 @@
     <!-- Participants Column -->
     <ng-container matColumnDef="participants">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Participants</th>
-      <td mat-cell *matCellDef="let element"> {{element.participants}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.participants.length}} </td>
     </ng-container>
 
     <!-- View Column -->

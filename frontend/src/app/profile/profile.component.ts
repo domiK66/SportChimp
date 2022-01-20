@@ -9,7 +9,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  displayedColumns = ['id', 'title', 'sport_genre', 'date', 'location', 'is_public', 'created_by_user', 'view'];
+  displayedColumns = ['id','image', 'title', 'sport_genre', 'date', 'location', 'is_public','participants', 'view'];
   activities: Activity[] = [];
   myActivities: Activity[] = [];
 

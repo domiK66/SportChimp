@@ -47,7 +47,7 @@ const routes: Routes = [
 
   //activity views
   {path: 'activity-view', component: ActivityViewComponent },
-  {path: 'activity-view:filter', component: ActivityListComponent},
+  {path: 'activity-view/:filter', component: ActivityViewComponent},
 
   // activity-details
   {path: 'activity-details/:id', component: ActivityDetailsComponent}
