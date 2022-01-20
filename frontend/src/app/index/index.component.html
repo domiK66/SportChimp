@@ -3,7 +3,7 @@
   <mat-grid-list [cols]="cols$ | async" rowHeight="106:151" gutterSize="10px" >
     <div *ngFor="let sport of sports; let i=index">
       <mat-grid-tile class="sport-grid-tile">
-        <mat-card class="sport-card">
+        <mat-card class="sport-card" [routerLink]='"/activity-view/" + sport.name'>
           <img mat-card-image
                class="sport-card-img"
                src="http://127.0.0.1:4200/api/{{sport.image}}"
