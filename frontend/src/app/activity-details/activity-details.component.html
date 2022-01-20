@@ -37,7 +37,7 @@
       <button mat-raised-button color="accent" *ngIf="this.isNotTheOwner" (click)="attendActivity()">{{attendButton}}</button>
       <p></p>
       <div *ngFor="let user of activity.participants">
-        <img src="/api/{{user.profile_image}}" height="40px"/>
+        <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
         <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
       </div>
     </mat-card-content>
@@ -63,7 +63,7 @@
           <mat-card-title>{{comment.text}} </mat-card-title>
 
 
-          <img src="/api/{{comment.created_by_user.profile_image}}" height="40px"/>
+          <img src="/api/{{comment.created_by_user.profile_image}}" height="40px" style="border-radius: 50%;"/>
 
           {{comment.created_by_user.username}}
           {{comment.created_at}}
