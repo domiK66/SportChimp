@@ -23,8 +23,8 @@ export class ActivityViewComponent implements OnInit {
   sportFilterFormControl = new FormControl('');
 
   curPage = 1;
-  pageSize = 6;
-  pageSizeOptions = [3, 6, 12, 24, 32];
+  pageSize = 4;
+  pageSizeOptions = [4, 8, 12, 24, 32];
 
   pageSizeFormControl = new FormControl(this.pageSize);
 
@@ -63,7 +63,7 @@ export class ActivityViewComponent implements OnInit {
     this.route.paramMap.subscribe(params => this.sportFilterFormControl.setValue(params.get('filter')) );
 
     this.searchFilterFormControl.valueChanges.subscribe(value => this.searchFilter(value));
-    this.route.paramMap.subscribe(params => this.searchFilterFormControl.setValue(params.get('filter')) );
+    this.route.paramMap.subscribe(params => this.searchFilterFormControl.setValue(params.get('')) );
 
     this.pageSizeFormControl.valueChanges.subscribe(value => this.pageSize = value);
 
@@ -77,17 +77,21 @@ export class ActivityViewComponent implements OnInit {
     this.numberOfPages();
   }
 
-  sportFilter(filterValue: []) {
+  sportFilter(filterValue: []  ) {
     if (filterValue == null || filterValue.length == 0) {
       this.filteredActivities = this.activities
-    } else {
+    } else if (Array.isArray(filterValue)) {
       this.filteredActivities = this.activities.filter((el) => {
         return filterValue.some((f) => {
           return !filterValue || f === el.sport_genre.name;
         })
       });
+    } else {
+      this.filteredActivities = this.activities.filter(a => {
+        // @ts-ignore
+        return !filterValue || a.sport_genre.name.toLowerCase() == filterValue.toLowerCase()
+      });
     }
-
 
     this.curPage = 1;
     this.numberOfPages();

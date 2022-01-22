@@ -33,6 +33,7 @@ export class ActivityFormComponent implements OnInit {
         sport_genre: new FormControl([]),
         description: new FormControl(''),
         date: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
+        time: new FormControl(formatDate(new Date(), 'HH:mm:ss', 'en')),
         location: new FormControl(''),
         is_public: new FormControl(false)
       }
@@ -55,10 +56,10 @@ export class ActivityFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.activityService.updateActivity(this.activityFormGroup.value).subscribe(() => this.snackbar.open('Activity updated successfully!', 'OK', {duration: 3000}))
-      this.router.navigate(['/activity-list']);
+      this.router.navigate([`/activity-details/${id}`]);
     } else {
       this.activityService.createActivity(this.activityFormGroup.value).subscribe(() => this.snackbar.open('Activity created successfully!', 'OK', {duration: 3000}))
-      this.router.navigate(['/activity-list']);
+      this.router.navigate([`/activity-view/`]);
     }
   }
 }

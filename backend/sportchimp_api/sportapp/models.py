@@ -7,6 +7,7 @@ class CustomUser(AbstractUser):
     birthday = models.DateField(null=True)
     bio = models.CharField(max_length=1024, null=True)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, default='profile_images/user.png')
+    follower = models.ManyToManyField('self', symmetrical=False)
 
 
 class Sport(models.Model):
@@ -22,6 +23,7 @@ class Activity(models.Model):
     title = models.CharField(max_length=1024)
     description = models.CharField(max_length=1024, null=True)
     date = models.DateField()
+    time = models.TimeField()
     # TODO: location
     location = models.CharField(max_length=1024)
     is_public = models.BooleanField(default=True)
@@ -41,16 +43,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
-
-
-class FriendshipRequest(models.Model):
-    from_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='friendship_requests_sent')
-    to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='friendship_requests_received')
-
-
-class Friend(models.Model):
-    to_user = models.ForeignKey(CustomUser, models.CASCADE, related_name='friends')
-    from_user = models.ForeignKey(CustomUser, models.CASCADE, related_name='_unused_friend_relation')
 
 
 

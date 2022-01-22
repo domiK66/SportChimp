@@ -10,10 +10,19 @@ class SportSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserSerializer(serializers.ModelSerializer):
+class FollowerSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = models.CustomUser
         fields = ('id', 'username', 'first_name', 'last_name', 'date_joined', 'birthday', 'bio', 'profile_image')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    follower = FollowerSerializer(many=True)
+
+    class Meta:
+        model = models.CustomUser
+        fields = ('id', 'username', 'first_name', 'last_name', 'date_joined', 'birthday', 'bio', 'profile_image', 'follower')
 
 
 class ActivitySerializer(serializers.ModelSerializer):

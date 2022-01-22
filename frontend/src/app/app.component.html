@@ -13,28 +13,30 @@
         <mat-icon aria-hidden="false">home</mat-icon>
         Home </a>
       <mat-divider></mat-divider>
+      <a [routerLink]="'/activity-form'" mat-list-item>
+
+        <mat-icon>add</mat-icon>
+        Create Activity
+      </a>
+      <mat-divider></mat-divider>
       <a [routerLink]="'/activity-view/'" mat-list-item>
         <mat-icon aria-hidden="false">emoji_events</mat-icon>
         <mat-icon aria-hidden="false">search</mat-icon>
         Find Activities </a>
       <mat-divider></mat-divider>
-      <a [routerLink]="'/activity-list/'" mat-list-item>
+      <a routerLink="profile/{{userService.user.username}}" mat-list-item>
         <mat-icon aria-hidden="false">event_available</mat-icon>
         Attending Activities </a>
       <mat-divider></mat-divider>
       <a routerLink="profile/{{userService.user.username}}" mat-list-item>
         <mat-icon aria-hidden="false">person</mat-icon>
         My Own Activities </a>
-      <mat-divider ></mat-divider>
-      <a [routerLink]="'/activity-list/'" mat-list-item>
-        <mat-icon aria-hidden="false">favorite</mat-icon>
-        My Saved Activities </a>
       <mat-divider></mat-divider>
-      <a [routerLink]="'/activity-list/'" mat-list-item>
+      <a [routerLink]="'/friends/'" mat-list-item>
         <mat-icon aria-hidden="false">group_add</mat-icon>
         Find Friends </a>
       <mat-divider></mat-divider>
-      <a [routerLink]="'/activity-list/'" mat-list-item>
+      <a [routerLink]="'/'" mat-list-item>
         <mat-icon aria-hidden="false">event</mat-icon>
         Friends Activities</a>
     </mat-nav-list>
@@ -63,17 +65,18 @@
 
         <!-- only shown when logged in -->
         <div *ngIf="userService.isLoggedIn | async; else guest">
-          <button [routerLink]="'/activity-form'" mat-icon-button>
-            <mat-icon>add</mat-icon>
-          </button>
+
+
           <button mat-icon-button matBadge="4" matBadgeColor="accent" matBadgeSize="medium">
             <mat-icon>notifications_active</mat-icon>
           </button>
-          <button [matMenuTriggerFor]="userMenu" mat-icon-button>
-            <mat-icon>account_circle</mat-icon>
+          <button [matMenuTriggerFor]="userMenu" mat-button>
+            {{userService.user.username}}
+            <img class=""
+                 src="http://127.0.0.1:4200/api/{{userService.user.profile_image}}"
+                 height="40px" style="border-radius: 50%;">
           </button>
           <mat-menu #userMenu="matMenu" xPosition="before">
-            <button mat-menu-item routerLink="profile/{{userService.user.username}}">Welcome {{userService.user.username}}!</button>
             <button mat-menu-item routerLink="profile/{{userService.user.username}}">Profile</button>
             <button mat-menu-item>My friends</button>
             <button mat-menu-item routerLink="account-settings">My Account Settings</button>

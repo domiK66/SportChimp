@@ -10,3 +10,11 @@
 .sport-card-title {
   font-size: 10px;
 }
+
+
+.activity-container {
+  display: flex;
+  flex-direction: column;
+  width: 50rem;
+  margin: 3rem auto;
+}

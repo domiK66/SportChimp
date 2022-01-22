@@ -107,6 +107,7 @@ class ActivityViewSet(viewsets.ViewSet):
             title=request.data["title"],
             description=request.data["description"],
             date=request.data["date"],
+            time=request.data["time"],
             is_public=request.data["is_public"],
             location=request.data["location"],
 
@@ -140,6 +141,7 @@ class ActivityViewSet(viewsets.ViewSet):
                 activity.sport_genre = models.Sport.objects.get(id=request.data["sport_genre"])
                 activity.description = request.data["description"]
                 activity.date = request.data["date"]
+                activity.time = request.data["time"]
                 activity.location = request.data["location"]
                 activity.is_public = request.data["is_public"]
                 activity.save()
@@ -259,19 +261,45 @@ class UsersViewSet(viewsets.ViewSet):
 
     def update(self, request, pk=None):
         user = CustomUser.objects.get(pk=pk)
-        if request.data["first_name"]: user.first_name = request.data["first_name"]
-        if request.data["last_name"]: user.last_name = request.data["last_name"]
-        if request.data["bio"]: user.bio = request.data["bio"]
-        if request.data["birthday"]: user.birthday = request.data["birthday"]
-        if request.data["profile_image"]: user.profile_image = request.data["profile_image"]
-        if request.data["password"]: user.set_password(request.data["password"])
-        user.save()
+        if request.user == user:
+            if request.data["first_name"]: user.first_name = request.data["first_name"]
+            if request.data["last_name"]: user.last_name = request.data["last_name"]
+            if request.data["bio"]: user.bio = request.data["bio"]
+            if request.data["birthday"]: user.birthday = request.data["birthday"]
+            if request.data["profile_image"]: user.profile_image = request.data["profile_image"]
+            if request.data["password"]: user.set_password(request.data["password"])
+            user.save()
+
+            return Response(
+                {
+                    "id": user.id,
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name
+                },
+                status=201
+            )
+        elif request.user in user.follower.all():
+            user.follower.remove(request.user)
+            user.save()
+
+            return Response(
+                {
+                },
+                status=200
+            )
+        elif request.user not in user.follower.all():
+            user.follower.add(request.user)
+            user.save()
+
+            return Response(
+                {
+                },
+                status=200
+            )
+
         return Response(
             {
-                "id": user.id,
-                "username": user.username,
-                "first_name": user.first_name,
-                "last_name": user.last_name
             },
-            status=201
+            status=200
         )

@@ -2,17 +2,19 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Sport} from "./sport.service";
 import {SportChimpApiService} from "./sportchimp-api.service";
+import {User} from "./user.service";
 
 export interface Activity {
   id: number;
   title: string;
   description: string;
   date: string;
+  time: string;
   location: string;
   is_public: boolean;
   sport_genre: Sport;
   created_by_user: any;
-  participants: [];
+  participants: User[];
 }
 
 @Injectable({providedIn: 'root'})

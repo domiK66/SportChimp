@@ -13,6 +13,7 @@ import {UserService} from "../services/user.service";
 export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup;
+  public showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +30,10 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.userService.login(this.loginFormGroup.value)
+  }
+
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
 }

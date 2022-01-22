@@ -26,21 +26,6 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(models.Comment, CommentAdmin)
 
 
-#
-class FriendAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(models.Friend, FriendAdmin)
-
-
-#
-class FriendshipRequestAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(models.FriendshipRequest, FriendshipRequestAdmin)
-
 
 #
 class UserAdmin(admin.ModelAdmin):

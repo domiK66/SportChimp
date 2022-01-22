@@ -1,5 +1,6 @@
-<form (ngSubmit)="createOrUpdateActivity()" [formGroup]="activityFormGroup" class="activity-form__form">
 
+<form (ngSubmit)="createOrUpdateActivity()" [formGroup]="activityFormGroup" class="activity-form__form">
+  <h2>Create an activity:</h2>
   <!-- Title -->
   <mat-form-field appearance="outline">
     <input formControlName="title" matInput placeholder="Title" type="text">
@@ -31,6 +32,10 @@
             hint="The date of the activity"
             placeholder="Date">
   </app-date>
+
+  <mat-form-field appearance="outline">
+    <input matInput type="time" formControlName="time" required="true" >
+  </mat-form-field>
 
   <!-- Location -->
   <mat-form-field appearance="outline">

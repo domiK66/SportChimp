@@ -1,0 +1,18 @@
+<p>friends works!</p>
+
+<mat-form-field appearance="outline">
+  <mat-label>Search</mat-label>
+  <mat-icon matPrefix>search</mat-icon>
+  <input matInput
+         type="text"
+         [formControl]="searchFilterFormControl"
+         placeholder="Search for activities ..." />
+</mat-form-field>
+
+<div *ngFor="let user of filteredUsers">
+  <mat-card style="">
+    <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+    <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+  </mat-card>
+</div>
+
