@@ -22,6 +22,7 @@ class Activity(models.Model):
     title = models.CharField(max_length=1024)
     description = models.CharField(max_length=1024, null=True)
     date = models.DateField()
+    time = models.TimeField()
     # TODO: location
     location = models.CharField(max_length=1024)
     is_public = models.BooleanField(default=True)

@@ -107,6 +107,7 @@ class ActivityViewSet(viewsets.ViewSet):
             title=request.data["title"],
             description=request.data["description"],
             date=request.data["date"],
+            time=request.data["time"],
             is_public=request.data["is_public"],
             location=request.data["location"],
 
@@ -140,6 +141,7 @@ class ActivityViewSet(viewsets.ViewSet):
                 activity.sport_genre = models.Sport.objects.get(id=request.data["sport_genre"])
                 activity.description = request.data["description"]
                 activity.date = request.data["date"]
+                activity.time = request.data["time"]
                 activity.location = request.data["location"]
                 activity.is_public = request.data["is_public"]
                 activity.save()

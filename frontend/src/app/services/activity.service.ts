@@ -9,6 +9,7 @@ export interface Activity {
   title: string;
   description: string;
   date: string;
+  time: string;
   location: string;
   is_public: boolean;
   sport_genre: Sport;

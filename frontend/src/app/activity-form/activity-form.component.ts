@@ -33,6 +33,7 @@ export class ActivityFormComponent implements OnInit {
         sport_genre: new FormControl([]),
         description: new FormControl(''),
         date: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
+        time: new FormControl(formatDate(new Date(), 'HH:mm:ss', 'en')),
         location: new FormControl(''),
         is_public: new FormControl(false)
       }
