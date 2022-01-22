@@ -78,7 +78,6 @@
           </button>
           <mat-menu #userMenu="matMenu" xPosition="before">
             <button mat-menu-item routerLink="profile/{{userService.user.username}}">Profile</button>
-            <button mat-menu-item>My friends</button>
             <button mat-menu-item routerLink="account-settings">My Account Settings</button>
             <button (click)="userService.logout()" mat-menu-item>Log out</button>
           </mat-menu>

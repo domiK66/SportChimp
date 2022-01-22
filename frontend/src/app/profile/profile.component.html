@@ -36,7 +36,7 @@
           <p>Follower:{{this.user.follower.length}}</p>
           <div *ngFor="let user of this.user.follower">
             <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
-            <a (click)="this.getUser()" style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+            <a (click)="ngOnInit()" style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
           </div>
           <p>Following: </p>
         </mat-card-content>
