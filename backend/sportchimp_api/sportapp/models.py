@@ -23,9 +23,10 @@ class Activity(models.Model):
     description = models.CharField(max_length=1024, null=True)
     date = models.DateField()
     time = models.TimeField()
-    # TODO: location
+    min_players = models.IntegerField(default=2)
+    max_players = models.IntegerField(default=30)
     location = models.CharField(max_length=1024)
-    is_public = models.BooleanField(default=True)
+    equipment_needed = models.BooleanField(default=True)
     sport_genre = models.ForeignKey(Sport, on_delete=models.PROTECT)
     created_by_user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="activity_created_by_user", null=True)
     participants = models.ManyToManyField(CustomUser, related_name="participants")

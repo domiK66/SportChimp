@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivityService} from "../services/activity.service";
-import {Sport, SportService} from "../services/sport.service";
+import {SportService} from "../services/sport.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserService} from "../services/user.service";
 import {formatDate} from "@angular/common";
@@ -17,6 +17,7 @@ export class ActivityFormComponent implements OnInit {
 
   activityFormGroup: FormGroup;
   submitButtonText = 'Create';
+  isOn: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -34,8 +35,10 @@ export class ActivityFormComponent implements OnInit {
         description: new FormControl(''),
         date: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
         time: new FormControl(formatDate(new Date(), 'HH:mm:ss', 'en')),
+        min_players: new FormControl(2),
+        max_players: new FormControl(10),
         location: new FormControl(''),
-        is_public: new FormControl(false)
+        equipment_needed: new FormControl(false)
       }
     )
   }

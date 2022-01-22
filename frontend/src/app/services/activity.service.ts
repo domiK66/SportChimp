@@ -10,8 +10,10 @@ export interface Activity {
   description: string;
   date: string;
   time: string;
+  min_players: number;
+  max_players: number;
   location: string;
-  is_public: boolean;
+  equipment_needed: boolean;
   sport_genre: Sport;
   created_by_user: any;
   participants: User[];
