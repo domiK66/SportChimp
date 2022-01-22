@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Activity, ActivityService} from "../services/activity.service";
-import {Sport, SportService} from "../services/sport.service";
 import {FormControl} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 
@@ -12,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ActivityListComponent implements OnInit {
 
-  displayedColumns = ['id', 'title', 'sport_genre', 'date', 'location', 'is_public', 'created_by_user', 'edit', 'view'];
+  displayedColumns = ['id', 'title', 'sport_genre', 'date', 'location', 'equipment_needed', 'created_by_user', 'edit', 'view'];
   activities: Activity[] = [];
   filteredActivities: Activity[] = [];
   filterFormControl = new FormControl('');

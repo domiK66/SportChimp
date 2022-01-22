@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {User, UserService} from "../services/user.service";
+import {FormControl, FormGroup} from "@angular/forms";
+import {UserService} from "../services/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {formatDate} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
@@ -24,6 +24,9 @@ export class AccountSettingsComponent implements OnInit {
   public showPassword = false; //todo password change
   userName: string | undefined;
 
+  minDate: Date;
+  maxDate: Date;
+
   constructor(
     private userService: UserService,
     private snackbar: MatSnackBar,
@@ -35,17 +38,20 @@ export class AccountSettingsComponent implements OnInit {
         id: new FormControl(this.userService.userId),
         first_name: new FormControl(null),
         last_name: new FormControl(null),
-        bio: new FormControl(null),
+        bio: new FormControl(''),
         birthday: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
         profile_image: new FormControl(null),
         password: new FormControl("",[passwordService.confirmPassword]),
         confirmPassword: new FormControl("", [passwordService.confirmPassword])
-        //TODO: password change
       },
       {validators: passwordService.confirmPassword()}
     )
-
-
+    const today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+    const currentYear = new Date().getFullYear();
+    const currentMonth= new Date().getMonth()+1;
+    const currentDay = +today.slice(8, 10);
+    this.minDate = new Date(currentYear - 120, currentMonth, currentDay);
+    this.maxDate = new Date(currentYear - 19, currentMonth, currentDay);
   }
 
 

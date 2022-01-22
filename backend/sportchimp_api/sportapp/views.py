@@ -1,8 +1,5 @@
-from django.contrib.auth.decorators import user_passes_test
 from rest_framework import viewsets
-from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
-from rest_framework import permissions
 
 from datetime import datetime
 
@@ -108,7 +105,9 @@ class ActivityViewSet(viewsets.ViewSet):
             description=request.data["description"],
             date=request.data["date"],
             time=request.data["time"],
-            is_public=request.data["is_public"],
+            min_players=request.data["min_players"],
+            max_players=request.data["max_players"],
+            equipment_needed=request.data["equipment_needed"],
             location=request.data["location"],
 
             # TODO: ?? idk if best practice
@@ -142,8 +141,10 @@ class ActivityViewSet(viewsets.ViewSet):
                 activity.description = request.data["description"]
                 activity.date = request.data["date"]
                 activity.time = request.data["time"]
+                activity.min_players = request.data["min_players"]
+                activity.max_players = request.data["max_players"]
                 activity.location = request.data["location"]
-                activity.is_public = request.data["is_public"]
+                activity.equipment_needed = request.data["equipment_needed"]
                 activity.save()
 
                 return Response(

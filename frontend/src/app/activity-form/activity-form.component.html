@@ -34,7 +34,20 @@
   </app-date>
 
   <mat-form-field appearance="outline">
-    <input matInput type="time" formControlName="time" required="true" >
+    <input matInput type="time" formControlName="time" required>
+    <mat-hint align="end">The start time of the activity.</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <input matInput type="number" maxlength="2" min="2" placeholder="Min. People" formControlName="min_players" required>
+    <mat-error *ngIf="activityFormGroup.controls.min_players.hasError('required')">Please enter an amount.</mat-error>
+    <mat-hint align="end">The minimum amount of people needed for this activity including you (Min. 2).</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <input matInput type="number" maxlength="2" min="min_players"  placeholder="Max. People" formControlName="max_players" required>
+    <mat-error *ngIf="activityFormGroup.controls.max_players.hasError('required')">Please enter an amount.</mat-error>
+    <mat-hint align="end">Max People to attend.</mat-hint>
   </mat-form-field>
 
   <!-- Location -->
@@ -44,8 +57,9 @@
     <mat-hint align="end">The location of the sport activity</mat-hint>
   </mat-form-field>
 
-  <!-- public? -->
-  <mat-checkbox formControlName="is_public">is public</mat-checkbox>
+  <!-- equipment needed? -->
+  <mat-checkbox formControlName="equipment_needed" (click)="isOn = true">Equipment needed</mat-checkbox>
+  <mat-hint *ngIf="isOn == true">Please provide in the description, what others should bring with.</mat-hint>
 
   <!-- Button -->
   <mat-card-actions align="start">
