@@ -1,4 +1,4 @@
-# SportChimp
+# SportChimp 🐵
 ***
 
 <img src="https://github.com/domiK66/SportChimp/blob/main/backend/sportchimp_api/media/images/chimp.png" width="200">
