@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/purple-green.css';
+//@import '@angular/material/prebuilt-themes/purple-green.css';
+@import '~@angular/material/theming';
+@include mat-core();
 
+$my-app-primary: mat-palette($mat-blue, 900);
+$my-app-accent: mat-palette($mat-cyan, A200);
+$my-app-theme: mat-dark-theme($my-app-primary, $my-app-accent);
+
+@include angular-material-theme($my-app-theme);
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
