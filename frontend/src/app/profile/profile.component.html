@@ -16,6 +16,14 @@
       <p>Age: {{this.age}}</p>
       <p>Birthday: {{this.user.birthday}}</p>
       <p>About me: {{this.user.bio}}</p>
+      <button (click)="userService.updateUser(this.user).subscribe()">Follow</button>
+      <p>Follower:{{this.user.follower.length}}</p>
+      <div *ngFor="let user of this.user.follower">
+        <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+        <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+      </div>
+      <p>Following: </p>
+      <p>Total created Activities: {{this.myActivities.length}}</p>
 
     </mat-card-content>
 

@@ -14,6 +14,7 @@ export interface User {
   last_name: string;
   date_joined: string;
   profile_image: string;
+  follower: [];
 }
 
 @Injectable({providedIn: 'root'})

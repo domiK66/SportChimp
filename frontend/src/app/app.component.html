@@ -24,19 +24,15 @@
         <mat-icon aria-hidden="false">search</mat-icon>
         Find Activities </a>
       <mat-divider></mat-divider>
-      <a [routerLink]="'/activity-view/'" mat-list-item>
+      <a routerLink="profile/{{userService.user.username}}" mat-list-item>
         <mat-icon aria-hidden="false">event_available</mat-icon>
         Attending Activities </a>
       <mat-divider></mat-divider>
       <a routerLink="profile/{{userService.user.username}}" mat-list-item>
         <mat-icon aria-hidden="false">person</mat-icon>
         My Own Activities </a>
-      <mat-divider ></mat-divider>
-      <a [routerLink]="'/activity-view/'" mat-list-item>
-        <mat-icon aria-hidden="false">favorite</mat-icon>
-        My Saved Activities </a>
       <mat-divider></mat-divider>
-      <a [routerLink]="'/activity-view/'" mat-list-item>
+      <a [routerLink]="'/friends/'" mat-list-item>
         <mat-icon aria-hidden="false">group_add</mat-icon>
         Find Friends </a>
       <mat-divider></mat-divider>

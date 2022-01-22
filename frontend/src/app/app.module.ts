@@ -37,6 +37,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatBadgeModule} from '@angular/material/badge';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { FriendsComponent } from './friends/friends.component';
 
 
 export function tokenGetter() {
@@ -58,6 +59,7 @@ export function tokenGetter() {
     ProfileComponent,
     ActivityDetailsComponent,
     AccountSettingsComponent,
+    FriendsComponent,
 
   ],
   imports: [
