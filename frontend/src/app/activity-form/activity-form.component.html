@@ -3,6 +3,7 @@
   <h2>Create an activity:</h2>
   <!-- Title -->
   <mat-form-field appearance="outline">
+    <mat-label>Title</mat-label>
     <input formControlName="title" matInput placeholder="Title" type="text">
     <mat-hint align="end">The title of the sport activity</mat-hint>
     <mat-error *ngIf="activityFormGroup.controls.title.hasError('required')">
@@ -12,6 +13,7 @@
 
   <!-- Sport Genre -->
   <mat-form-field appearance="outline"><!--[formControl]="sportControl"-->
+    <mat-label>Sport Genre</mat-label>
     <mat-select formControlName="sport_genre" placeholder="Sport Genre" required>
       <mat-option *ngFor="let sport_genre of sportService.availableSports"
                   [value]="sport_genre.id">{{sport_genre.name}}</mat-option>
@@ -22,6 +24,7 @@
 
   <!-- Description -->
   <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
     <textarea formControlName="description" matInput placeholder="Description" type="text"></textarea>
     <mat-hint align="end">The description of the sport activity</mat-hint>
   </mat-form-field>
@@ -33,18 +36,24 @@
             placeholder="Date">
   </app-date>
 
+  <!-- Start Time-->
   <mat-form-field appearance="outline">
+    <mat-label>Start Time</mat-label>
     <input matInput type="time" formControlName="time" required>
     <mat-hint align="end">The start time of the activity.</mat-hint>
   </mat-form-field>
 
+  <!-- Min players-->
   <mat-form-field appearance="outline">
+    <mat-label>Min. People</mat-label>
     <input matInput type="number" maxlength="2" min="2" placeholder="Min. People" formControlName="min_players" required>
     <mat-error *ngIf="activityFormGroup.controls.min_players.hasError('required')">Please enter an amount.</mat-error>
     <mat-hint align="end">The minimum amount of people needed for this activity including you (Min. 2).</mat-hint>
   </mat-form-field>
 
+  <!-- Max players-->
   <mat-form-field appearance="outline">
+    <mat-label>Max. People</mat-label>
     <input matInput type="number" maxlength="2" min="min_players"  placeholder="Max. People" formControlName="max_players" required>
     <mat-error *ngIf="activityFormGroup.controls.max_players.hasError('required')">Please enter an amount.</mat-error>
     <mat-hint align="end">Max People to attend.</mat-hint>
@@ -52,6 +61,7 @@
 
   <!-- Location -->
   <mat-form-field appearance="outline">
+    <mat-label>Location</mat-label>
     <input formControlName="location" matInput placeholder="Location" required type="text">
     <mat-error *ngIf="activityFormGroup.controls.location.hasError('required')">Please enter a location</mat-error>
     <mat-hint align="end">The location of the sport activity</mat-hint>
