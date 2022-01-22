@@ -1,33 +1,48 @@
 <div class="main-div">
-  <mat-card class="card">
-    <mat-card-header>
-
-      <mat-card-title>{{this.user.username}}</mat-card-title>
-      <mat-card-subtitle>{{this.user.first_name + " " + this.user.last_name}}</mat-card-subtitle>
-      <br>
-
-    </mat-card-header>
-    <mat-card-content>
-      <img mat-card-image
-           class=""
-           src="http://127.0.0.1:4200/api/{{user.profile_image}}"
-           alt="">
-      <p>Date joined: {{this.user.date_joined?.slice(0, 10)}}</p>
-      <p>Age: {{this.age}}</p>
-      <p>Birthday: {{this.user.birthday}}</p>
-      <p>About me: {{this.user.bio}}</p>
-      <button (click)="userService.updateUser(this.user).subscribe()">Follow</button>
-      <p>Follower:{{this.user.follower.length}}</p>
-      <div *ngFor="let user of this.user.follower">
-        <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
-        <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
-      </div>
-      <p>Following: </p>
-      <p>Total created Activities: {{this.myActivities.length}}</p>
-
-    </mat-card-content>
-
-  </mat-card>
+  <mat-grid-list cols="2" rowHeight="400px" >
+    <mat-grid-tile>
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>{{this.user.username}}</mat-card-title>
+          <mat-card-subtitle>{{this.user.first_name + " " + this.user.last_name}}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="card">
+        <mat-card-content>
+          <img mat-card-image
+               class=""
+               src="http://127.0.0.1:4200/api/{{user.profile_image}}"
+               alt="">
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="card">
+        <mat-card-content>
+          <p>Date joined: {{this.user.date_joined?.slice(0, 10)}}</p>
+          <p>Age: {{this.age}}</p>
+          <p>Birthday: {{this.user.birthday}}</p>
+          <p>About me: {{this.user.bio}}</p>
+          <p>Total created Activities: {{this.myActivities.length}}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="card">
+        <mat-card-content>
+          <button (click)="userService.updateUser(this.user).subscribe()">Follow</button>
+          <p>Follower:{{this.user.follower.length}}</p>
+          <div *ngFor="let user of this.user.follower">
+            <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+            <a (click)="this.getUser()" style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+          </div>
+          <p>Following: </p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 
   <h2 style="margin: 3rem auto;width: 80%;">Activities that {{this.user.username}} created</h2>
   <table mat-table [dataSource]="myActivities" matSort class="mat-elevation-z8">
