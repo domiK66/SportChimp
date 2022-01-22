@@ -21,7 +21,10 @@
       <!-- Password -->
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input formControlName="password" matInput name="password" required type="password">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" matInput placeholder="Password"
+               required>
+        <mat-icon (click)="togglePasswordVisibility()"
+                  matSuffix>{{showPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
         <mat-error *ngIf="loginFormGroup.controls.password.hasError('required')">Please enter your password</mat-error>
       </mat-form-field>
     </mat-card-content>
