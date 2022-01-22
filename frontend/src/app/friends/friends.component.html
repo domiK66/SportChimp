@@ -1,0 +1,9 @@
+<p>friends works!</p>
+
+<div *ngFor="let user of users">
+  <mat-card style="">
+    <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+    <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+  </mat-card>
+</div>
+
