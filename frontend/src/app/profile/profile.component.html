@@ -44,7 +44,7 @@
     </mat-grid-tile>
   </mat-grid-list>
 
-  <h2 style="margin: 3rem auto;width: 80%;">Activities that {{this.user.username}} created</h2>
+  <h2 style="margin: 3rem auto;width: 80%;">Activities {{this.user.username}} created</h2>
   <table mat-table [dataSource]="myActivities" matSort class="mat-elevation-z8">
     <h2>Activities from {{this.user.username}}</h2>
     <!-- Id Column -->
@@ -121,7 +121,7 @@
   </table>
 
 
-  <h2 style="margin: 3rem auto;width: 80%;">Activities where {{this.user.username}} is going to</h2>
+  <h2 style="margin: 3rem auto;width: 80%;">Activities {{this.user.username}} will attend</h2>
   <table mat-table [dataSource]="attendActivities" matSort class="mat-elevation-z8">
     <h2>Activities from {{this.user.username}}</h2>
     <!-- Id Column -->

@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Sport, SportService} from "../services/sport.service";
 import {User, UserService} from "../services/user.service";
-import {FormControl, FormGroup, FormsModule, Validators} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {formatDate} from "@angular/common";
 interface Comment {
   text: string;
@@ -81,7 +81,11 @@ export class ActivityDetailsComponent implements OnInit {
   }
   attendActivity() {
     this.activityService.attendActivity(this.activity).subscribe(() => {
-        this.snackbar.open('Attended successfully!', 'OK',{duration:3000})
+        if(this.attendButton == "Attend") {
+          this.snackbar.open('Attended successfully!', 'OK',{duration:3000})
+        } else {
+          this.snackbar.open('You are not attending anymore.', 'OK',{duration:3000})
+        }
         this.getActivity()
       }
     )
