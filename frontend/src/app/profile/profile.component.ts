@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User, UserService} from "../services/user.service";
 import {Activity, ActivityService} from "../services/activity.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   activities: Activity[] = [];
   myActivities: Activity[] = [];
   attendActivities: Activity[] = [];
+  following: User[] = [];
 
   user: any | User = {};
   age: number | null = null;
@@ -21,11 +22,17 @@ export class ProfileComponent implements OnInit {
     public userService: UserService,
     public activityService: ActivityService,
     private route: ActivatedRoute,
+    private router: Router
   ) {
+    // @ts-ignore
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) this.ngOnInit()
+    });
   }
 
   ngOnInit(): void {
     this.getUser()
+    this.getFollowing()
     this.activityService.getActivities().subscribe(activities => {
         this.activities = activities;
         this.filter(this.user.username);
@@ -62,5 +69,13 @@ export class ProfileComponent implements OnInit {
   }
   onClick(){
     this.userService.updateUser(this.user).subscribe( () => { this.getUser() } )
+  }
+  getFollowing() {
+    const username = this.route.snapshot.paramMap.get('username');
+    this.userService.getUsers().subscribe(users => {
+      this.following = users.filter(u => {
+        return u.follower.some(function(user : User) { return !username || user.username.toLowerCase() == username.toLowerCase()})
+      })
+    })
   }
 }

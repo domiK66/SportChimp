@@ -39,7 +39,7 @@ export class AccountSettingsComponent implements OnInit {
         first_name: new FormControl(null),
         last_name: new FormControl(null),
         bio: new FormControl(''),
-        birthday: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en')),
+        birthday: new FormControl(''),
         profile_image: new FormControl(null),
         password: new FormControl("",[passwordService.confirmPassword]),
         confirmPassword: new FormControl("", [passwordService.confirmPassword])
@@ -94,6 +94,7 @@ export class AccountSettingsComponent implements OnInit {
     formData.append('first_name', this.userFormGroup.value.first_name);
     formData.append('last_name', this.userFormGroup.value.last_name);
     formData.append('bio', this.userFormGroup.value.bio);
+    if(this.userFormGroup.value.birthday)
     this.userFormGroup.value.birthday = formatDate(new Date(this.userFormGroup.value.birthday), 'yyyy-MM-dd', 'en')
     formData.append('birthday', this.userFormGroup.value.birthday);
 

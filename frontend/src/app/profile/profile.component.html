@@ -22,9 +22,9 @@
       <mat-card class="card">
         <mat-card-content>
           <p>Date joined: {{this.user.date_joined?.slice(0, 10)}}</p>
-          <p>Age: {{this.age}}</p>
-          <p>Birthday: {{this.user.birthday}}</p>
-          <p>About me: {{this.user.bio}}</p>
+          <p>{{this.age ? "Age: " + this.age : ""}}</p>
+          <p>{{this.user.birthday? "Birthday: " + this.user.birthday : ""}}</p>
+          <p>{{this.user.bio ? "About me: " + this.user.bio : ""}}</p>
           <p>Total created Activities: {{this.myActivities.length}}</p>
         </mat-card-content>
       </mat-card>
@@ -36,9 +36,13 @@
           <p>Follower: {{this.user.follower.length}}</p>
           <div *ngFor="let user of this.user.follower">
             <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
-            <a (click)="ngOnInit()" style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+            <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
           </div>
           <p>Following: </p>
+          <div *ngFor="let user of this.following">
+            <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+            <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+          </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

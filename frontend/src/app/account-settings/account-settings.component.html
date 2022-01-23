@@ -58,8 +58,8 @@
         <mat-hint align="end">Your bio</mat-hint>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Choose a date</mat-label>
+      <mat-form-field appearance="outline">
+        <mat-label>Choose your birthday</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="birthday">
         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
