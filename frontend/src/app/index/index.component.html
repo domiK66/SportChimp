@@ -20,21 +20,17 @@
     <h3>Latest Activities:</h3>
     <div class="activities" *ngFor="let activity of activities; let i=index;">
 
-          <mat-card>
+          <mat-card [routerLink]="'/activity-details/' + activity.id">
             <mat-card-title>
               <a style="color: #FFFFFF" [routerLink]='"/activity-details/" + activity.id'>{{activity.title}}</a>
             </mat-card-title>
 
-            <mat-card-subtitle>created_by {{activity.created_by_user.username}}</mat-card-subtitle>
+            <mat-card-subtitle>created by {{activity.created_by_user.username}}</mat-card-subtitle>
             <mat-card-content>
               <img class="card"  src="http://127.0.0.1:4200/api/{{activity.sport_genre.image}}"  height="50px">
               <p>Date: {{activity.date}}</p>
             </mat-card-content>
             <mat-card-actions>
-
-              <button mat-stroked-button [routerLink]="'/activity-details/' + activity.id">View</button>
-
-              <button mat-stroked-button  [routerLink]="'/activity-form/' + activity.id">Edit</button>
             </mat-card-actions>
           </mat-card>
 

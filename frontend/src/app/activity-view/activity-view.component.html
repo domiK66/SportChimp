@@ -39,7 +39,7 @@
   <mat-grid-list [cols]="cols$ | async" rowHeight="405:295" gutterSize="10px" >
     <div *ngFor="let activity of filteredActivities | slice: (curPage * pageSize) - pageSize :curPage * pageSize; let i=index">
       <mat-grid-tile class="title">
-        <mat-card class="activity-card">
+        <mat-card class="activity-card" [routerLink]="'/activity-details/' + activity.id">
           <mat-card-header>
 
             <div mat-card-avatar class="example-header-image"><img src="http://127.0.0.1:4200/api/{{activity.sport_genre.image}}" style="height:50px"/></div>
@@ -59,13 +59,6 @@
               {{activity.description}}
             </p>
           </mat-card-content>
-          <mat-card-actions>
-
-            <button mat-stroked-button [routerLink]="'/activity-details/' + activity.id">View</button>
-            <button mat-stroked-button >Add to favourites</button> <!-- TODO -->
-            <button mat-stroked-button >Attend</button> <!-- TODO -->
-            <button mat-stroked-button  [routerLink]="'/activity-form/' + activity.id">Edit</button>
-          </mat-card-actions>
         </mat-card>
 
       </mat-grid-tile>

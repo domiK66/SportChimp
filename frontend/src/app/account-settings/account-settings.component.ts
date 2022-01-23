@@ -98,7 +98,7 @@ export class AccountSettingsComponent implements OnInit {
     formData.append('birthday', this.userFormGroup.value.birthday);
 
     this.http.put(`/api/users/${this.userService.user.id}/`, formData).subscribe(() => {
-        this.snackbar.open('updated!', 'OK', {duration: 3000})
+        this.snackbar.open('Account Settings updated!', 'OK', {duration: 3000})
         this.userService.getUserData()
       }
     )
