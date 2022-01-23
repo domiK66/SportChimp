@@ -12,6 +12,32 @@ import {Activity, ActivityService} from "../services/activity.service";
 })
 export class IndexComponent implements OnInit {
 
+  customOptions: any = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 8
+      },
+      940: {
+        items: 8
+      }
+    },
+    nav: true
+  }
+
+
   sports: Sport[] = [];
   activities: Activity[] = [];
 

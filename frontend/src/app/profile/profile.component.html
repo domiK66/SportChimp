@@ -50,6 +50,26 @@
     </mat-grid-tile>
   </mat-grid-list>
 
+  <div class="activity-container">
+
+    <mat-card style="">
+      <mat-card-title>Activities {{this.user.username}} created</mat-card-title>
+      <div class="activities" *ngFor="let activity of myActivities; let i=index;">
+
+        <app-activity-card [activity]="activity"></app-activity-card>
+
+      </div>
+    </mat-card>
+  </div>
+  <div class="activity-container">
+    <mat-card style="">
+      <mat-card-title> Activities {{this.user.username}} will attend</mat-card-title>
+      <div class="activities" *ngFor="let activity of attendActivities; let i=index;">
+        <app-activity-card [activity]="activity"></app-activity-card>
+      </div>
+    </mat-card>
+  </div>
+
   <h2 style="margin: 3rem auto;width: 80%;">Activities {{this.user.username}} created</h2>
   <table mat-table [dataSource]="myActivities" matSort class="mat-elevation-z8">
     <h2>Activities from {{this.user.username}}</h2>

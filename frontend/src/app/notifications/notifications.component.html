@@ -6,7 +6,7 @@
   <mat-icon>notifications_active</mat-icon>
 </button>
 <mat-menu #notificationMenu="matMenu" xPosition="before">
-  <div *ngIf="this.userService.unreadNotifications.length < 0">
+  <div *ngIf="this.userService.unreadNotifications.length == 0">
     <p>No notifications.</p>
   </div>
   <div *ngFor="let not of this.userService.unreadNotifications">
