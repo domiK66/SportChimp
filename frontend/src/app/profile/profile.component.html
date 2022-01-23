@@ -32,7 +32,7 @@
     <mat-grid-tile>
       <mat-card class="card">
         <mat-card-content>
-          <button (click)="userService.updateUser(this.user).subscribe()">Follow</button>
+          <button (click)="onClick()">Follow</button>
           <p>Follower:{{this.user.follower.length}}</p>
           <div *ngFor="let user of this.user.follower">
             <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>

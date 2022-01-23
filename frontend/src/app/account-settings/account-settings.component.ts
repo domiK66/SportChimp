@@ -99,6 +99,7 @@ export class AccountSettingsComponent implements OnInit {
 
     this.http.put(`/api/users/${this.userService.user.id}/`, formData).subscribe(() => {
         this.snackbar.open('updated!', 'OK', {duration: 3000})
+        this.userService.getUserData()
       }
     )
     this.router.navigate(['/profile/' + this.userName]);

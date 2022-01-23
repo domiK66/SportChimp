@@ -7,7 +7,7 @@
          placeholder="Search for activities ..." />
 </mat-form-field>
 
-<div *ngFor="let user of filteredUsers">
+<div *ngFor="let user of filteredUsers" style="width: 300px">
   <mat-card style="">
     <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
     <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>

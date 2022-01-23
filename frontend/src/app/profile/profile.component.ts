@@ -60,4 +60,7 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+  onClick(){
+    this.userService.updateUser(this.user).subscribe( () => { this.getUser() } )
+  }
 }
