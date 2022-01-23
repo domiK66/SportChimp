@@ -213,11 +213,18 @@ class CommentViewSet(viewsets.ViewSet):
 
     # TODO: POST http://127.0.0.1:8000/comments/
     def create(self, request, format=None):
+        activity_x = models.Activity.objects.get(pk=request.data["activity"])
         comment = models.Comment.objects.create(
             created_at=datetime.now(),
-            activity=models.Activity.objects.get(pk=request.data["activity"]),
+            activity=activity_x,
             created_by_user=CustomUser.objects.get(pk=request.data["created_by_user"]),
             text=request.data["text"]
+        )
+        notification = models.Notification.objects.create(
+            from_user=request.user,
+            to_user=activity_x.created_by_user.id,
+            text="commented on",
+            activity=activity_x
         )
 
         return Response(
