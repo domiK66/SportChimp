@@ -1,0 +1,20 @@
+<button mat-icon-button [matMenuTriggerFor]="notificationMenu" matBadge="{{this.userService.unreadNotifications.length}}" matBadgeColor="accent" matBadgeSize="medium">
+  <mat-icon>notifications_active</mat-icon>
+</button>
+
+<mat-menu #notificationMenu="matMenu" xPosition="before" >
+  <div *ngIf="this.userService.unreadNotifications.length < 0">
+    <p>No notifications.</p>
+  </div>
+    <div *ngFor="let not of this.userService.unreadNotifications">
+
+        <div *ngIf="not.activity != null">
+          <button (click)="onClick(not.id)" mat-menu-item [routerLink]='"/activity-details/" + not.activity.id'><img src="/api/{{not.from_user.profile_image}}" height="40px" style="border-radius: 50%;"/> {{not.from_user.username}} {{not.text}} {{not.activity.title}}</button>
+        </div>
+        <div *ngIf="not.activity == null">
+          <button (click)="onClick(not.id)" mat-menu-item [routerLink]='"/profile/" + not.from_user.username '><img src="/api/{{not.from_user.profile_image}}" height="40px" style="border-radius: 50%;"/> {{not.from_user.username}} {{not.text}}</button>
+        </div>
+
+    </div>
+
+</mat-menu>

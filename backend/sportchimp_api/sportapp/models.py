@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 from django.contrib.auth.models import AbstractUser
@@ -46,4 +48,13 @@ class Comment(models.Model):
         return self.text
 
 
+class Notification(models.Model):
+    text = models.CharField(max_length=1024)
+    activity = models.ForeignKey(Activity, on_delete=models.PROTECT, null=True)
+    from_user = models.ForeignKey(CustomUser, null=True, on_delete=models.PROTECT)
+    to_user = models.IntegerField(null=True)
+    read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=datetime.now())
 
+    def __str__(self):
+        return self.text

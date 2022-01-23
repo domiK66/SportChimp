@@ -38,6 +38,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { FriendsComponent } from './friends/friends.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 export function tokenGetter() {
@@ -60,6 +61,7 @@ export function tokenGetter() {
     ActivityDetailsComponent,
     AccountSettingsComponent,
     FriendsComponent,
+    NotificationsComponent,
 
   ],
   imports: [
