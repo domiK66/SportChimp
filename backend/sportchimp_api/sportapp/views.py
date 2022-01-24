@@ -58,6 +58,7 @@ class SportViewSet(viewsets.ViewSet):
             sport = models.Sport.objects.get(pk=pk)
             sport.name = request.data["name"]
             sport.description = request.data["description"]
+            if request.data["image"]: sport.image = request.data["image"]
             sport.save()
             return Response(
                 {
