@@ -27,7 +27,8 @@ export class NotificationsComponent implements OnInit {
 
   onClick(not_id: number) {
     this.userService.readUserNotification(not_id).subscribe(() => {
-      console.log("success");
+      console.log("read notification");
+      this.userService.getUserData();
     });
   }
 

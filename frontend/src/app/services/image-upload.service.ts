@@ -10,11 +10,10 @@ class ImageSnippet {
 })
 export class ImageUploadService {
 
-  selectedFile: ImageSnippet | undefined
+  selectedFile: ImageSnippet | undefined;
 
-  constructor(
-  )
-  { }
+  constructor() { }
+  // on value change on image input
   ImageInputOnClick(imageInput: any) {
     const file: File = imageInput.files[0];
     const reader = new FileReader();
