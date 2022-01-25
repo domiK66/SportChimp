@@ -38,8 +38,10 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { FriendsComponent } from './friends/friends.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
-
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ActivityCardComponent } from './activity-card/activity-card.component';
 export function tokenGetter() {
   return localStorage.getItem('access_token')
 }
@@ -60,6 +62,8 @@ export function tokenGetter() {
     ActivityDetailsComponent,
     AccountSettingsComponent,
     FriendsComponent,
+    NotificationsComponent,
+    ActivityCardComponent,
 
   ],
   imports: [
@@ -93,7 +97,8 @@ export function tokenGetter() {
     MatSnackBarModule,
 
     MatPaginatorModule,
-    MatBadgeModule
+    MatBadgeModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

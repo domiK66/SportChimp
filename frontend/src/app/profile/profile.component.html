@@ -1,52 +1,74 @@
 <div class="main-div">
-  <mat-grid-list cols="2" rowHeight="400px" >
+  <mat-grid-list cols="3">
     <mat-grid-tile>
       <mat-card class="card">
         <mat-card-header>
-          <mat-card-title>{{this.user.username}}</mat-card-title>
-          <mat-card-subtitle>{{this.user.first_name + " " + this.user.last_name}}</mat-card-subtitle>
+          <img
+            class="round"
+            src="http://127.0.0.1:4200/api/{{user.profile_image}}"
+            alt=""
+            height="200px"
+            width="200px">
+          <mat-card-title><h1>{{this.user.username}}</h1></mat-card-title>
+          <mat-card-subtitle><h2>{{this.user.first_name + " " + this.user.last_name}}</h2></mat-card-subtitle>
+
         </mat-card-header>
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card class="card">
         <mat-card-content>
-          <img mat-card-image
-               class=""
-               src="http://127.0.0.1:4200/api/{{user.profile_image}}"
-               alt="">
+          <p>{{this.user.bio ? "About me: " + this.user.bio : ""}}</p>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-card class="card">
         <mat-card-content>
+          <button mat-raised-button color="accent" (click)="onClick()">Follow</button>
+          <h4>sportchimp.xyz/stats</h4>
+          <p>Total created Activities: {{this.myActivities.length}}</p>
           <p>Date joined: {{this.user.date_joined?.slice(0, 10)}}</p>
           <p>{{this.age ? "Age: " + this.age : ""}}</p>
           <p>{{this.user.birthday? "Birthday: " + this.user.birthday : ""}}</p>
-          <p>{{this.user.bio ? "About me: " + this.user.bio : ""}}</p>
-          <p>Total created Activities: {{this.myActivities.length}}</p>
-        </mat-card-content>
+      </mat-card-content>
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-card class="card">
         <mat-card-content>
-          <button (click)="onClick()">Follow</button>
-          <p>Follower: {{this.user.follower.length}}</p>
+          <p>Follower: {{this.user.follower?.length}}</p>
           <div *ngFor="let user of this.user.follower">
             <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
             <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+            {{user.first_name}} {{user.last_name}}
           </div>
           <p>Following: </p>
           <div *ngFor="let user of this.following">
-            <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
-            <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+              <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+              <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
+              {{user.first_name}} {{user.last_name}}
           </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
+
+  <div class="activity-container">
+
+    <mat-card style="">
+      <mat-card-title>Activities {{this.user.username}} created</mat-card-title>
+      <div class="activities" *ngFor="let activity of myActivities; let i=index;">
+
+        <app-activity-card [activity]="activity"></app-activity-card>
+
+      </div>
+    </mat-card>
+  </div>
+  <div class="activity-container">
+    <mat-card style="">
+      <mat-card-title> Activities {{this.user.username}} will attend</mat-card-title>
+      <div class="activities" *ngFor="let activity of attendActivities; let i=index;">
+        <app-activity-card [activity]="activity"></app-activity-card>
+      </div>
+    </mat-card>
+  </div>
 
   <h2 style="margin: 3rem auto;width: 80%;">Activities {{this.user.username}} created</h2>
   <table mat-table [dataSource]="myActivities" matSort class="mat-elevation-z8">
@@ -201,5 +223,3 @@
 
   </table>
 </div>
-
-

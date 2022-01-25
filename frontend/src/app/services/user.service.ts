@@ -29,6 +29,9 @@ export class UserService {
   userId: number | null = 1
   user: User | any = {}
 
+  notifications: [] | any = [];
+  unreadNotifications: [] | any = [];
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -70,6 +73,12 @@ export class UserService {
   updateUser(user: User) {
     return this.http.put<User>(`${this.sportChimpApiService.base_url}/users/${user.id}/`, user);
   }
+  getUserNotifications(user_id:number) {
+    return this.http.get(`${this.sportChimpApiService.base_url}/notifications/${user_id}/`);
+  }
+  readUserNotification(not_id:number) {
+    return this.http.put(`${this.sportChimpApiService.base_url}/notifications/${not_id}/`, null);
+  }
 
   getUserData(){
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
@@ -79,6 +88,12 @@ export class UserService {
     console.log(this.userId)
     if (this.userId != null) {
       this.getUser(this.userId).subscribe(data => this.user = data)
+      this.getUserNotifications(this.userId).subscribe(not =>  {
+        this.notifications = not;
+        this.unreadNotifications = this.notifications.filter((not:{read:boolean})=> !not.read);
+      })
+
+
     } else {
       this.user = {}
     }

@@ -1,4 +1,19 @@
-
+<div class="sports-slider">
+<owl-carousel-o [options]="customOptions" >
+  <ng-container *ngFor="let sport of sports; let i=index">
+    <ng-template carouselSlide>
+        <mat-card class="sport-card" [routerLink]='"/activity-view/" + sport.name' >
+          <img mat-card-image
+               class="sport-card-img"
+               src="http://127.0.0.1:4200/api/{{sport.image}}"
+               alt=""
+               >
+          <mat-card-title class="sport-card-title">{{sport.name}}</mat-card-title>
+        </mat-card>
+    </ng-template>
+  </ng-container>
+</owl-carousel-o>
+</div>
 <div class="sports-slider">
   <mat-grid-list [cols]="cols$ | async" rowHeight="106:151" gutterSize="10px" >
     <div *ngFor="let sport of sports; let i=index">
@@ -20,19 +35,7 @@
     <h3>Latest Activities:</h3>
     <div class="activities" *ngFor="let activity of activities; let i=index;">
 
-          <mat-card [routerLink]="'/activity-details/' + activity.id">
-            <mat-card-title>
-              <a style="color: #FFFFFF" [routerLink]='"/activity-details/" + activity.id'>{{activity.title}}</a>
-            </mat-card-title>
-
-            <mat-card-subtitle>created by {{activity.created_by_user.username}}</mat-card-subtitle>
-            <mat-card-content>
-              <img class="card"  src="http://127.0.0.1:4200/api/{{activity.sport_genre.image}}"  height="50px">
-              <p>Date: {{activity.date}}</p>
-            </mat-card-content>
-            <mat-card-actions>
-            </mat-card-actions>
-          </mat-card>
+      <app-activity-card [activity]="activity"></app-activity-card>
 
     </div>
   </mat-card>

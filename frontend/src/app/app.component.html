@@ -65,11 +65,7 @@
 
         <!-- only shown when logged in -->
         <div *ngIf="userService.isLoggedIn | async; else guest">
-
-
-          <button mat-icon-button matBadge="4" matBadgeColor="accent" matBadgeSize="medium">
-            <mat-icon>notifications_active</mat-icon>
-          </button>
+          <app-notifications></app-notifications>
           <button [matMenuTriggerFor]="userMenu" mat-button>
             {{userService.user.username}}
             <img class=""

@@ -1,0 +1,20 @@
+<mat-card class="activity-card" [routerLink]="'/activity-details/' + activity.id">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"><img src="http://127.0.0.1:4200/api/{{activity.sport_genre.image}}" style="height:50px"/></div>
+    <mat-card-title>{{activity.title}}</mat-card-title>
+    <mat-card-subtitle>{{activity.sport_genre.name}}</mat-card-subtitle>
+    <mat-card-subtitle>created by: {{activity.created_by_user?.username}}</mat-card-subtitle>
+    <mat-card-subtitle><mat-icon aria-hidden="false">event</mat-icon>{{activity.date}}</mat-card-subtitle>
+    <mat-card-subtitle><mat-icon aria-hidden="false">place</mat-icon>{{activity.location}}</mat-card-subtitle>
+    <mat-card-subtitle><mat-icon aria-hidden="false">person</mat-icon>{{activity.participants.length}}</mat-card-subtitle>
+    <div *ngFor="let user of activity.participants">
+      <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+    </div>
+
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      {{activity.description}}
+    </p>
+  </mat-card-content>
+</mat-card>
