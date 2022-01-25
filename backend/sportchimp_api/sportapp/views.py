@@ -58,6 +58,7 @@ class SportViewSet(viewsets.ViewSet):
             sport = models.Sport.objects.get(pk=pk)
             sport.name = request.data["name"]
             sport.description = request.data["description"]
+            if request.data["image"]: sport.image = request.data["image"]
             sport.save()
             return Response(
                 {
@@ -160,6 +161,13 @@ class ActivityViewSet(viewsets.ViewSet):
                     activity.participants.add(request.user)
                     activity.save()
 
+                    notification = models.Notification.objects.create(
+                        from_user=request.user,
+                        to_user=activity.created_by_user.id,
+                        text="attends activity",
+                        activity=activity
+                    )
+
                 return Response(
                     {
                     },
@@ -206,11 +214,18 @@ class CommentViewSet(viewsets.ViewSet):
 
     # TODO: POST http://127.0.0.1:8000/comments/
     def create(self, request, format=None):
+        activity_x = models.Activity.objects.get(pk=request.data["activity"])
         comment = models.Comment.objects.create(
             created_at=datetime.now(),
-            activity=models.Activity.objects.get(pk=request.data["activity"]),
+            activity=activity_x,
             created_by_user=CustomUser.objects.get(pk=request.data["created_by_user"]),
             text=request.data["text"]
+        )
+        notification = models.Notification.objects.create(
+            from_user=request.user,
+            to_user=activity_x.created_by_user.id,
+            text="commented on",
+            activity=activity_x
         )
 
         return Response(
@@ -293,6 +308,11 @@ class UsersViewSet(viewsets.ViewSet):
             user.follower.add(request.user)
             user.save()
 
+            notification = models.Notification.objects.create(
+                from_user=request.user,
+                to_user=user.id,
+                text="started following you."
+            )
             return Response(
                 {
                 },
@@ -304,3 +324,22 @@ class UsersViewSet(viewsets.ViewSet):
             },
             status=200
         )
+
+class NotificationViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = models.Notification.objects.all()
+
+        serializer = serializers.NotificationSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
+    def retrieve(self, request, pk=None, format=None):
+        queryset = models.Notification.objects.filter(to_user=pk)
+        serializer = serializers.NotificationSerializer(queryset, many=True)
+        return Response(serializer.data, status=200)
+
+    def update(self,request,pk=None):
+        notification = models.Notification.objects.get(pk=pk)
+        notification.read = True
+        notification.save()
+        return Response({"read": "read"},status=200)

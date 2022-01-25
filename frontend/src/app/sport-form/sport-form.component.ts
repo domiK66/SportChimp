@@ -6,12 +6,7 @@ import {SportService} from "../services/sport.service";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
-
-
-class ImageSnippet {
-  constructor(public src: string, public file: File) {
-  }
-}
+import {ImageUploadService} from "../services/image-upload.service";
 
 @Component({
   selector: 'app-sport-form',
@@ -22,16 +17,14 @@ export class SportFormComponent implements OnInit {
 
   sportFormGroup: FormGroup;
   submitButtonText = '';
-  selectedFile: ImageSnippet | undefined;
-
-  //fileSelected: boolean;
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private sportService: SportService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    public imageUploadService : ImageUploadService
   ) {
     this.sportFormGroup = new FormGroup({
         id: new FormControl(null),
@@ -56,26 +49,35 @@ export class SportFormComponent implements OnInit {
   createOrUpdateSport() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.sportService.updateSport(this.sportFormGroup.value).subscribe(() => {
-        this.snackbar.open('Sport updated successfully!', 'OK', {duration: 3000})
-      })
-      this.router.navigate(['/sport-list']);
+      const formData = new FormData();
+      if (this.imageUploadService.selectedFile) {
+        formData.append('image', this.imageUploadService.selectedFile.file);
+      } else {
+        formData.append('image', "");
+      }
+      formData.append('name', this.sportFormGroup.value.name);
+      formData.append('description', this.sportFormGroup.value.description);
+
+      this.http.put(`/api/sports/${id}/`, formData).subscribe(() => {
+          this.snackbar.open('UPDATED', 'OK', {duration: 3000})
+        }
+      )
     } else {
-      this.sportService.createSport(this.sportFormGroup.value).subscribe(() => {
-        this.snackbar.open('Sport created successfully!', 'OK', {duration: 3000})
-      })
-      this.router.navigate(['/sport-list']);
+      const formData = new FormData();
+      if (this.imageUploadService.selectedFile) {
+        formData.append('image', this.imageUploadService.selectedFile.file);
+      } else {
+        formData.append('image', "");
+      }
+      formData.append('name', this.sportFormGroup.value.name);
+      formData.append('description', this.sportFormGroup.value.description);
+
+      this.http.post(`/api/sports/`, formData).subscribe(() => {
+          this.snackbar.open('CREATED', 'OK', {duration: 3000})
+          this.router.navigate(['/sport-list']);
+        }
+      )
     }
-  }
-
-  uploadImage(image: File) {
-    const formData = new FormData();
-    formData.append('image', image);
-    formData.append('name', this.sportFormGroup.value.name);
-    formData.append('description', this.sportFormGroup.value.description);
-    console.log(image)
-
-    return this.http.post('/api/sports/', formData);
   }
 
   // Validators
@@ -90,23 +92,6 @@ export class SportFormComponent implements OnInit {
     }
   }
 
-  processFile(imageInput: any) {
-    const file: File = imageInput.files[0];
-    const reader = new FileReader();
-    reader.addEventListener('load', (event: any) => {
 
-      this.selectedFile = new ImageSnippet(event.target.result, file);
-
-      this.uploadImage(this.selectedFile.file).subscribe(
-        (res: any) => {
-
-        },
-        (err: any) => {
-
-        })
-    });
-
-    reader.readAsDataURL(file);
-  }
 }
 

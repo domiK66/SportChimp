@@ -33,3 +33,10 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.CustomUser, UserAdmin)
+
+
+class NotificationAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(models.Notification, NotificationAdmin)
