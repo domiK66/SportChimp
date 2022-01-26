@@ -291,7 +291,7 @@ class UsersViewSet(viewsets.ViewSet):
         if request.user == user:
             user.first_name = request.data["first_name"]
             user.last_name = request.data["last_name"]
-            user.bio = request.data["bio"]
+            if request.data["bio"] != "null": user.bio = request.data["bio"]
             if request.data["birthday"] != "null": user.birthday = request.data["birthday"]
             if request.data["profile_image"]: user.profile_image = request.data["profile_image"]
             if request.data["password"]: user.set_password(request.data["password"])

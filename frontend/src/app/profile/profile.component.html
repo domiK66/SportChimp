@@ -18,7 +18,6 @@
       <mat-card class="card">
         <mat-card-content>
           <button mat-raised-button color="accent" (click)="onClick()">{{followButton}}</button>
-          <h4>sportchimp.xyz/stats</h4>
           <p>Total created Activities: {{this.myActivities.length}}</p>
           <p>Date joined: {{this.user.date_joined?.slice(0, 10)}}</p>
           <p>{{this.age ? "Age: " + this.age : ""}}</p>
@@ -33,7 +32,7 @@
             <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
             {{user.first_name}} {{user.last_name}}
           </div>
-          <p>Following: </p>
+          <p>Following: {{this.following?.length}}</p>
           <div *ngFor="let user of this.following">
               <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
               <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
