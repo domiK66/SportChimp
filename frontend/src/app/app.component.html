@@ -92,21 +92,42 @@
     <!-- Footer -->
     <footer>
       <div class="footer-container">
-        <div class="row py-4">
-          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0"><img src="img/logo.png" alt="" width="180" class="mb-3">
-            <p class="font-italic text-muted">Exercising is often just more fun if done with other people. SportChimp offers an easy way to plan sport activities together and even meet new people to exercise with. Look for places and activities near you and take part. Find people with similar sporting interests!</p>
-          </div>
-        <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
-        <div class="title">
-        <a [routerLink]="'/'" style="color: white"><h1>SportChimp</h1></a>
+        <div class="wrapper">
+          <section class="columns">
+            <div class="column">
+
+              <div class="title">
+                <img src="https://cdn-icons-png.flaticon.com/512/427/427419.png" style="height:50px"/>
+                <a [routerLink]="'/'" style="color: white"><h1>SportChimp</h1></a>
+              </div>
+              <p class="font-italic text-muted">Exercising is often just more fun if done with other people. </p>
+
+            </div>
+
+            <div class="column">
+              <h2>Our Mission</h2>
+              <p>SportChimp offers an easy way to plan sport activities together and even meet new people to exercise with. </p>
+              <p>Find people with similar sporting interests!</p>
+            </div>
+
+            <div class="column">
+              <h2>Quick Links</h2>
+              <a style="color: #FFFFFF" routerLink="profile/{{userService.user.username}}">Profile</a>
+              <p></p>
+              <a style="color: #FFFFFF" routerLink="/account-settings">Account Settings</a>
+              <p>Contact</p>
+              <p>Privacy Policy</p>
+              <p>Terms of Use</p>
+            </div>
+
+          </section>
         </div>
-        <div class="bg-light py-4">
-          <div class="container text-center">
-            <p class="text-muted mb-0 py-2">© 2022 SportChimp. All rights reserved.</p>
-          </div>
-        </div>
+
       </div>
+      <div class="container text-center copy-right" style="text-align: center;">
+        <p class="text-muted" style="margin-top: 0px;margin-bottom: 0px; color: #000000">© 2022 SportChimp. All rights reserved.</p>
       </div>
+
     </footer>
   </div>
 </mat-drawer-container>

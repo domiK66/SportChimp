@@ -1,4 +1,5 @@
 <div class="search-container">
+  <h2>Find activities:</h2>
   <mat-form-field appearance="outline">
     <mat-label>Search</mat-label>
     <mat-icon matPrefix>search</mat-icon>
@@ -17,7 +18,7 @@
     </mat-select>
   </mat-form-field>
   <p></p>
-  <mat-form-field appearance="outline">
+  <!--<mat-form-field appearance="outline">
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker">
       <input matStartDate placeholder="Start date">
@@ -25,7 +26,7 @@
     </mat-date-range-input>
     <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
-  </mat-form-field>
+  </mat-form-field> -->
 </div>
 <div class="pagination">
   <p>{{filteredActivities.length}} Results found</p>
