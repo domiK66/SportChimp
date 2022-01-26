@@ -17,7 +17,7 @@
       </mat-card>
       <mat-card class="card">
         <mat-card-content>
-          <button mat-raised-button color="accent" (click)="onClick()">{{followButton}}</button>
+          <button mat-raised-button color="accent" *ngIf="this.user.id != this.userService.user.id" (click)="onClick()">{{followButton}}</button>
           <p>Total created Activities: {{this.myActivities.length}}</p>
           <p>Date joined: {{this.user.date_joined?.slice(0, 10)}}</p>
           <p>{{this.age ? "Age: " + this.age : ""}}</p>
