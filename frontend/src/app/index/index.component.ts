@@ -20,6 +20,7 @@ export class IndexComponent implements OnInit {
     touchDrag: true,
     pullDrag: true,
     dots: false,
+    margin: 10,
     animateIn: true,
     animateOut: true,
     navSpeed: 700,
