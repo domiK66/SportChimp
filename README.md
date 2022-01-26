@@ -29,10 +29,8 @@ Link to [Project Proposal](https://fhjoanneum-my.sharepoint.com/:b:/g/personal/t
 What you need to:
 * Host this application:
   - Run website on localhost as explained in frontend and backend README.md
-  -  [Angular Frontend Readme.md](https://github.com/domiK66/SportChimp/tree/secondary/frontend#sportchimpxyz-angular---frontend)
-  - 
-  -  [Django Backend](https://github.com/domiK66/SportChimp/blob/main/backend/)
-
+  -  [Angular Frontend Readme.md](https://github.com/domiK66/SportChimp/tree/main/frontend#sportchimpxyz-angular---frontend)
+  -  [Django Backend](https://github.com/domiK66/SportChimp/tree/main/backend#sportchimpxyz-django---backend)
 
 * Access the website:
   - An up to date web browser, we recommend using Mozilla Firefox or Google Chrome.
