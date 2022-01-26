@@ -12,7 +12,7 @@ from .models import CustomUser
 # Sport:
 class SportViewSet(viewsets.ViewSet):
     # GET: http://127.0.0.1:8000/sports/
-    def list(self, request, format=None):
+    def list(self, request):
         queryset = models.Sport.objects.all()
 
         # GET http://127.0.0.1:8000/sports/?order_by=name
@@ -24,26 +24,8 @@ class SportViewSet(viewsets.ViewSet):
         serializer = serializers.SportSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    # POST http://127.0.0.1:8000/sports/
-    def create(self, request, format=None):
-        if request.user.is_superuser:
-            sport = models.Sport.objects.create(
-                name=request.data["name"],
-                description=request.data["description"],
-                image=request.data["image"]
-
-            )
-            return Response(
-                {
-                    "id": sport.pk,
-                    "name": sport.name,
-                    "description": sport.description
-                },
-                status=201
-            )
-
     # GET: http://127.0.0.1:8000/sports/id
-    def retrieve(self, request, pk=None, format=None):
+    def retrieve(self, request, pk=None):
         try:
             sport = models.Sport.objects.get(pk=pk)
             serializer = serializers.SportSerializer(sport)
@@ -52,35 +34,58 @@ class SportViewSet(viewsets.ViewSet):
         except models.Sport.DoesNotExist:
             return Response({"error": "Sport does not exist"}, status=404)
 
-    # PUT http://127.0.0.1:8000/sports/id
-    def update(self, request, pk=None, format=None):
-        try:
-            sport = models.Sport.objects.get(pk=pk)
-            sport.name = request.data["name"]
-            sport.description = request.data["description"]
-            if request.data["image"]: sport.image = request.data["image"]
-            sport.save()
-            return Response(
-                {
-                    "id": sport.pk,
-                    "name": sport.name,
-                    "description": sport.description
-                },
-                status=200
+    # ONLY POSSIBLE BY ADMIN USER
+    # POST http://127.0.0.1:8000/sports/
+    def create(self, request):
+        # when the user is the admin, then allow the creation of a sport
+        if request.user.is_superuser:
+            sport = models.Sport.objects.create(
+                name=request.data["name"],
+                description=request.data["description"]
             )
-        except models.Sport.DoesNotExist:
-            return Response(status=404)
+            if request.data["image"]:
+                sport.image = request.data["image"]
+                sport.save()
+            serializer = serializers.SportSerializer(sport)
+            return Response(serializer.data, status=201)
+        # otherwise return error
+        else:
+            return Response({"error": "user is not a superuser"}, status=401)
 
-    def partial_update(self, request, pk=None, format=None):
-        # We do not allow partial updates here
-        # So we return a 405 instead.
-        return Response(status=405)
+    # ONLY POSSIBLE BY ADMIN USER
+    # PUT http://127.0.0.1:8000/sports/id
+    def update(self, request, pk=None):
+        # when the user is the admin, then allow the update of the sport
+        if request.user.is_superuser:
+            try:
+                sport = models.Sport.objects.get(pk=pk)
+                sport.name = request.data["name"]
+                sport.description = request.data["description"]
+                if request.data["image"]:
+                    sport.image = request.data["image"]
+                sport.save()
+                serializer = serializers.SportSerializer(sport)
+                return Response(serializer.data, status=200)
+            except models.Sport.DoesNotExist:
+                return Response({"error": "sport with this id does not exist"}, status=404)
+        # otherwise return error
+        else:
+            return Response({"error": "user is not a superuser"}, status=401)
 
+    # ONLY POSSIBLE BY ADMIN USER
     # DELETE http://127.0.0.1:8000/sports/id
-    def destroy(self, request, pk=None, format=None):
-        models.Sport.objects.filter(pk=pk).delete()
-        return Response(status=204)
+    def destroy(self, request, pk=None):
+        # when the user is the admin, then allow the deletion of the sport
+        if request.user.is_superuser:
+            models.Sport.objects.filter(pk=pk).delete()
+            return Response(status=204)
+        # otherwise return error
+        else:
+            return Response({"error": "user is not a superuser"}, status=401)
 
+    def partial_update(self, request):
+        # we do not allow partial updates here. so we return a 405 instead.
+        return Response(status=405)
 
 # Activity:
 class ActivityViewSet(viewsets.ViewSet):
@@ -110,8 +115,6 @@ class ActivityViewSet(viewsets.ViewSet):
             max_players=request.data["max_players"],
             equipment_needed=request.data["equipment_needed"],
             location=request.data["location"],
-
-            # TODO: ?? idk if best practice
             sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
             created_by_user=request.user
         )
@@ -178,8 +181,6 @@ class ActivityViewSet(viewsets.ViewSet):
             return Response(status=404)
 
 
-
-# TODO: Comment:
 class CommentViewSet(viewsets.ViewSet):
 
     # GET: http://127.0.0.1:8000/comments/
@@ -187,7 +188,6 @@ class CommentViewSet(viewsets.ViewSet):
         queryset = models.Comment.objects.all()
         serializer = serializers.CommentSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
-
 
     # GET: http://127.0.0.1:8000/comments/pk
     def retrieve(self, request, pk=None, format=None):
@@ -212,7 +212,7 @@ class CommentViewSet(viewsets.ViewSet):
                 status=404
             )
 
-    # TODO: POST http://127.0.0.1:8000/comments/
+    #  POST http://127.0.0.1:8000/comments/
     def create(self, request, format=None):
         activity_x = models.Activity.objects.get(pk=request.data["activity"])
         comment = models.Comment.objects.create(
@@ -237,7 +237,7 @@ class CommentViewSet(viewsets.ViewSet):
         )
 
 
-# TODO: CustomUser
+# CustomUser
 class UsersViewSet(viewsets.ViewSet):
 
     # GET: http://127.0.0.1:8000/users/
@@ -325,6 +325,7 @@ class UsersViewSet(viewsets.ViewSet):
             status=200
         )
 
+
 class NotificationViewSet(viewsets.ViewSet):
 
     def list(self, request):
@@ -338,8 +339,11 @@ class NotificationViewSet(viewsets.ViewSet):
         serializer = serializers.NotificationSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    def update(self,request,pk=None):
+    def update(self, request, pk=None):
         notification = models.Notification.objects.get(pk=pk)
-        notification.read = True
-        notification.save()
-        return Response({"read": "read"},status=200)
+        if request.user.id == notification.to_user:
+            notification.read = True
+            notification.save()
+            return Response({"read": "true"}, status=200)
+        else:
+            return Response({"error": "tried to fetch data from other user"}, status=401)

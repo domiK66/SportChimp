@@ -30,7 +30,7 @@ venv\Scripts\activate.bat
 ```python
 (venv) lukas@MacBook-Pro-Lukas backend % source venv/bin/activate  
 ```
-### PYTHON DJNAGO DEPENDENCIES
+### PYTHON DJANGO DEPENDENCIES
 - Install Django version 3.2.10
 ```python 
 pip install django==3.2.10
@@ -49,13 +49,17 @@ pip install djangorestframework-jwt
 cd sportchimp_api
 (venv) C:\Users\AK-47u\Desktop\Code Projects\SportChimp\sportchimp_api>
 ```
-- Migrate migrations files
+
 ```python 
 python manage.py migrate
 ```
 - Run the development server on localhost
 ```python 
 python manage.py runserver
+```
+- Add Sports Data
+```python
+python manage.py loaddata sports
 ```
 
 ### API & ADMIN
@@ -70,11 +74,7 @@ http://127.0.0.1:8000/admin
 python manage.py makemigrations
 ```
 
-### Add Sports Data
 
-```python
-python manage.py loaddata sports
-```
 
 
 

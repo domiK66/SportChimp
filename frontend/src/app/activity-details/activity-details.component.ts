@@ -20,7 +20,6 @@ interface Comment {
 })
 export class ActivityDetailsComponent implements OnInit {
 
-  editable = false; // Todo: datum verstecken
   user: User | any = {}
   activity: Activity | any = {}
   sport : Sport | any = {}

@@ -1,14 +1,16 @@
-# Frontend
+# SportChimp.xyz Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.13.
 
+Carousel: https://github.com/vitalii-andriiovskyi/ngx-owl-carousel-o
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. 
 
-## Code scaffolding
+Navigate to `http://localhost:4200/`. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The app will automatically reload if you change any of the source files.
 
 ## Build
 

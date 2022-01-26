@@ -66,9 +66,12 @@ export class ActivityViewComponent implements OnInit {
     });
 
     this.route.paramMap.subscribe(params => {
-      let sports: [(string | null)] = [params.get('filter')]
-      this.sportFilterFormControl.setValue(sports)
-    } );
+      let name = params.get('filter')
+      let sports: [(string | null)] = [name]
+      if (name != null) {
+        this.sportFilterFormControl.setValue(sports)
+      }
+    });
 
     this.searchFilterFormControl.valueChanges.subscribe(value => this.searchFilter(value));
     this.route.paramMap.subscribe(params => this.searchFilterFormControl.setValue(params.get('')) );

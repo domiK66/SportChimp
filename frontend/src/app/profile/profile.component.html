@@ -1,6 +1,4 @@
 <div class="main-div">
-  <mat-grid-list cols="3">
-    <mat-grid-tile>
       <mat-card class="card">
         <mat-card-header>
           <img
@@ -17,20 +15,16 @@
           <p>{{this.user.bio ? "About me: " + this.user.bio : ""}}</p>
         </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
       <mat-card class="card">
         <mat-card-content>
-          <button mat-raised-button color="accent" (click)="onClick()">Follow</button>
+          <button mat-raised-button color="accent" (click)="onClick()">{{followButton}}</button>
           <h4>sportchimp.xyz/stats</h4>
           <p>Total created Activities: {{this.myActivities.length}}</p>
           <p>Date joined: {{this.user.date_joined?.slice(0, 10)}}</p>
           <p>{{this.age ? "Age: " + this.age : ""}}</p>
           <p>{{this.user.birthday? "Birthday: " + this.user.birthday : ""}}</p>
-      </mat-card-content>
+        </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
       <mat-card class="card">
         <mat-card-content>
           <p>Follower: {{this.user.follower?.length}}</p>
@@ -47,17 +41,12 @@
           </div>
         </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
 
   <div class="activity-container">
-
     <mat-card style="">
       <mat-card-title>Activities {{this.user.username}} created</mat-card-title>
       <div class="activities" *ngFor="let activity of myActivities; let i=index;">
-
         <app-activity-card [activity]="activity"></app-activity-card>
-
       </div>
     </mat-card>
   </div>
