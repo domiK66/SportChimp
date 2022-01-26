@@ -88,5 +88,14 @@
       "description": "Volleyball is a team sport in which two teams of six players are separated by a net. Each team tries to score points by grounding a ball on the other team's court under organized rules.",
       "image": "/images/chimp_volleyball.png"
     }
+  },
+  {
+    "model": "sportapp.sport",
+    "pk": 11,
+    "fields": {
+      "name": "Fieldhockey",
+      "description": "Field hockey is a team sport of the hockey family. Each team plays with ten field players and a goalkeeper, and must carry a round, hard, plastic hockey ball with a hockey stick to the rival goal.",
+      "image": "/images/chimp_fieldhockey.png"
+    }
   }
 ]
