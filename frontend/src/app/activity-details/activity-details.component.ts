@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Sport, SportService} from "../services/sport.service";
 import {User, UserService} from "../services/user.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {formatDate} from "@angular/common";
 interface Comment {
   text: string;
@@ -26,7 +26,7 @@ export class ActivityDetailsComponent implements OnInit {
   comments: Comment[] = []
   attendButton: string = ''
   isNotTheOwner: boolean = true
-  commentFormGroup: FormGroup = new FormGroup({text: new FormControl('')})
+  commentFormGroup: FormGroup = new FormGroup({text: new FormControl('', [Validators.required])})
 
   constructor(
     private http: HttpClient,

@@ -59,7 +59,7 @@ export class SportFormComponent implements OnInit {
       formData.append('description', this.sportFormGroup.value.description);
 
       this.http.put(`/api/sports/${id}/`, formData).subscribe(() => {
-          this.snackbar.open('UPDATED', 'OK', {duration: 3000})
+          this.snackbar.open('Sport updated successfully.', 'OK', {duration: 3000})
         }
       )
     } else {
@@ -73,7 +73,7 @@ export class SportFormComponent implements OnInit {
       formData.append('description', this.sportFormGroup.value.description);
 
       this.http.post(`/api/sports/`, formData).subscribe(() => {
-          this.snackbar.open('CREATED', 'OK', {duration: 3000})
+          this.snackbar.open('Sport created successfully.', 'OK', {duration: 3000})
           this.router.navigate(['/sport-list']);
         }
       )

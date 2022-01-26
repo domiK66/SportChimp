@@ -1,24 +1,23 @@
 <div class="main-div">
   <mat-card class="card">
-    <mat-card-header>
+    <mat-card-content>
       <mat-card-title>{{this.activity.title}}</mat-card-title>
       <mat-card-subtitle><a style="color: #FFFFFF" routerLink="/profile/{{this.user.username}}">by {{this.user.username}}</a></mat-card-subtitle>
       <mat-card-subtitle>{{this.activity.description}}</mat-card-subtitle>
-      <mat-card-subtitle><button mat-raised-button color="primary" [routerLink]="'/activity-form/' + this.activity.id">Edit</button></mat-card-subtitle>
-    </mat-card-header>
+      <mat-card-subtitle *ngIf="!this.isNotTheOwner"><button mat-raised-button color="primary" [routerLink]="'/activity-form/' + this.activity.id">Edit</button></mat-card-subtitle>
+    </mat-card-content>
   </mat-card>
 
   <mat-card class="card">
     <mat-card-content>
-      <mat-card-title>This activity's sport is:</mat-card-title>
-        <mat-card-title> -> {{this.sport.name}}</mat-card-title>
-      <img class="card"  src="http://127.0.0.1:4200/api/{{this.sport.image}}" style="height:100px; width: 100px">
+      <mat-card-title>{{this.sport.name}}</mat-card-title>
+      <img class="card"  src="http://127.0.0.1:4200/api/{{this.sport.image}}" style="height:100px; width: 100px" alt="">
       <p>{{this.sport.description}}</p>
     </mat-card-content>
   </mat-card>
 
   <mat-card class="card">
-    <mat-card-title>Activity information:</mat-card-title>
+    <mat-card-title>Info</mat-card-title>
     <mat-card-content>
       <p>Date: {{this.activity.date}}</p>
       <p>Time: {{this.activity.time}}</p>
@@ -31,12 +30,12 @@
   </mat-card>
 
   <mat-card class="card">
-    <mat-card-title>Activity attendance list:</mat-card-title>
+    <mat-card-title>Attendance list</mat-card-title>
     <mat-card-content>
       <button mat-raised-button color="accent" *ngIf="this.isNotTheOwner" (click)="attendActivity()">{{attendButton}}</button>
       <p></p>
       <div *ngFor="let user of activity.participants">
-        <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+        <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;" alt=""/>
         <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
       </div>
     </mat-card-content>
@@ -47,13 +46,13 @@
 
     <form [formGroup]="commentFormGroup" (ngSubmit)="createComment()" class="sport-form__form">
       <mat-form-field appearance="outline">
-        <input matInput type="text" placeholder="Comment" formControlName="text">
+        <input matInput type="text" placeholder="Comment" formControlName="text" required>
       </mat-form-field>
         <button mat-raised-button color="accent"  [disabled]="!commentFormGroup.valid">Comment</button>
     </form>
 
     <p></p>
-    <mat-card-title>Activity comments:</mat-card-title>
+    <mat-card-title>Comments</mat-card-title>
   <div *ngFor="let comment of this.comments">
 
     <mat-card-content>
@@ -62,7 +61,7 @@
           <mat-card-title>{{comment.text}} </mat-card-title>
 
 
-          <img src="/api/{{comment.created_by_user.profile_image}}" height="40px" style="border-radius: 50%;"/>
+          <img src="/api/{{comment.created_by_user.profile_image}}" height="40px" style="border-radius: 50%;" alt=""/>
 
           {{comment.created_by_user.username}}
           {{comment.created_at}}
