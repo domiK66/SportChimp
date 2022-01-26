@@ -52,11 +52,15 @@
   </mat-form-field>
 
   <!-- Max players-->
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" >
     <mat-label>Max. People</mat-label>
-    <input matInput type="number" maxlength="2" min="min_players"  placeholder="Max. People" formControlName="max_players" required>
+    <input matInput type="number" maxlength="2" min="min_players"  placeholder="Max. People" formControlName="max_players">
     <mat-error *ngIf="activityFormGroup.controls.max_players.hasError('required')">Please enter an amount.</mat-error>
     <mat-hint align="end">Max People to attend.</mat-hint>
+    <span align="end" *ngIf="activityFormGroup.controls.max_players.value <= activityFormGroup.controls.min_players.value">
+      <mat-error>Max amount of people cannot be below (or equal) min amount of people.</mat-error>
+      {{activityFormGroup.controls.max_players.setErrors({ incorrect: true })}}
+    </span>
   </mat-form-field>
 
   <!-- Location -->
