@@ -1,12 +1,22 @@
-# SportChimp.xyz Frontend
+# SportChimp.xyz Angular - Frontend
+This module is made with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.13 and sportchimp_api an API for the sportchimp.xyz single-page Web-Application.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.13.
 
-Carousel: https://github.com/vitalii-andriiovskyi/ngx-owl-carousel-o
+##Libraries
+- Carousel: https://github.com/vitalii-andriiovskyi/ngx-owl-carousel-o
+- Material Design: https://material.angular.io/
 
+## Requirements
+> **Install the newest NodeJS version** ([Download here](https://nodejs.org/en/download/))
+>>Check if installed with ```npm --version```
+
+Run `npm install @angular/cli`
+and `npm install`
 ## Development server
 
-Run `ng serve` for a dev server. 
+[Here](https://github.com/domiK66/SportChimp/blob/main/frontend/proxy.conf.json/) is the API Connection
+
+Run `ng serve` for a dev server.
 
 Navigate to `http://localhost:4200/`. 
 

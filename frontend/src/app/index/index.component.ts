@@ -68,7 +68,7 @@ export class IndexComponent implements OnInit {
     this.sportService.getSports().subscribe( sports => this.sports = sports)
     const sortByDate = function (a: { date: any; }, b: { date: any; }) {
       // @ts-ignore
-      return new Date((b.date)) - new Date(a.date);
+      return new Date((a.date)) - new Date(b.date);
 
     };
     this.activityService.getActivities().subscribe( activities => this.activities = activities.sort(sortByDate))
