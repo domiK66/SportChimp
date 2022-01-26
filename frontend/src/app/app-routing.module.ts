@@ -34,20 +34,20 @@ const routes: Routes = [
 
   //profile
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'profile/:username', component: ProfileComponent},
 
   //account-settings
   {path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuard]},
 
   //activity views
-  {path: 'activity-view', component: ActivityViewComponent, canActivate: [AuthGuard]},
-  {path: 'activity-view/:filter', component: ActivityViewComponent, canActivate: [AuthGuard]},
+  {path: 'activity-view', component: ActivityViewComponent},
+  {path: 'activity-view/:filter', component: ActivityViewComponent},
 
   // activity-details
   {path: 'activity-details/:id', component: ActivityDetailsComponent, canActivate: [AuthGuard]},
 
   // friends
-  {path: 'friends', component: FriendsComponent, canActivate: [AuthGuard]},
+  {path: 'friends', component: FriendsComponent},
 
   //login
   {path: 'login', component: LoginComponent},

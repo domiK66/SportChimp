@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticated
 from rest_framework.response import Response
 
 from datetime import datetime
@@ -93,7 +94,6 @@ class ActivityViewSet(viewsets.ViewSet):
     # GET: http://127.0.0.1:8000/activities
     def list(self, request, format=None):
         queryset = models.Activity.objects.all()
-
         # GET http://127.0.0.1:8000/activities/?order_by=sport_genre
         if request.GET.get("sport_genre") is not None:
             queryset = models.Activity.objects.filter(pk=request.GET.get("sport_genre"))
@@ -106,22 +106,25 @@ class ActivityViewSet(viewsets.ViewSet):
     # POST http://127.0.0.1:8000/activities/
     # ALLOW ONLY WHEN LOGGEND IN:
     def create(self, request, format=None):
-        activity = models.Activity.objects.create(
-            title=request.data["title"],
-            description=request.data["description"],
-            date=request.data["date"],
-            time=request.data["time"],
-            min_players=request.data["min_players"],
-            max_players=request.data["max_players"],
-            equipment_needed=request.data["equipment_needed"],
-            location=request.data["location"],
-            sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
-            created_by_user=request.user
-        )
-        activity.participants.add(request.user)
-        activity.save()
-        serializer = serializers.ActivitySerializer(activity)
-        return Response(serializer.data, status=200)
+        if request.user.is_authenticated:
+            activity = models.Activity.objects.create(
+                title=request.data["title"],
+                description=request.data["description"],
+                date=request.data["date"],
+                time=request.data["time"],
+                min_players=request.data["min_players"],
+                max_players=request.data["max_players"],
+                equipment_needed=request.data["equipment_needed"],
+                location=request.data["location"],
+                sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
+                created_by_user=request.user
+            )
+            activity.participants.add(request.user)
+            activity.save()
+            serializer = serializers.ActivitySerializer(activity)
+            return Response(serializer.data, status=200)
+        else:
+            return Response({"error": "login to create activity"}, status=401)
 
     # GET: http://127.0.0.1:8000/activities/id
     def retrieve(self, request, pk=None, format=None):
@@ -131,57 +134,61 @@ class ActivityViewSet(viewsets.ViewSet):
             return Response(serializer.data, status=200)
 
         except models.Activity.DoesNotExist:
-            return Response({"error": "Activity does not exist"}, status=404)
+            return Response({"error": "activity does not exist"}, status=404)
 
     # PUT http://127.0.0.1:8000/activites/id
     # ALLOW ONLY WHEN LOGGEND IN AND THE USER WHO CREATED IT
     def update(self, request, pk=None, format=None):
-
-        try:
-            activity = models.Activity.objects.get(pk=pk)
-            if request.user == activity.created_by_user:
-                activity.title = request.data["title"]
-                activity.sport_genre = models.Sport.objects.get(id=request.data["sport_genre"])
-                activity.description = request.data["description"]
-                activity.date = request.data["date"]
-                activity.time = request.data["time"]
-                activity.min_players = request.data["min_players"]
-                activity.max_players = request.data["max_players"]
-                activity.location = request.data["location"]
-                activity.equipment_needed = request.data["equipment_needed"]
-                activity.save()
-
-                return Response(
-                    {
-                    },
-                    status=200
-                )
-            else:
-                if request.user in activity.participants.all():
-                    activity.participants.remove(request.user)
+        if request.user.is_authenticated:
+            try:
+                activity = models.Activity.objects.get(pk=pk)
+                if request.user == activity.created_by_user:
+                    activity.title = request.data["title"]
+                    activity.sport_genre = models.Sport.objects.get(id=request.data["sport_genre"])
+                    activity.description = request.data["description"]
+                    activity.date = request.data["date"]
+                    activity.time = request.data["time"]
+                    activity.min_players = request.data["min_players"]
+                    activity.max_players = request.data["max_players"]
+                    activity.location = request.data["location"]
+                    activity.equipment_needed = request.data["equipment_needed"]
                     activity.save()
+
+                    return Response(
+                        {
+                        },
+                        status=200
+                    )
                 else:
-                    activity.participants.add(request.user)
-                    activity.save()
+                    if request.user in activity.participants.all():
+                        activity.participants.remove(request.user)
+                        activity.save()
+                    else:
+                        activity.participants.add(request.user)
+                        activity.save()
 
-                    notification = models.Notification.objects.create(
-                        from_user=request.user,
-                        to_user=activity.created_by_user.id,
-                        text="attends activity",
-                        activity=activity
+                        notification = models.Notification.objects.create(
+                            from_user=request.user,
+                            to_user=activity.created_by_user.id,
+                            text="attends activity",
+                            activity=activity
+                        )
+
+                    return Response(
+                        {
+                        },
+                        status=200
                     )
 
-                return Response(
-                    {
-                    },
-                    status=200
-                )
-
-        except models.Activity.DoesNotExist:
-            return Response(status=404)
+            except models.Activity.DoesNotExist:
+                return Response(status=404)
+        else:
+            return Response({"error": "login to create activity"}, status=401)
 
 
 class CommentViewSet(viewsets.ViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = models.Comment.objects.all()
 
     # GET: http://127.0.0.1:8000/comments/
     def list(self, request, format=None):
@@ -214,27 +221,31 @@ class CommentViewSet(viewsets.ViewSet):
 
     #  POST http://127.0.0.1:8000/comments/
     def create(self, request, format=None):
-        activity_x = models.Activity.objects.get(pk=request.data["activity"])
-        comment = models.Comment.objects.create(
-            created_at=datetime.now(),
-            activity=activity_x,
-            created_by_user=CustomUser.objects.get(pk=request.data["created_by_user"]),
-            text=request.data["text"]
-        )
-        notification = models.Notification.objects.create(
-            from_user=request.user,
-            to_user=activity_x.created_by_user.id,
-            text="commented on",
-            activity=activity_x
-        )
+        if request.user.is_authenticated:
+            activity_x = models.Activity.objects.get(pk=request.data["activity"])
+            comment = models.Comment.objects.create(
+                created_at=datetime.now(),
+                activity=activity_x,
+                created_by_user=CustomUser.objects.get(pk=request.data["created_by_user"]),
+                text=request.data["text"]
+            )
+            notification = models.Notification.objects.create(
+                from_user=request.user,
+                to_user=activity_x.created_by_user.id,
+                text="commented on",
+                activity=activity_x
+            )
 
-        return Response(
-            {
-                "pk": comment.pk,
-                "text": comment.text
-            },
-            status=201
-        )
+            return Response(
+                {
+                    "pk": comment.pk,
+                    "text": comment.text
+                },
+                status=201
+            )
+        else:
+            return Response({"error": "login to create comment"}, status=401)
+
 
 
 # CustomUser
@@ -327,6 +338,8 @@ class UsersViewSet(viewsets.ViewSet):
 
 
 class NotificationViewSet(viewsets.ViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = models.Notification.objects.all()
 
     def list(self, request):
         queryset = models.Notification.objects.all()
