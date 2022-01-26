@@ -14,12 +14,16 @@ export class IndexComponent implements OnInit {
 
   customOptions: any = {
     loop: true,
+    autoplay: true,
+    autoplaySpeed:300,
     mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
+    touchDrag: true,
+    pullDrag: true,
     dots: false,
+    animateIn: true,
+    animateOut: true,
     navSpeed: 700,
-    navText: ['', ''],
+    navText: ['<span class="next-btn" aria-label="Previous">‹</span>', '<span style="color: #303030" aria-label="Next">›</span>'],
     responsive: {
       0: {
         items: 1

@@ -30,3 +30,7 @@ main {
     display: block;
   }
 }
+.owl-theme .owl-nav [class*=owl-]{
+  background: #303030 !important;
+  font-size: 30px !important;
+}
