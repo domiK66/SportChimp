@@ -2,7 +2,7 @@
 This module is made with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.13 and sportchimp_api an API for the sportchimp.xyz single-page Web-Application.
 
 
-##Libraries
+## Libraries
 - Carousel: https://github.com/vitalii-andriiovskyi/ngx-owl-carousel-o
 - Material Design: https://material.angular.io/
 
