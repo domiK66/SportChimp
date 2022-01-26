@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import {AuthGuard} from "./auth.guard";
 
 import {SportListComponent} from "./sport-list/sport-list.component";
@@ -24,20 +23,14 @@ const routes: Routes = [
 
   //admin
   {path: 'sport-list', component: SportListComponent, canActivate: [AdminGuard]},
-  {path: 'activity-list', component: ActivityListComponent },
-  {path: 'activity-list:filter', component: ActivityListComponent},
-
-  //forms
+  {path: 'activity-list', component: ActivityListComponent, canActivate: [AdminGuard] },
+  {path: 'activity-list:filter', component: ActivityListComponent, canActivate: [AdminGuard]},
   {path: 'sport-form', component: SportFormComponent, canActivate: [AdminGuard] },
   {path: 'sport-form/:id', component: SportFormComponent, canActivate: [AdminGuard]},
+
+  //forms
   {path: 'activity-form', component: ActivityFormComponent, canActivate: [AuthGuard] },
   {path: 'activity-form/:id', component: ActivityFormComponent, canActivate: [AuthGuard] },
-
-  //login
-  {path: 'login', component: LoginComponent},
-
-  //register
-  {path: 'register', component: RegisterComponent},
 
   //profile
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
@@ -47,14 +40,20 @@ const routes: Routes = [
   {path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuard]},
 
   //activity views
-  {path: 'activity-view', component: ActivityViewComponent },
+  {path: 'activity-view', component: ActivityViewComponent},
   {path: 'activity-view/:filter', component: ActivityViewComponent},
 
   // activity-details
-  {path: 'activity-details/:id', component: ActivityDetailsComponent},
+  {path: 'activity-details/:id', component: ActivityDetailsComponent, canActivate: [AuthGuard]},
 
   // friends
-  {path: 'friends', component: FriendsComponent, canActivate: [AuthGuard]}
+  {path: 'friends', component: FriendsComponent},
+
+  //login
+  {path: 'login', component: LoginComponent},
+
+  //register
+  {path: 'register', component: RegisterComponent}
 
 ];
 

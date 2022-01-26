@@ -1,6 +1,4 @@
 <div class="main-div">
-  <mat-grid-list cols="3">
-    <mat-grid-tile>
       <mat-card class="card">
         <mat-card-header>
           <img
@@ -17,20 +15,15 @@
           <p>{{this.user.bio ? "About me: " + this.user.bio : ""}}</p>
         </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
       <mat-card class="card">
         <mat-card-content>
-          <button mat-raised-button color="accent" (click)="onClick()">Follow</button>
-          <h4>sportchimp.xyz/stats</h4>
+          <button mat-raised-button color="accent" (click)="onClick()">{{followButton}}</button>
           <p>Total created Activities: {{this.myActivities.length}}</p>
           <p>Date joined: {{this.user.date_joined?.slice(0, 10)}}</p>
           <p>{{this.age ? "Age: " + this.age : ""}}</p>
           <p>{{this.user.birthday? "Birthday: " + this.user.birthday : ""}}</p>
-      </mat-card-content>
+        </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
       <mat-card class="card">
         <mat-card-content>
           <p>Follower: {{this.user.follower?.length}}</p>
@@ -39,7 +32,7 @@
             <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
             {{user.first_name}} {{user.last_name}}
           </div>
-          <p>Following: </p>
+          <p>Following: {{this.following?.length}}</p>
           <div *ngFor="let user of this.following">
               <img src="/api/{{user.profile_image}}" height="40px" style="border-radius: 50%;"/>
               <a style="color: #FFFFFF" routerLink="/profile/{{user.username}}"> {{user.username}}</a>
@@ -47,17 +40,12 @@
           </div>
         </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
 
   <div class="activity-container">
-
     <mat-card style="">
       <mat-card-title>Activities {{this.user.username}} created</mat-card-title>
       <div class="activities" *ngFor="let activity of myActivities; let i=index;">
-
         <app-activity-card [activity]="activity"></app-activity-card>
-
       </div>
     </mat-card>
   </div>
@@ -69,157 +57,4 @@
       </div>
     </mat-card>
   </div>
-
-  <h2 style="margin: 3rem auto;width: 80%;">Activities {{this.user.username}} created</h2>
-  <table mat-table [dataSource]="myActivities" matSort class="mat-elevation-z8">
-    <h2>Activities from {{this.user.username}}</h2>
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-
-    <!-- Image -->
-    <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
-      <td mat-cell *matCellDef="let element"> <img alt='image' src="api/{{element.sport_genre.image}}/" height="50px"> </td>
-    </ng-container>
-
-    <!-- Title Column -->
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
-      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-    </ng-container>
-
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-    </ng-container>
-
-    <!-- Date Column -->
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-      <td mat-cell *matCellDef="let element"> {{element.date | date : 'dd.MM.yyyy'}} </td>
-    </ng-container>
-
-    <!-- Location Column -->
-    <ng-container matColumnDef="location">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
-      <td mat-cell *matCellDef="let element"> {{element.location}} </td>
-    </ng-container>
-
-    <!-- Is_Public Column -->
-    <ng-container matColumnDef="equipment_needed">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Equipment needed</th>
-      <td mat-cell *matCellDef="let element"> {{element.equipment_needed}} </td>
-    </ng-container>
-
-    <!-- Sport Genre Column-->
-    <ng-container matColumnDef="sport_genre">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sport Genre</th>
-      <td mat-cell *matCellDef="let element"> {{element.sport_genre.name}} </td>
-    </ng-container>
-
-    <!-- Created_By_User Column -->
-    <ng-container matColumnDef="created_by_user">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By User</th>
-      <td mat-cell *matCellDef="let element"> {{element.created_by_user?.username}} </td>
-    </ng-container>
-
-    <!-- Participants Column -->
-    <ng-container matColumnDef="participants">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Participants</th>
-      <td mat-cell *matCellDef="let element"> {{element.participants.length}} </td>
-    </ng-container>
-
-    <!-- View Column -->
-    <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="accent" [routerLink]="'/activity-details/' + element.id">View</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table>
-
-
-  <h2 style="margin: 3rem auto;width: 80%;">Activities {{this.user.username}} will attend</h2>
-  <table mat-table [dataSource]="attendActivities" matSort class="mat-elevation-z8">
-    <h2>Activities from {{this.user.username}}</h2>
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-
-    <!-- Image -->
-    <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
-      <td mat-cell *matCellDef="let element"> <img alt='image' src="api/{{element.sport_genre.image}}/" height="50px"> </td>
-    </ng-container>
-
-    <!-- Title Column -->
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
-      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-    </ng-container>
-
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-    </ng-container>
-
-    <!-- Date Column -->
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-      <td mat-cell *matCellDef="let element"> {{element.date | date : 'dd.MM.yyyy'}} </td>
-    </ng-container>
-
-    <!-- Location Column -->
-    <ng-container matColumnDef="location">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
-      <td mat-cell *matCellDef="let element"> {{element.location}} </td>
-    </ng-container>
-
-    <!-- Is_Public Column -->
-    <ng-container matColumnDef="equipment_needed">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Equipment needed</th>
-      <td mat-cell *matCellDef="let element"> {{element.equipment_needed}} </td>
-    </ng-container>
-
-    <!-- Sport Genre Column-->
-    <ng-container matColumnDef="sport_genre">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sport Genre</th>
-      <td mat-cell *matCellDef="let element"> {{element.sport_genre.name}} </td>
-    </ng-container>
-
-    <!-- Created_By_User Column -->
-    <ng-container matColumnDef="created_by_user">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By User</th>
-      <td mat-cell *matCellDef="let element"> {{element.created_by_user?.username}} </td>
-    </ng-container>
-
-    <!-- Participants Column -->
-    <ng-container matColumnDef="participants">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Participants</th>
-      <td mat-cell *matCellDef="let element"> {{element.participants.length}} </td>
-    </ng-container>
-
-    <!-- View Column -->
-    <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="accent" [routerLink]="'/activity-details/' + element.id">View</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table>
 </div>

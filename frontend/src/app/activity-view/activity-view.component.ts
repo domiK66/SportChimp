@@ -23,12 +23,14 @@ export class ActivityViewComponent implements OnInit {
   sportFilterFormControl = new FormControl('');
 
   curPage = 1;
-  pageSize = 4;
+  pageSize = 8;
   pageSizeOptions = [4, 8, 12, 24, 32];
 
   pageSizeFormControl = new FormControl(this.pageSize);
 
-  cols$: Observable<number> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall]).pipe(map((result) => {
+  cols$: Observable<number> = this.breakpointObserver.observe(
+    [Breakpoints.Small, Breakpoints.XSmall]
+  ).pipe(map((result) => {
     if (result.breakpoints[Breakpoints.XSmall]) {
       return 1;
     } else if (result.breakpoints[Breakpoints.Small]) {
@@ -59,8 +61,17 @@ export class ActivityViewComponent implements OnInit {
 
     this.sportService.getSports().subscribe(sports => this.sports = sports);
 
-    this.sportFilterFormControl.valueChanges.subscribe(value => this.sportFilter(value));
-    this.route.paramMap.subscribe(params => this.sportFilterFormControl.setValue(params.get('filter')) );
+    this.sportFilterFormControl.valueChanges.subscribe(value => {
+      this.sportFilter(value);
+    });
+
+    this.route.paramMap.subscribe(params => {
+      let name = params.get('filter')
+      let sports: [(string | null)] = [name]
+      if (name != null) {
+        this.sportFilterFormControl.setValue(sports)
+      }
+    });
 
     this.searchFilterFormControl.valueChanges.subscribe(value => this.searchFilter(value));
     this.route.paramMap.subscribe(params => this.searchFilterFormControl.setValue(params.get('')) );

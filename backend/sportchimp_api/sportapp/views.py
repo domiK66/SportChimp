@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticated
 from rest_framework.response import Response
 
 from datetime import datetime
@@ -12,7 +13,7 @@ from .models import CustomUser
 # Sport:
 class SportViewSet(viewsets.ViewSet):
     # GET: http://127.0.0.1:8000/sports/
-    def list(self, request, format=None):
+    def list(self, request):
         queryset = models.Sport.objects.all()
 
         # GET http://127.0.0.1:8000/sports/?order_by=name
@@ -24,26 +25,8 @@ class SportViewSet(viewsets.ViewSet):
         serializer = serializers.SportSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    # POST http://127.0.0.1:8000/sports/
-    def create(self, request, format=None):
-        if request.user.is_superuser:
-            sport = models.Sport.objects.create(
-                name=request.data["name"],
-                description=request.data["description"],
-                image=request.data["image"]
-
-            )
-            return Response(
-                {
-                    "id": sport.pk,
-                    "name": sport.name,
-                    "description": sport.description
-                },
-                status=201
-            )
-
     # GET: http://127.0.0.1:8000/sports/id
-    def retrieve(self, request, pk=None, format=None):
+    def retrieve(self, request, pk=None):
         try:
             sport = models.Sport.objects.get(pk=pk)
             serializer = serializers.SportSerializer(sport)
@@ -52,35 +35,58 @@ class SportViewSet(viewsets.ViewSet):
         except models.Sport.DoesNotExist:
             return Response({"error": "Sport does not exist"}, status=404)
 
-    # PUT http://127.0.0.1:8000/sports/id
-    def update(self, request, pk=None, format=None):
-        try:
-            sport = models.Sport.objects.get(pk=pk)
-            sport.name = request.data["name"]
-            sport.description = request.data["description"]
-            if request.data["image"]: sport.image = request.data["image"]
-            sport.save()
-            return Response(
-                {
-                    "id": sport.pk,
-                    "name": sport.name,
-                    "description": sport.description
-                },
-                status=200
+    # ONLY POSSIBLE BY ADMIN USER
+    # POST http://127.0.0.1:8000/sports/
+    def create(self, request):
+        # when the user is the admin, then allow the creation of a sport
+        if request.user.is_superuser:
+            sport = models.Sport.objects.create(
+                name=request.data["name"],
+                description=request.data["description"]
             )
-        except models.Sport.DoesNotExist:
-            return Response(status=404)
+            if request.data["image"]:
+                sport.image = request.data["image"]
+                sport.save()
+            serializer = serializers.SportSerializer(sport)
+            return Response(serializer.data, status=201)
+        # otherwise return error
+        else:
+            return Response({"error": "user is not a superuser"}, status=401)
 
-    def partial_update(self, request, pk=None, format=None):
-        # We do not allow partial updates here
-        # So we return a 405 instead.
-        return Response(status=405)
+    # ONLY POSSIBLE BY ADMIN USER
+    # PUT http://127.0.0.1:8000/sports/id
+    def update(self, request, pk=None):
+        # when the user is the admin, then allow the update of the sport
+        if request.user.is_superuser:
+            try:
+                sport = models.Sport.objects.get(pk=pk)
+                sport.name = request.data["name"]
+                sport.description = request.data["description"]
+                if request.data["image"]:
+                    sport.image = request.data["image"]
+                sport.save()
+                serializer = serializers.SportSerializer(sport)
+                return Response(serializer.data, status=200)
+            except models.Sport.DoesNotExist:
+                return Response({"error": "sport with this id does not exist"}, status=404)
+        # otherwise return error
+        else:
+            return Response({"error": "user is not a superuser"}, status=401)
 
+    # ONLY POSSIBLE BY ADMIN USER
     # DELETE http://127.0.0.1:8000/sports/id
-    def destroy(self, request, pk=None, format=None):
-        models.Sport.objects.filter(pk=pk).delete()
-        return Response(status=204)
+    def destroy(self, request, pk=None):
+        # when the user is the admin, then allow the deletion of the sport
+        if request.user.is_superuser:
+            models.Sport.objects.filter(pk=pk).delete()
+            return Response(status=204)
+        # otherwise return error
+        else:
+            return Response({"error": "user is not a superuser"}, status=401)
 
+    def partial_update(self, request):
+        # we do not allow partial updates here. so we return a 405 instead.
+        return Response(status=405)
 
 # Activity:
 class ActivityViewSet(viewsets.ViewSet):
@@ -88,7 +94,6 @@ class ActivityViewSet(viewsets.ViewSet):
     # GET: http://127.0.0.1:8000/activities
     def list(self, request, format=None):
         queryset = models.Activity.objects.all()
-
         # GET http://127.0.0.1:8000/activities/?order_by=sport_genre
         if request.GET.get("sport_genre") is not None:
             queryset = models.Activity.objects.filter(pk=request.GET.get("sport_genre"))
@@ -101,24 +106,25 @@ class ActivityViewSet(viewsets.ViewSet):
     # POST http://127.0.0.1:8000/activities/
     # ALLOW ONLY WHEN LOGGEND IN:
     def create(self, request, format=None):
-        activity = models.Activity.objects.create(
-            title=request.data["title"],
-            description=request.data["description"],
-            date=request.data["date"],
-            time=request.data["time"],
-            min_players=request.data["min_players"],
-            max_players=request.data["max_players"],
-            equipment_needed=request.data["equipment_needed"],
-            location=request.data["location"],
-
-            # TODO: ?? idk if best practice
-            sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
-            created_by_user=request.user
-        )
-        activity.participants.add(request.user)
-        activity.save()
-        serializer = serializers.ActivitySerializer(activity)
-        return Response(serializer.data, status=200)
+        if request.user.is_authenticated:
+            activity = models.Activity.objects.create(
+                title=request.data["title"],
+                description=request.data["description"],
+                date=request.data["date"],
+                time=request.data["time"],
+                min_players=request.data["min_players"],
+                max_players=request.data["max_players"],
+                equipment_needed=request.data["equipment_needed"],
+                location=request.data["location"],
+                sport_genre=models.Sport.objects.get(id=request.data["sport_genre"]),
+                created_by_user=request.user
+            )
+            activity.participants.add(request.user)
+            activity.save()
+            serializer = serializers.ActivitySerializer(activity)
+            return Response(serializer.data, status=200)
+        else:
+            return Response({"error": "login to create activity"}, status=401)
 
     # GET: http://127.0.0.1:8000/activities/id
     def retrieve(self, request, pk=None, format=None):
@@ -128,66 +134,67 @@ class ActivityViewSet(viewsets.ViewSet):
             return Response(serializer.data, status=200)
 
         except models.Activity.DoesNotExist:
-            return Response({"error": "Activity does not exist"}, status=404)
+            return Response({"error": "activity does not exist"}, status=404)
 
     # PUT http://127.0.0.1:8000/activites/id
     # ALLOW ONLY WHEN LOGGEND IN AND THE USER WHO CREATED IT
     def update(self, request, pk=None, format=None):
-
-        try:
-            activity = models.Activity.objects.get(pk=pk)
-            if request.user == activity.created_by_user:
-                activity.title = request.data["title"]
-                activity.sport_genre = models.Sport.objects.get(id=request.data["sport_genre"])
-                activity.description = request.data["description"]
-                activity.date = request.data["date"]
-                activity.time = request.data["time"]
-                activity.min_players = request.data["min_players"]
-                activity.max_players = request.data["max_players"]
-                activity.location = request.data["location"]
-                activity.equipment_needed = request.data["equipment_needed"]
-                activity.save()
-
-                return Response(
-                    {
-                    },
-                    status=200
-                )
-            else:
-                if request.user in activity.participants.all():
-                    activity.participants.remove(request.user)
+        if request.user.is_authenticated:
+            try:
+                activity = models.Activity.objects.get(pk=pk)
+                if request.user == activity.created_by_user:
+                    activity.title = request.data["title"]
+                    activity.sport_genre = models.Sport.objects.get(id=request.data["sport_genre"])
+                    activity.description = request.data["description"]
+                    activity.date = request.data["date"]
+                    activity.time = request.data["time"]
+                    activity.min_players = request.data["min_players"]
+                    activity.max_players = request.data["max_players"]
+                    activity.location = request.data["location"]
+                    activity.equipment_needed = request.data["equipment_needed"]
                     activity.save()
+
+                    return Response(
+                        {
+                        },
+                        status=200
+                    )
                 else:
-                    activity.participants.add(request.user)
-                    activity.save()
+                    if request.user in activity.participants.all():
+                        activity.participants.remove(request.user)
+                        activity.save()
+                    else:
+                        activity.participants.add(request.user)
+                        activity.save()
 
-                    notification = models.Notification.objects.create(
-                        from_user=request.user,
-                        to_user=activity.created_by_user.id,
-                        text="attends activity",
-                        activity=activity
+                        notification = models.Notification.objects.create(
+                            from_user=request.user,
+                            to_user=activity.created_by_user.id,
+                            text="attends activity",
+                            activity=activity
+                        )
+
+                    return Response(
+                        {
+                        },
+                        status=200
                     )
 
-                return Response(
-                    {
-                    },
-                    status=200
-                )
-
-        except models.Activity.DoesNotExist:
-            return Response(status=404)
+            except models.Activity.DoesNotExist:
+                return Response(status=404)
+        else:
+            return Response({"error": "login to create activity"}, status=401)
 
 
-
-# TODO: Comment:
 class CommentViewSet(viewsets.ViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = models.Comment.objects.all()
 
     # GET: http://127.0.0.1:8000/comments/
     def list(self, request, format=None):
         queryset = models.Comment.objects.all()
         serializer = serializers.CommentSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
-
 
     # GET: http://127.0.0.1:8000/comments/pk
     def retrieve(self, request, pk=None, format=None):
@@ -212,32 +219,36 @@ class CommentViewSet(viewsets.ViewSet):
                 status=404
             )
 
-    # TODO: POST http://127.0.0.1:8000/comments/
+    #  POST http://127.0.0.1:8000/comments/
     def create(self, request, format=None):
-        activity_x = models.Activity.objects.get(pk=request.data["activity"])
-        comment = models.Comment.objects.create(
-            created_at=datetime.now(),
-            activity=activity_x,
-            created_by_user=CustomUser.objects.get(pk=request.data["created_by_user"]),
-            text=request.data["text"]
-        )
-        notification = models.Notification.objects.create(
-            from_user=request.user,
-            to_user=activity_x.created_by_user.id,
-            text="commented on",
-            activity=activity_x
-        )
+        if request.user.is_authenticated:
+            activity_x = models.Activity.objects.get(pk=request.data["activity"])
+            comment = models.Comment.objects.create(
+                created_at=datetime.now(),
+                activity=activity_x,
+                created_by_user=CustomUser.objects.get(pk=request.data["created_by_user"]),
+                text=request.data["text"]
+            )
+            notification = models.Notification.objects.create(
+                from_user=request.user,
+                to_user=activity_x.created_by_user.id,
+                text="commented on",
+                activity=activity_x
+            )
 
-        return Response(
-            {
-                "pk": comment.pk,
-                "text": comment.text
-            },
-            status=201
-        )
+            return Response(
+                {
+                    "pk": comment.pk,
+                    "text": comment.text
+                },
+                status=201
+            )
+        else:
+            return Response({"error": "login to create comment"}, status=401)
 
 
-# TODO: CustomUser
+
+# CustomUser
 class UsersViewSet(viewsets.ViewSet):
 
     # GET: http://127.0.0.1:8000/users/
@@ -280,7 +291,7 @@ class UsersViewSet(viewsets.ViewSet):
         if request.user == user:
             user.first_name = request.data["first_name"]
             user.last_name = request.data["last_name"]
-            user.bio = request.data["bio"]
+            if request.data["bio"] != "null": user.bio = request.data["bio"]
             if request.data["birthday"] != "null": user.birthday = request.data["birthday"]
             if request.data["profile_image"]: user.profile_image = request.data["profile_image"]
             if request.data["password"]: user.set_password(request.data["password"])
@@ -325,7 +336,10 @@ class UsersViewSet(viewsets.ViewSet):
             status=200
         )
 
+
 class NotificationViewSet(viewsets.ViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = models.Notification.objects.all()
 
     def list(self, request):
         queryset = models.Notification.objects.all()
@@ -338,8 +352,11 @@ class NotificationViewSet(viewsets.ViewSet):
         serializer = serializers.NotificationSerializer(queryset, many=True)
         return Response(serializer.data, status=200)
 
-    def update(self,request,pk=None):
+    def update(self, request, pk=None):
         notification = models.Notification.objects.get(pk=pk)
-        notification.read = True
-        notification.save()
-        return Response({"read": "read"},status=200)
+        if request.user.id == notification.to_user:
+            notification.read = True
+            notification.save()
+            return Response({"read": "true"}, status=200)
+        else:
+            return Response({"error": "tried to fetch data from other user"}, status=401)

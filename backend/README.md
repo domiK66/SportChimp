@@ -1,10 +1,34 @@
-# Setup helpfile for DJANGO sportapp WITH sportchimp_api
-an API for the sportchimp.xyz Webpage
+# SportChimp.xyz Django - Backend
 
-username: admin/password: admin
+This module is made with Django v3.2.10 and sportchimp_api an API for the sportchimp.xyz single-page Web-Application.
 
+### API & ADMIN
 
-## SETUP
+>To get to the API-Endpoint visit the [Rest API](http://localhost:8000)
+>> Or go to the [Admin Dashboard](http://localhost:8000/admin)
+
+## Requirements
+Can be found in the [requirements.txt](https://github.com/domiK66/SportChimp/blob/main/backend/requirements.txt)
+
+> **Python version 3.10.0** ([Download here](https://www.python.org/downloads/))
+```
+Package                 Version
+----------------------- -------
+asgiref                 3.4.1
+Django                  3.2.10
+djangorestframework     3.12.4
+djangorestframework-jwt 1.11.0
+Pillow                  9.0.0
+pip                     21.1.3
+PyJWT                   1.7.1
+pytz                    2021.3
+setuptools              57.0.0
+sqlparse                0.4.2
+wheel                   0.36.2
+
+```
+
+## SETUP API
 
 - Open cmd / bash / shell
 
@@ -19,7 +43,8 @@ pip install virtualenv
 python -m venv venv
 ```
 ### ACTIVATE VENV
-- Activate the virtual environment: venv (Windows)
+- Activate the virtual environment: venv (Windows) 
+| It should look like this:
 ```python 
 (venv) C:\Users\AK-47u\Desktop\Code Projects\SportChimp>
 ```
@@ -30,26 +55,26 @@ venv\Scripts\activate.bat
 ```python
 (venv) lukas@MacBook-Pro-Lukas backend % source venv/bin/activate  
 ```
-### PYTHON DJNAGO DEPENDENCIES
+### PYTHON DJANGO DEPENDENCIES
 - Install Django version 3.2.10
 ```python 
 pip install django==3.2.10
 ```
 - Install rest_framework and security
 ```python 
-pip install djangorestframework 
+pip install djangorestframework==3.12.4
 ```
 ```python 
-pip install djangorestframework-jwt 
+pip install djangorestframework-jwt==1.11.0
 ```
 
 ### RUN THE DJANGO PROJECT
 - Migrate migrations files
 ```python 
 cd sportchimp_api
-(venv) C:\Users\AK-47u\Desktop\Code Projects\SportChimp\sportchimp_api>
+(venv) C:\Users\PC-NAME\SportChimp\sportchimp_api>
 ```
-- Migrate migrations files
+
 ```python 
 python manage.py migrate
 ```
@@ -58,11 +83,17 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-### API & ADMIN
-http://127.0.0.1:8000/
+- Create a superuser
+> **Follow instructions in the Terminal**
 
-http://127.0.0.1:8000/admin
+```python
+python manage.py createsuperuser
+```
 
+- Add Sports Data
+```python
+python manage.py loaddata sports
+```
 
 ### New Models
 - Make migrations
@@ -70,11 +101,10 @@ http://127.0.0.1:8000/admin
 python manage.py makemigrations
 ```
 
-### Add Sports Data
-
-```python
-python manage.py loaddata sports
+```python 
+python manage.py migrate
 ```
+
 
 
 

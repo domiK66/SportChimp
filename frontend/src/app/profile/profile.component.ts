@@ -15,6 +15,8 @@ export class ProfileComponent implements OnInit {
   attendActivities: Activity[] = [];
   following: User[] = [];
 
+  followButton = "Follow"
+
   user: any | User = {};
   age: number | null = null;
 
@@ -64,6 +66,12 @@ export class ProfileComponent implements OnInit {
       if (this.user.birthday != null) {
         let timeDiff = Math.abs(Date.now() - new Date(this.user.birthday).getTime());
         this.age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+      }
+      if (this.user.follower.filter((user: User) => user.username == this.userService.user.username).length > 0) {
+        console.log(this.user.follower.filter((user: User) => user.username == this.userService.user.username))
+        this.followButton = "Unfollow"
+      } else  {
+        this.followButton = "Follow"
       }
     });
   }

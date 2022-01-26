@@ -92,8 +92,6 @@ export class UserService {
         this.notifications = not;
         this.unreadNotifications = this.notifications.filter((not:{read:boolean})=> !not.read);
       })
-
-
     } else {
       this.user = {}
     }

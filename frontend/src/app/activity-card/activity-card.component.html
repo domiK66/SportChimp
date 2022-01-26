@@ -5,6 +5,7 @@
     <mat-card-subtitle>{{activity.sport_genre.name}}</mat-card-subtitle>
     <mat-card-subtitle>created by: {{activity.created_by_user?.username}}</mat-card-subtitle>
     <mat-card-subtitle><mat-icon aria-hidden="false">event</mat-icon>{{activity.date}}</mat-card-subtitle>
+    <mat-card-subtitle><mat-icon aria-hidden="false">alarm</mat-icon>{{activity.time}}</mat-card-subtitle>
     <mat-card-subtitle><mat-icon aria-hidden="false">place</mat-icon>{{activity.location}}</mat-card-subtitle>
     <mat-card-subtitle><mat-icon aria-hidden="false">person</mat-icon>{{activity.participants.length}}</mat-card-subtitle>
     <div *ngFor="let user of activity.participants">
