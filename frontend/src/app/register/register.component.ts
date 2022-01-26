@@ -1,10 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {
+  AbstractControl,
+  AsyncValidatorFn,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
 import {User, UserService} from "../services/user.service";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PasswordService} from "../services/password.service";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-register',
@@ -28,7 +38,7 @@ export class RegisterComponent implements OnInit {
   ) {
     this.registerFormGroup = new FormGroup({
         id: new FormControl(null),
-        username: new FormControl('', [Validators.required]),
+        username: new FormControl('', [Validators.required], [this.usernameValidator()]),
         password: new FormControl(null,
           [
             Validators.required, passwordService.confirmPassword()
@@ -69,5 +79,16 @@ export class RegisterComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
+  usernameValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return this.userService.getUsers().pipe(map(users => {
+        const currentId = this.registerFormGroup.controls['id'].value;
+        const currentUsername = this.registerFormGroup.controls['username'].value;
+        const existingUser = users.find(user => user.username === currentUsername);
+
+        return existingUser && existingUser.id !== currentId ? { usernameAlreadyExists: true} : null
+      }))
+    }
+  }
 
 }

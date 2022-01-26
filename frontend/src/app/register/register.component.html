@@ -18,6 +18,10 @@
         <mat-label>Username</mat-label>
         <input formControlName="username" matInput placeholder="Username" required type="text">
         <mat-error *ngIf="registerFormGroup.controls.username.hasError('required')">Please enter a username</mat-error>
+        <mat-error
+          *ngIf="registerFormGroup.controls.username.hasError('usernameAlreadyExists')">
+          username already taken
+        </mat-error>
         <mat-hint align="end">Your username</mat-hint>
       </mat-form-field>
 
